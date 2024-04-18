@@ -14,6 +14,7 @@ github_username: nicaudinet
 linkedin_username: nicolas-audinet
 twitter_username:
 medium_username:
-blogger_url:
-description: Nicolas is interested in developing methods to use text data to improve causal estimates, and to apply those methods in the social sciences.
+blogger_url: "https://nicaudinet.github.io"
+description: >
+    I'm interested in causal inference and natural language processing. In my research I develop methods to use text data for inferring causal estimates, and apply those methods in research questions from the social sciences. I am supervised by Richard Johansson and co-supervised by Moa Johansson and Adel Daoud.
 ---
