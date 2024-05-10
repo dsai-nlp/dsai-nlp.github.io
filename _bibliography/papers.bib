@@ -1,14 +1,16 @@
 ---
 ---
 # 2024
-@article{audinet2024can,
+@inproceedings{audinet2024can,
   author = {Nicolas Audinet de Pieuchon and Adel Daoud and Connor Jerzak and Moa Johansson and Richard Johansson},
-  title = {Can Large Language Models (or Humans) Distill Text?},
+  title = {Can Large Language Models (or Humans) Disentangle Text?},
   year = {2024},
-  journal={arXiv preprint arXiv:2403.16584},
+  booktitle = {Proceedings of the 6th Workshop on Natural Language Processing and Computational Social Science (NLP+CSS)},
   url = {https://arxiv.org/abs/2403.16584},
+  address = {Mexico City, Mexico},
   pdf = {https://arxiv.org/pdf/2403.16584.pdf},
-  abstract = {We investigate the potential of large language models (LLMs) to distill text: to remove the textual traces of an undesired forbidden variable. We employ a range of LLMs with varying architectures and training approaches to distill text by identifying and removing information about the target variable while preserving other relevant signals. Our findings shed light on the strengths and limitations of LLMs in addressing the distillation and provide insights into the strategies for leveraging these models in computational social science investigations involving text data. In particular, we show that in the strong test of removing sentiment, the statistical association between the processed text and sentiment is still clearly detectable to machine learning classifiers post-LLM-distillation. Furthermore, we find that human annotators also struggle to distill sentiment while preserving other semantic content. This suggests there may be limited separability between concept variables in some text contexts, highlighting limitations of methods relying on text-level transformations and also raising questions about the robustness of distillation methods that achieve statistical independence in representation space if this is difficult for human coders operating on raw text to attain.}
+  note = {to appear},
+  abstract = {We investigate the potential of large language models (LLMs) to disentangle text variables--to remove the textual traces of an undesired forbidden variable in a task sometimes known as text distillation and closely related to the fairness in AI and causal inference literature. We employ a range of various LLM approaches in an attempt to disentangle text by identifying and removing information about a target variable while preserving other relevant signals. We show that in the strong test of removing sentiment, the statistical association between the processed text and sentiment is still detectable to machine learning classifiers post-LLM-disentanglement. Furthermore, we find that human annotators also struggle to disentangle sentiment while preserving other semantic content. This suggests there may be limited separability between concept variables in some text contexts, highlighting limitations of methods relying on text-level transformations and also raising questions about the robustness of disentanglement methods that achieve statistical independence in representation space.}
 }
 
 @inproceedings{johansson2024what,
