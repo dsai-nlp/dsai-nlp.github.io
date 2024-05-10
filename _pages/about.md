@@ -17,7 +17,7 @@ social: false # includes social icons at the bottom of the page
 <div class="banner">
     <p>
         We conduct academic research in Natural Language Processing, where we
-        investigate methods to understand langauge models and how to apply them
+        investigate methods to understand language models and how to apply them
         to the political and social sciences. We are part of the Data Science
         and AI division at
         <a href="https://www.chalmers.se/en/">Chalmers University of Technology</a>.
