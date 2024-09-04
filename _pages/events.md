@@ -39,9 +39,15 @@ actively to each other.
 If you would like to join the reading group, please send an email to
 [nicolas.audinet@chalmers.se](mailto:nicolas.audinet@chalmers.se).
 
+### Next meeting
+
+- 2024-09-05 - [Critical questionf for Big Data](https://www.dhi.ac.uk/san/waysofbeing/data/communication-zangana-boyd-2012.pdf)
 
 ### Previous meetings
 
+- 2024-05-30 - [Out of One, Many: Using Language Models to Simulate Human Samples
+](https://www.cambridge.org/core/journals/political-analysis/article/out-of-one-many-using-language-models-to-simulate-human-samples/035D7C8A55B237942FB6DBAD7CAA4E49)
+- 2024-04 - [LOCOST: State-Space Models for Long Document Abstractive Summarization](https://aclanthology.org/2024.eacl-long.69/)
 - 2024-03-28 - [Naturalistic Causal Probing for Morpho-Syntax](https://aclanthology.org/2023.tacl-1.23.pdf)
 - 2024-03-07 - [Understanding Transformer Memorization Recall Through Idioms](https://aclanthology.org/2023.eacl-main.19.pdf)
 - 2023-12-21 - [Detecting Pretraining Data from Large Language Models](https://arxiv.org/abs/2310.16789)
