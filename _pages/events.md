@@ -41,7 +41,7 @@ If you would like to join the reading group, please send an email to
 
 ### Next meeting
 
-- 2024-09-05 - [Critical questionf for Big Data](https://www.dhi.ac.uk/san/waysofbeing/data/communication-zangana-boyd-2012.pdf)
+- 2024-09-05 - [Critical questions for Big Data](https://www.dhi.ac.uk/san/waysofbeing/data/communication-zangana-boyd-2012.pdf)
 
 ### Previous meetings
 
