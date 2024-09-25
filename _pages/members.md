@@ -40,3 +40,11 @@ nav_order: 1
         {% endif %}
     </div>
 </div>
+
+# Past members
+
+## PhD students
+
+- Olof Mogren
+- Luis Nieto Piña
+- Tobias Norlund

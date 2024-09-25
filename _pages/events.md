@@ -41,12 +41,12 @@ If you would like to join the reading group, please send an email to
 
 ### Upcoming meetings
 
-- 2024-09-25, 13:00&ndash;15:00, [EDIT-5128](https://maps.chalmers.se/#e04e51e0-36ae-11ea-a7b1-c33e025140ed) - [Using Large Language Model Annotations for the Social Sciences:
-A General Framework of Using Predicted Variables in Downstream Analyses](https://naokiegami.com/paper/dsl_ss.pdf)
 - 2024-10-17, 13:00&ndash;15:00, [EDIT-5128](https://maps.chalmers.se/#e04e51e0-36ae-11ea-a7b1-c33e025140ed) - [Analyzing Semantic Change through Lexical Replacements](https://aclanthology.org/2024.acl-long.246.pdf) and [Using Synchronic Definitions and Semantic Relations to Classify Semantic Change Types](https://aclanthology.org/2024.acl-long.249.pdf), with invited guests [Pierluigi Cassotti](https://www.gu.se/om-universitetet/hitta-person/pierluigicassotti) and [Nina Tahmasebi](http://tahmasebi.se/)
 
 ### Previous meetings
 
+- 2024-09-25, 13:00&ndash;15:00, [EDIT-5128](https://maps.chalmers.se/#e04e51e0-36ae-11ea-a7b1-c33e025140ed) - [Using Large Language Model Annotations for the Social Sciences:
+A General Framework of Using Predicted Variables in Downstream Analyses](https://naokiegami.com/paper/dsl_ss.pdf)
 - 2024-09-05 - [Critical questions for Big Data](https://www.dhi.ac.uk/san/waysofbeing/data/communication-zangana-boyd-2012.pdf)
 - 2024-05-30 - [Out of One, Many: Using Language Models to Simulate Human Samples
 ](https://www.cambridge.org/core/journals/political-analysis/article/out-of-one-many-using-language-models-to-simulate-human-samples/035D7C8A55B237942FB6DBAD7CAA4E49)
