@@ -1,5 +1,5 @@
 ---
-name: Olof Mogren
+name: Tobias Norlund
 image: "https://github.com/TobiasNorlund.png"
 position: PhD Student
 current:
