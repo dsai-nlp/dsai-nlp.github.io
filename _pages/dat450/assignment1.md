@@ -21,7 +21,7 @@ You will need a *tokenizer* that splits English text into separate words. In thi
 
 Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
 
-**Sanity check**: after this step, your training set should consist of around 147,000 paragraphs and the validation set around 18,000 paragraphs.
+**Sanity check**: after this step, your training set should consist of around 147,000 paragraphs and the validation set around 18,000 paragraphs. (The exact number depends on what tokenizer you selected.)
 
 ## Step 2: Encoding the text as integers
 
