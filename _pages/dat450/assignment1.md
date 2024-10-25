@@ -36,6 +36,16 @@ In addition, the vocabulary should contain 3 special symbols:
 
 The total size of the vocabulary (including the 3 symbols) should be at most `max_voc_size`, which is is a user-specified hyperparameter. If the number of unique tokens in the text is greater than `max_voc_size`, then use the most frequent ones.
 
+<details>
+<summary>A `nn.Counter` can be convenient when computing the frequencies.</summary.>
+
+x
+
+y
+
+z
+</details>
+
 **Sanity check**: after creating the vocabulary, make sure that
 - the size of your vocabulary is not greater than the max vocabulary size you specified,
 - the 3 special symbols exist in the vocabulary and that they don't coincide with any real words,
