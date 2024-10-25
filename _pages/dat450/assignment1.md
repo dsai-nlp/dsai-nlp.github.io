@@ -19,6 +19,11 @@ Download the following text files. They consist of Wikipedia articles converted 
 
 You will need a *tokenizer* that splits English text into separate words. In this assignment, you will just use an existing tokenizer. Popular NLP libraries such as SpaCy and NLTK come with built-in tokenizers. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
 
+<details>
+<summary><b>Hint</b>: how to use NLTK's English tokenizer</summary>
+Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>.
+</details>
+
 Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
 
 **Sanity check**: after this step, your training set should consist of around 147,000 paragraphs and the validation set around 18,000 paragraphs. (The exact number depends on what tokenizer you selected.)
