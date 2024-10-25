@@ -53,12 +53,28 @@ Set up a neural network inspired by the neural language model proposed by [Bengi
 You are free to experiment with the design of the intermediate layers and you don't have to follow the exact structure used in the paper.
 
 <details>
-<summary>Test click</summary>
-Testar att expandera en sektion, rad 1.
+<summary></summary>
+```model = nn.Sequential(
+layer 1,
+layer 2,
+...
+layer N)```
 
-Testar att expandera en sektion, rad 2.
+```
+class MyNetwork(nn.Module):
+  def __init__(self, hyperparameters):
+    super().__init__()
+    self.layer1 = ... some layer ...
+    self.layer2 = ... some layer ...
+    ...
 
-Testar att expandera en sektion, rad 3.
+  def forward(self, inputs):
+    step1 = self.layer1(inputs)
+    step2 = self.layer2(step1)
+    ...
+    return something
+``` 
+
 </details>
 
 **Sanity check**: carry out the following steps:
