@@ -13,7 +13,7 @@ Our goal in this assignment is to implement a neural network-based language mode
 
 ## Step 0: Preliminaries
 
-Download the following texts.
+Download the following text files. They consist of Wikipedia articles converted into raw text.
 
 ## Step 1: Preprocessing the text
 
@@ -25,11 +25,18 @@ You will need a *tokenizer* that splits English text into separate words. In thi
 
 ### Building the vocabulary
 
+Create a utility (a function or a class) that goes through the training text and creates a *vocabulary*: a mapping from token strings to integers.
 
+In addition, the vocabulary should contain 3 special symbols:
+- a symbol for previously unseen or low-frequency tokens,
+- a symbol we will put at the beginning of each paragraph,
+- a symbol we will put at the end of each paragraph.
 
-**Sanity check**: make sure that
+The total size of the vocabulary (including the 3 symbols) should be at most `max_voc_size`, which is is a user-specified hyperparameter. If the number of unique tokens in the text is greater than `max_voc_size`, then use the most frequent ones.
+
+**Sanity check**: after creating the vocabulary, make sure that
 - the size of your vocabulary is not greater than the max vocabulary size you specified,
-- the 3 special symbols exist in the vocabulary
+- the 3 special symbols exist in the vocabulary and that they don't coincide with any real words,
 - that some highly frequent English word (e.g. "the") is mapped to a small integer
 
 ### Encoding the texts
