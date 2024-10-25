@@ -86,7 +86,7 @@ class MyNetwork(nn.Module):
 The second coding style, while more verbose, has the advantage that it is easier to debug: for instance, it is easy to check the shapes of intermediate computations. It is also more flexible and allows you to go beyond the constraints of a traditional layered setup.
 </details>
 
-**Hint**: a ``nn.Flatten`` layer is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of *B* inputs, each of which is a context window of size *N*, so our input tensor has the shape (*B*, *N*). The output from the embedding layer will have the shape (*B*, *N*, *D*) where *D* is the embedding dimensionality. If you use a ``nn.Flatten``, we go back to a two-dimensional tensor of shape (*B*, *N* * *D*). That is, we can see this as a step that concatenates the word embeddings in the context window.
+**Hint**: a ``nn.Flatten`` layer is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of *B* inputs, each of which is a context window of size *N*, so our input tensor has the shape (*B*, *N*). The output from the embedding layer will have the shape (*B*, *N*, *D*) where *D* is the embedding dimensionality. If you use a ``nn.Flatten``, we go back to a two-dimensional tensor of shape (*B*, *N* * *D*). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.
 
 **Sanity check**: carry out the following steps:
 - Create an integer tensor of shape 1x*N* where *N* is the size of the context window. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
