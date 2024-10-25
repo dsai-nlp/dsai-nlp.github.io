@@ -54,7 +54,7 @@ You are free to experiment with the design of the intermediate layers and you do
 
 <details>
 <summary>Setting up a neural network in PyTorch</summary>
-<small>
+<sup><sub>
 There are a few different ways that we can write code to set up a neural network in PyTorch.
 
 If your model has the traditional structure of stacked layers, then the most concise way to declare the model is to use `nn.Sequential`:
@@ -85,7 +85,7 @@ class MyNetwork(nn.Module):
 ``` 
 
 The second coding style, while more verbose, has the advantage that it is easier to debug: for instance, it is easy to check the shapes of intermediate computations. It is also more flexible and allows you to go beyond the constraints of a traditional layered setup.
-</small>
+</sub></sup>
 </details>
 
 **Sanity check**: carry out the following steps:
