@@ -116,7 +116,7 @@ The second coding style, while more verbose, has the advantage that it is easier
 **Sanity check**: carry out the following steps:
 - Create an integer tensor of shape 1x*N* where *N* is the size of the context window. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
 - Apply the model to this input tensor. It shouldn't crash here.
-- Make sure that the shape of the returned output tensor is 1x*V* where *V* is the size of the vocabulary.
+- Make sure that the shape of the returned output tensor is 1x*V* where *V* is the size of the vocabulary. This output corresponds to the logits of the next-token probability distribution, but it is useless at this point because we haven't yet trained the model.
 
 ### Training the model
 
