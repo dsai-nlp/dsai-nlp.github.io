@@ -9,7 +9,7 @@ nav_order: 4
 
 # DAT450/DIT247: Programming Assignment 1
 
-Testing.
+Our goal in this assignment is to implement a neural network-based language model similar to the one described by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf).
 
 ## Step 0: Preliminaries
 
@@ -25,7 +25,12 @@ You will need a *tokenizer* that splits English text into separate words. In thi
 
 ### Building the vocabulary
 
-**Sanity check**: make sure that the size of your vocabulary is not greater than the max vocabulary size you specified.
+
+
+**Sanity check**: make sure that
+- the size of your vocabulary is not greater than the max vocabulary size you specified,
+- the 3 special symbols exist in the vocabulary
+- that some highly frequent English word (e.g. "the") is mapped to a small integer
 
 ### Encoding the texts
 
@@ -34,6 +39,8 @@ You will need a *tokenizer* that splits English text into separate words. In thi
 ### Splitting the text into *n*-grams
 
 ### Setting up the neural network structure
+
+**Sanity check**: 
 
 ### Training the model
 
