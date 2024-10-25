@@ -48,10 +48,13 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 A <code>Counter</code> is like a regular Python dictionary, with some additional functionality for computing frequencies. For instance, you can go through each paragraph and call <a href="https://docs.python.org/3/library/collections.html#collections.Counter.update"><code>update</code></a>. After building the <code>Counter</code> on your dataset, <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items.
 </details>
 
+Also create some tool that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we use the model to predict the next word.
+
 **Sanity check**: after creating the vocabulary, make sure that
 - the size of your vocabulary is not greater than the max vocabulary size you specified,
 - the 3 special symbols exist in the vocabulary and that they don't coincide with any real words,
-- that some highly frequent example words (e.g. "the", "and") are included in the vocabulary but that some rare words (e.g. "cuboidal", "epiglottis") are not.
+- some highly frequent example words (e.g. "the", "and") are included in the vocabulary but that some rare words (e.g. "cuboidal", "epiglottis") are not.
+- if you take some test word, you can map it to an integer and then back to the original test word using the inverse mapping.
 
 ### Encoding the texts and creating training instances
 
@@ -124,9 +127,9 @@ The second coding style, while more verbose, has the advantage that it is easier
 
 ### Evaluating
 
+Take some example context window and use the model to predict the next word.
 
-
-Compute the [perplexity](https://huggingface.co/docs/transformers/perplexity) of your model on the validation set.
+Then compute the [perplexity](https://huggingface.co/docs/transformers/perplexity) of your model on the validation set.
 
 **Hint**: the perplexity is `exp` applied to the mean of the negative log probability of each token. The cross-entropy loss can be practical here, since it computes the mean negative log probability.
 
