@@ -37,17 +37,18 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 **Sanity check**: after creating the vocabulary, make sure that
 - the size of your vocabulary is not greater than the max vocabulary size you specified,
 - the 3 special symbols exist in the vocabulary and that they don't coincide with any real words,
-- that some highly frequent example words (e.g. "the", "and") are included in the vocabulary but that some rare words (e.g. "cuboidal", "epiglottis") don't.
+- that some highly frequent example words (e.g. "the", "and") are included in the vocabulary but that some rare words (e.g. "cuboidal", "epiglottis") are not.
 
-### Encoding the texts
+### Encoding the texts and creating *n*-grams
 
 ## Step 3: Developing a language model
 
-### Splitting the text into *n*-grams
-
 ### Setting up the neural network structure
 
-**Sanity check**: 
+**Sanity check**: carry out the following steps:
+- Create an integer tensor of shape 1x*N* where *N* is the length of the context window. It doesn't matter what the integers are except that they should be less than the vocabulary size.
+- Apply the model to this input tensor. It shouldn't crash here.
+- Make sure that the shape of the returned output tensor is 1x*V* where *V* is the size of the vocabulary.
 
 ### Training the model
 
