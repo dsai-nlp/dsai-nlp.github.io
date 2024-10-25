@@ -125,14 +125,18 @@ The second coding style, while more verbose, has the advantage that it is easier
 
 **Hint**: while developing the code, work with very small datasets until you know it doesn't crash. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error.
 
-### Evaluating
+## Step 4: Evaluation and analysis
+
+### Predicting the next word
 
 Take some example context window and use the model to predict the next word.
 
-Then compute the [perplexity](https://huggingface.co/docs/transformers/perplexity) of your model on the validation set.
+### Quantitative evaluation
+
+Compute the [perplexity](https://huggingface.co/docs/transformers/perplexity) of your model on the validation set.
 
 **Hint**: the perplexity is `exp` applied to the mean of the negative log probability of each token. The cross-entropy loss can be practical here, since it computes the mean negative log probability.
 
-## Step 4: Inspecting word embeddings
+### Inspecting the word embeddings
 
 Testing.
