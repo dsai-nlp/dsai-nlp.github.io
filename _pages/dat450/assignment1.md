@@ -11,7 +11,15 @@ nav_order: 4
 
 Testing.
 
+## Step 0: Preliminaries
+
+Download the following texts.
+
 ## Step 1: Preprocessing the text
+
+You will need a *tokenizer* that splits English text into separate words. In this assignment, you will just use an existing tokenizer. Popular NLP libraries such as SpaCy and NLTK come with built-in tokenizers. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
+
+
 
 ## Step 2: Encoding the vocabulary
 
