@@ -38,7 +38,7 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 
 <details>
 <summary>A <a href="https://docs.python.org/3/library/collections.html#collections.Counter"><code>Counter</code></a> can be convenient when computing the frequencies (click to expand for more explanation).</summary>
-A `Counter` is like a regular Python dictionary, with some additional functionality for computing frequencies. After creating the `Counter`, the method [<code>most_common</code>](https://docs.python.org/3/library/collections.html#collections.Counter.most_common) gives the most frequent items.
+A `Counter` is like a regular Python dictionary, with some additional functionality for computing frequencies. After creating the `Counter`, the method <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items.
 </details>
 
 **Sanity check**: after creating the vocabulary, make sure that
