@@ -3,11 +3,13 @@ layout: page
 title: DAT450/DIT247: Programming Assignment 1
 permalink: /courses/dat450/assignment1/
 description:
-nav: false
+nav: true
 nav_order: 4
 ---
 
 # DAT450/DIT247: Programming Assignment 1
+
+Testing.
 
 ## Step 1: Preprocessing the text
 
@@ -16,3 +18,5 @@ nav_order: 4
 ## Step 3: Developing a language model
 
 ## Step 4: Inspecting word embeddings
+
+Testing.
