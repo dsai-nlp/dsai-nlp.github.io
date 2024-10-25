@@ -3,7 +3,7 @@ layout: page
 title: DAT450/DIT247: Programming Assignment 1
 permalink: /courses/dat450/assignment1/
 description:
-nav: false
+nav: true
 nav_order: 4
 ---
 
