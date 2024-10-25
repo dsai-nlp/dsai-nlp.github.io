@@ -50,7 +50,16 @@ Set up a neural network inspired by the neural language model proposed by [Bengi
 - *intermediate layers* that map between input and output representations,
 - an *output layer* that computes (the logits of) a probability distribution over the vocabulary.
 
-You are free to experiment with the design of the intermediate layers.
+You are free to experiment with the design of the intermediate layers and you don't have to follow the exact structure used in the paper.
+
+<details>
+<summary>Test click</summary>
+Testar att expandera en sektion, rad 1.
+
+Testar att expandera en sektion, rad 2.
+
+Testar att expandera en sektion, rad 3.
+</details>
 
 **Sanity check**: carry out the following steps:
 - Create an integer tensor of shape 1x*N* where *N* is the length of the context window. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
