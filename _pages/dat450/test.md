@@ -3,7 +3,7 @@ layout: page
 title: DAT450 Test
 permalink: /courses/dat450/test/
 description:
-nav: true
+nav: false
 nav_order: 4
 ---
 
