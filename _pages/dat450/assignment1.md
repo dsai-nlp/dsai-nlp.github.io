@@ -37,7 +37,7 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 **Sanity check**: after creating the vocabulary, make sure that
 - the size of your vocabulary is not greater than the max vocabulary size you specified,
 - the 3 special symbols exist in the vocabulary and that they don't coincide with any real words,
-- that some highly frequent English word (e.g. "the") is mapped to a small integer
+- that some highly frequent example words (e.g. "the", "and") are included in the vocabulary but that some rare words (e.g. "cuboidal", "epiglottis") don't.
 
 ### Encoding the texts
 
