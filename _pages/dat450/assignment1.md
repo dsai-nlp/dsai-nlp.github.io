@@ -38,7 +38,6 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 
 <details>
 <summary>A `nn.Counter` can be convenient when computing the frequencies.</summary.>
-
 x
 
 y
