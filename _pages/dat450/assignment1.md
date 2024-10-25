@@ -53,12 +53,14 @@ Set up a neural network inspired by the neural language model proposed by [Bengi
 You are free to experiment with the design of the intermediate layers and you don't have to follow the exact structure used in the paper.
 
 <details>
-<summary></summary>
-```model = nn.Sequential(
+<summary>Setting up a neural network in PyTorch</summary>
+```
+model = nn.Sequential(
 layer 1,
 layer 2,
 ...
-layer N)```
+layer N)
+```
 
 ```
 class MyNetwork(nn.Module):
