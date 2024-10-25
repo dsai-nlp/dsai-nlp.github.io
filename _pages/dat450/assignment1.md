@@ -120,7 +120,7 @@ The second coding style, while more verbose, has the advantage that it is easier
 
 ### Training the model
 
-**Hint**: while developing the code, work with very small datasets. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error.
+**Hint**: while developing the code, work with very small datasets until you know it doesn't crash. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error.
 
 ### Evaluating
 
