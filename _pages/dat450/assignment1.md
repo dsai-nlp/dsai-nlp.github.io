@@ -56,15 +56,16 @@ You are free to experiment with the design of the intermediate layers and you do
 <summary>Setting up a neural network in PyTorch</summary>
 There are a few different ways that we can write code to set up a neural network in PyTorch.
 
-If your model has the traditional structure of stacked layers, then 
+If your model has the traditional structure of stacked layers, then the most concise way to declare the model is to use `nn.Sequential`:
 
 ```
 model = nn.Sequential(
-layer 1,
-layer 2,
-...
-layer N)
+  layer1,
+  layer2,
+  ...
+  layerN)
 ```
+You can use any type of layers here. In our case, you'll typically start with a `nn.Embedding` layer, followed by some intermediate layers (e.g. `nn.Linear` followed by some activation such as `nn.ReLU`), and then a linear output layer.
 
 A more general solution is to declare your network as a class that inherits from `nn.Module`. You will then have to declare your model components in `__init__` and define the forward computation in `forward`:
 ```
