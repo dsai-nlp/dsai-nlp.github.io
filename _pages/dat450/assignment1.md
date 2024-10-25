@@ -33,6 +33,18 @@ You will need a *tokenizer* that splits English text into separate words. In thi
 
 ### Splitting the text into *n*-grams
 
+### Setting up the neural network structure
+
+### Training the model
+
+**Hint**: while developing the code, work with very small datasets. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error.
+
+### Evaluating
+
+Compute the [perplexity](https://huggingface.co/docs/transformers/perplexity) of your model on the validation set.
+
+**Hint**: the perplexity is `exp` applied to the mean of the negative log probability of each token. The cross-entropy loss can be practical here, since it computes the mean negative log probability.
+
 ## Step 4: Inspecting word embeddings
 
 Testing.
