@@ -21,9 +21,17 @@ You will need a *tokenizer* that splits English text into separate words. In thi
 
 
 
-## Step 2: Encoding the vocabulary
+## Step 2: Encoding the text as integers
+
+### Building the vocabulary
+
+**Sanity check**: make sure that the size of your vocabulary is not greater than the max vocabulary size you specified.
+
+### Encoding the texts
 
 ## Step 3: Developing a language model
+
+### Splitting the text into *n*-grams
 
 ## Step 4: Inspecting word embeddings
 
