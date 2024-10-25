@@ -45,8 +45,15 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 
 ### Setting up the neural network structure
 
+Set up a neural network inspired by the neural language model proposed by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf). The main components are:
+- an *embedding layer* that maps token integers to floating-point vectors,
+- *intermediate layers* that map between input and output representations,
+- an *output layer* that computes (the logits of) a probability distribution over the vocabulary.
+
+You are free to experiment with the design of the intermediate layers.
+
 **Sanity check**: carry out the following steps:
-- Create an integer tensor of shape 1x*N* where *N* is the length of the context window. It doesn't matter what the integers are except that they should be less than the vocabulary size.
+- Create an integer tensor of shape 1x*N* where *N* is the length of the context window. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
 - Apply the model to this input tensor. It shouldn't crash here.
 - Make sure that the shape of the returned output tensor is 1x*V* where *V* is the size of the vocabulary.
 
