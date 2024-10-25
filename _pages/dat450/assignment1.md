@@ -19,7 +19,9 @@ Download the following text files. They consist of Wikipedia articles converted 
 
 You will need a *tokenizer* that splits English text into separate words. In this assignment, you will just use an existing tokenizer. Popular NLP libraries such as SpaCy and NLTK come with built-in tokenizers. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
 
+Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
 
+**Sanity check**: after this step, your training set should consist of around 147,000 paragraphs and the validation set around 18,000 paragraphs.
 
 ## Step 2: Encoding the text as integers
 
@@ -49,6 +51,8 @@ Go through the training and validation data and extract all sequences of *N*+1 t
 - an "end" symbol after each paragraph.
 
 Store all these sequences in lists.
+
+**Sanity check**: after these steps, you should have around 12 million training instances and 1.5 million validation instances.
 
 ## Step 3: Developing a language model
 
