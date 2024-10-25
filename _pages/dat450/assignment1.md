@@ -39,7 +39,16 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 - the 3 special symbols exist in the vocabulary and that they don't coincide with any real words,
 - that some highly frequent example words (e.g. "the", "and") are included in the vocabulary but that some rare words (e.g. "cuboidal", "epiglottis") are not.
 
-### Encoding the texts and creating *n*-grams
+### Encoding the texts and creating training instances
+
+We will now collect training instances for our language model, where we learn to predict the next token given the previous *N* tokens.
+
+Go through the training and validation data and extract all sequences of *N*+1 tokens and map them to the corresponding integer values. Remember to use the special symbols when necessary:
+- the "unseen" symbol for tokens not in your vocabulary,
+- *N* "beginning" symbols before each paragraph,
+- an "end" symbol after each paragraph.
+
+Store all these sequences in lists.
 
 ## Step 3: Developing a language model
 
@@ -98,6 +107,8 @@ The second coding style, while more verbose, has the advantage that it is easier
 **Hint**: while developing the code, work with very small datasets. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error.
 
 ### Evaluating
+
+
 
 Compute the [perplexity](https://huggingface.co/docs/transformers/perplexity) of your model on the validation set.
 
