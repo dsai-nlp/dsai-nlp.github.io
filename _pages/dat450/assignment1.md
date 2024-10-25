@@ -21,7 +21,7 @@ You will need a *tokenizer* that splits English text into separate words (tokens
 
 <details>
 <summary><b>Hint</b>: how to use NLTK's English tokenizer</summary>
-Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>.
+Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
 
 For instance, <code>word_tokenize("Let's test!!")</code> should give the result <code>["Let", "'s", "test", "!", "!"]</code>
 </details>
