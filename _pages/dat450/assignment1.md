@@ -22,7 +22,7 @@ You will need a *tokenizer* that splits English text into separate words (tokens
 <details>
 <summary><b>Hint</b>: how to use NLTK's English tokenizer</summary>
 
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black;">Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
 
 For instance, <code>word_tokenize("Let's test!!")</code> should give the result <code>["Let", "'s", "test", "!", "!"]</code>
 </div>
@@ -47,7 +47,7 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 
 <details>
 <summary><b>Hint</b>: A <a href="https://docs.python.org/3/library/collections.html#collections.Counter"><code>Counter</code></a> can be convenient when computing the frequencies.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black;">A <code>Counter</code> is like a regular Python dictionary, with some additional functionality for computing frequencies. For instance, you can go through each paragraph and call <a href="https://docs.python.org/3/library/collections.html#collections.Counter.update"><code>update</code></a>. After building the <code>Counter</code> on your dataset, <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items.</div>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">A <code>Counter</code> is like a regular Python dictionary, with some additional functionality for computing frequencies. For instance, you can go through each paragraph and call <a href="https://docs.python.org/3/library/collections.html#collections.Counter.update"><code>update</code></a>. After building the <code>Counter</code> on your dataset, <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items.</div>
 </details>
 
 Also create some tool that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we use the model to predict the next word.
@@ -84,20 +84,20 @@ You are free to experiment with the design of the intermediate layers and you do
 
 <details>
 <summary><b>Hint</b>: Setting up a neural network in PyTorch</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black;">There are a few different ways that we can write code to set up a neural network in PyTorch.
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">There are a few different ways that we can write code to set up a neural network in PyTorch.
 
-If your model has the traditional structure of stacked layers, then the most concise way to declare the model is to use `nn.Sequential`:
-```
+If your model has the traditional structure of stacked layers, then the most concise way to declare the model is to use <code>nn.Sequential</code>:
+<pre>
 model = nn.Sequential(
   layer1,
   layer2,
   ...
   layerN)
-```
+</pre>
 You can use any type of layers here. In our case, you'll typically start with a <code>nn.Embedding</code> layer, followed by some intermediate layers (e.g. <code>nn.Linear</code> followed by some activation such as <code>nn.ReLU</code>), and then a linear output layer.
 
-A more general solution is to declare your network as a class that inherits from `nn.Module`. You will then have to declare your model components in `__init__` and define the forward computation in `forward`:
-```
+A more general solution is to declare your network as a class that inherits from <code>nn.Module</code>. You will then have to declare your model components in <code>__init__</code> and define the forward computation in `forward`:
+<pre>
 class MyNetwork(nn.Module):
   def __init__(self, hyperparameters):
     super().__init__()
@@ -110,14 +110,14 @@ class MyNetwork(nn.Module):
     step2 = self.layer2(step1)
     ...
     return something
-``` 
+</pre>
 
 The second coding style, while more verbose, has the advantage that it is easier to debug: for instance, it is easy to check the shapes of intermediate computations. It is also more flexible and allows you to go beyond the constraints of a traditional layered setup.</div>
 </details>
 
 <details>
 <summary><b>Hint</b>: It can be useful to put a <a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> after the embedding layer.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black;"><a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of <em>B</em> inputs, each of which is a context window of size <em>N</em>, so our input tensor has the shape (<em>B</em>, <em>N</em>). The output from the embedding layer will have the shape (<em>B</em>, <em>N</em>, <em>D</em>) where <em>D</em> is the embedding dimensionality. If you use a <code>nn.Flatten</code>, we go back to a two-dimensional tensor of shape (<em>B</em>, <em>N</em>*<em>D</em>). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.</div>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;"><a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of <em>B</em> inputs, each of which is a context window of size <em>N</em>, so our input tensor has the shape (<em>B</em>, <em>N</em>). The output from the embedding layer will have the shape (<em>B</em>, <em>N</em>, <em>D</em>) where <em>D</em> is the embedding dimensionality. If you use a <code>nn.Flatten</code>, we go back to a two-dimensional tensor of shape (<em>B</em>, <em>N</em>*<em>D</em>). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.</div>
 </details>
 
 **Sanity check**: carry out the following steps:
