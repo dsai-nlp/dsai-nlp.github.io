@@ -156,6 +156,26 @@ The second coding style, while more verbose, has the advantage that it is easier
 
 ### Training the model
 
+<details>
+<summary><b>Hint</b>: A typical PyTorch training loop.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+
+<pre>
+select a loss function
+select an optimizer
+for each training epoch:
+    for each batch B in the training set:
+    	FORWARD PASS:
+	apply the model to B and compute the loss
+
+	BACKWARD PASS:
+	optimizer.zero_grad()
+	loss.backward()
+	optimizer.step()	
+</pre>
+</div>
+</details>
+
 **Hint**: while developing the code, work with very small datasets until you know it doesn't crash. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error.
 
 ## Step 4: Evaluation and analysis
