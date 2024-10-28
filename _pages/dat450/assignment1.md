@@ -116,8 +116,8 @@ The second coding style, while more verbose, has the advantage that it is easier
 </details>
 
 <details>
-<summary><b>Hint</b>: <a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> can be useful after the embedding layer.</summary>
-A <a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> layer is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of <em>B</em> inputs, each of which is a context window of size <em>N</em>, so our input tensor has the shape (<em>B</em>, <em>N</em>). The output from the embedding layer will have the shape (<em>B</em>, <em>N</em>, <em>D</em>) where <em>D</em> is the embedding dimensionality. If you use a <code>nn.Flatten</code>, we go back to a two-dimensional tensor of shape (<em>B</em>, <em>N</em>*<em>D</em>). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.
+<summary><b>Hint</b>: It can be useful to put a <a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> after the embedding layer.</summary>
+<a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of <em>B</em> inputs, each of which is a context window of size <em>N</em>, so our input tensor has the shape (<em>B</em>, <em>N</em>). The output from the embedding layer will have the shape (<em>B</em>, <em>N</em>, <em>D</em>) where <em>D</em> is the embedding dimensionality. If you use a <code>nn.Flatten</code>, we go back to a two-dimensional tensor of shape (<em>B</em>, <em>N</em>*<em>D</em>). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.
 </details>
 
 **Sanity check**: carry out the following steps:
