@@ -75,10 +75,13 @@ Store all these sequences in lists.
 
 ### Creating training batches
 
+When using neural networks, we typically process several instances at the time when training the model and when running the trained model.
+Make sure that you have a way to put your training instances in batches of a fixed size. It is enough to go through the training instances with a `for` loop, but most solutions would probably use a `DataLoader` here.
+
 <details>
-<summary><b>Hint</b>: Some hints <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a>.</summary>
+<summary><b>Hint</b>: More information about <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a>.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-PyTorch provides a utility called <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a> that help us to create batches. It can work on a variety of underlying data structures, but in this assignment, we'll just use the list you prepared previously.
+PyTorch provides a utility called <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a> to help us create batches. It can work on a variety of underlying data structures, but in this assignment, we'll just apply it to the list you prepared previously.
 
 <pre>
 dl = DataLoader(your_list, batch_size=..., shuffle=..., collate_fn=torch.as_tensor)
