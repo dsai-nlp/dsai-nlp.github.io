@@ -73,6 +73,32 @@ Store all these sequences in lists.
 
 ## Step 3: Developing a language model
 
+### Creating training batches
+
+<details>
+<summary><b>Hint</b>: Some hints <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a>.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+PyTorch provides a utility called <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a> that help us to create batches. It can work on a variety of underlying data structures, but in this assignment, we'll just use the list you prepared previously.
+
+<pre>
+dl = DataLoader(your_list, batch_size=..., shuffle=..., collate_fn=torch.as_tensor)
+</pre>
+
+The arguments here are as follows:
+<ul>
+<li><code>batch_size</code>: the number of instances in each batch.
+<li><code>shuffle</code>: whether or not we rearrange the instances randomly. It is common to shuffle instances while training.
+<li><code>collate_fn</code>: a function that defines how each batch is created. In our case, we just want to put each batch in a tensor.
+</ul>
+
+When you have created a <code>DataLoader</code>, you can iterate through the dataset batch by batch:
+<pre>
+for batch in dl:
+   ... do something with each batch ...
+</pre>
+</div>
+</details>
+
 ### Setting up the neural network structure
 
 Set up a neural network inspired by the neural language model proposed by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf). The main components are:
@@ -126,8 +152,6 @@ The second coding style, while more verbose, has the advantage that it is easier
 - Make sure that the shape of the returned output tensor is 1x*V* where *V* is the size of the vocabulary. This output corresponds to the logits of the next-token probability distribution, but it is useless at this point because we haven't yet trained the model.
 
 ### Training the model
-
-TODO data loader hint.
 
 **Hint**: while developing the code, work with very small datasets until you know it doesn't crash. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error.
 
