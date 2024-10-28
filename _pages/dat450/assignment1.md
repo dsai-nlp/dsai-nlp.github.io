@@ -102,6 +102,8 @@ for batch in dl:
 </div>
 </details>
 
+**Sanity check**: Make sure that your batches are PyTorch tensors of shape (*B*, *N*) where *B* is the batch size and *N* the number of context tokens. (Depending on your batch size, the last batch in the training set might be smaller than *B*.)
+
 ### Setting up the neural network structure
 
 Set up a neural network inspired by the neural language model proposed by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf). The main components are:
