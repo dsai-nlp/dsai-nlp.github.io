@@ -76,7 +76,7 @@ Store all these sequences in lists.
 ### Creating training batches
 
 When using neural networks, we typically process several instances at the time when training the model and when running the trained model.
-Make sure that you have a way to put your training instances in batches of a fixed size. It is enough to go through the training instances with a `for` loop, but most solutions would probably use a `DataLoader` here.
+Make sure that you have a way to put your training instances in batches of a fixed size. It is enough to go through the training instances with a `for` loop, taking steps of length `batch_size`,  but most solutions would probably use a `DataLoader` here.
 
 <details>
 <summary><b>Hint</b>: More information about <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a>.</summary>
