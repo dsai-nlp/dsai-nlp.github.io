@@ -22,7 +22,7 @@ You will need a *tokenizer* that splits English text into separate words (tokens
 <details>
 <summary><b>Hint</b>: how to use NLTK's English tokenizer</summary>
 
-<div style="border-radius: 20px; background: #ccffff; border: 2px solid black;">Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black;">Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
 
 For instance, <code>word_tokenize("Let's test!!")</code> should give the result <code>["Let", "'s", "test", "!", "!"]</code>
 </div>
@@ -83,7 +83,7 @@ Set up a neural network inspired by the neural language model proposed by [Bengi
 You are free to experiment with the design of the intermediate layers and you don't have to follow the exact structure used in the paper.
 
 <details>
-<summary> <b>Side note</b>: Setting up a neural network in PyTorch (click to expand)</summary>
+<summary> <b>Hint</b>: Setting up a neural network in PyTorch</summary>
 There are a few different ways that we can write code to set up a neural network in PyTorch.
 
 If your model has the traditional structure of stacked layers, then the most concise way to declare the model is to use `nn.Sequential`:
@@ -116,7 +116,10 @@ class MyNetwork(nn.Module):
 The second coding style, while more verbose, has the advantage that it is easier to debug: for instance, it is easy to check the shapes of intermediate computations. It is also more flexible and allows you to go beyond the constraints of a traditional layered setup.
 </details>
 
-**Hint**: a ``nn.Flatten`` layer is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of *B* inputs, each of which is a context window of size *N*, so our input tensor has the shape (*B*, *N*). The output from the embedding layer will have the shape (*B*, *N*, *D*) where *D* is the embedding dimensionality. If you use a ``nn.Flatten``, we go back to a two-dimensional tensor of shape (*B*, *N* * *D*). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.
+<details>
+<summary><b>Hint</b>: how to use <code>nn.Flatten</code></summary>
+A <code>nn.Flatten</code> layer is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of <em>B</em> inputs, each of which is a context window of size <em>N</em>, so our input tensor has the shape (<em>B</em>, <em>N</em>). The output from the embedding layer will have the shape (<em>B</em>, <em>N</em>, *D*) where *D* is the embedding dimensionality. If you use a ``nn.Flatten``, we go back to a two-dimensional tensor of shape (*B*, *N* * *D*). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.
+</details>
 
 **Sanity check**: carry out the following steps:
 - Create an integer tensor of shape 1x*N* where *N* is the size of the context window. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
