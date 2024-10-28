@@ -117,7 +117,7 @@ The second coding style, while more verbose, has the advantage that it is easier
 </details>
 
 <details>
-<summary>**Hint**: how to use ``nn.Flatten``</a>
+<summary>**Hint**: how to use ``nn.Flatten``</summary>
 **Hint**: a ``nn.Flatten`` layer is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of *B* inputs, each of which is a context window of size *N*, so our input tensor has the shape (*B*, *N*). The output from the embedding layer will have the shape (*B*, *N*, *D*) where *D* is the embedding dimensionality. If you use a ``nn.Flatten``, we go back to a two-dimensional tensor of shape (*B*, *N* * *D*). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.
 </details>
 
