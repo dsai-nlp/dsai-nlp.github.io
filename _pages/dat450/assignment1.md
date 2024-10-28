@@ -21,9 +21,11 @@ You will need a *tokenizer* that splits English text into separate words (tokens
 
 <details>
 <summary><b>Hint</b>: how to use NLTK's English tokenizer</summary>
-Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
+
+<div style="border-radius: 20px; background: #ccffff;">Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
 
 For instance, <code>word_tokenize("Let's test!!")</code> should give the result <code>["Let", "'s", "test", "!", "!"]</code>
+</div>
 </details>
 
 Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
@@ -122,6 +124,8 @@ The second coding style, while more verbose, has the advantage that it is easier
 - Make sure that the shape of the returned output tensor is 1x*V* where *V* is the size of the vocabulary. This output corresponds to the logits of the next-token probability distribution, but it is useless at this point because we haven't yet trained the model.
 
 ### Training the model
+
+TODO data loader hint.
 
 **Hint**: while developing the code, work with very small datasets until you know it doesn't crash. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error.
 
