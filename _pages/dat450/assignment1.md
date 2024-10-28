@@ -168,7 +168,7 @@ for each training epoch:
     	FORWARD PASS:
 	apply the model to B and compute the loss
 
-	BACKWARD PASS:
+	BACKWARD PASS (updating the model parameters):
 	optimizer.zero_grad()
 	loss.backward()
 	optimizer.step()	
