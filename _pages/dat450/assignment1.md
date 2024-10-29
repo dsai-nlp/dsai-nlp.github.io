@@ -166,6 +166,8 @@ Before training, we need two final pieces:
 
 Now, we are ready to train the neural network on the training set. Using the loss, the optimizer, and the training batches, write a *training loop* that iterates through the batches and updates the model incrementally to minimize the loss.
 
+If you followed our previous implementation advice, your training batches will be integer tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* is the number of previous tokens in a context window. The "rightmost" column corresponds to the tokens we are predicting.
+
 <details>
 <summary><b>Hint</b>: A typical PyTorch training loop.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
@@ -173,7 +175,10 @@ Now, we are ready to train the neural network on the training set. Using the los
 for each training epoch:
     for each batch B in the training set:
         FORWARD PASS:
-        apply the model to B and compute the loss
+	X = first N columns in B
+	Y = last column in B
+        apply the model to X
+	compute the loss for the model output and Y
         BACKWARD PASS (updating the model parameters):
         optimizer.zero_grad()
         loss.backward()
