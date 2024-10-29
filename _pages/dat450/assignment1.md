@@ -14,18 +14,20 @@ Our goal in this assignment is to implement a neural network-based language mode
 ## Step 0: Preliminaries
 
 If you are working on your own machine, make sure that the following libraries are installed:
-- NLTK or SpaCy, for tokenization
-- PyTorch, for building and training the models
-- Matplotlib, for the visualizations in the last step (optional)
+- [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage), for tokenization
+- [PyTorch](https://pytorch.org/get-started/locally/), for building and training the models
+- Optional: [Matplotlib](https://matplotlib.org/stable/users/getting_started/) and [scikit-learn](https://scikit-learn.org/stable/install.html), for the embedding visualization in the last step
 
-Download and extract the following zip file, which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed.
+If you are using a Colab notebook, these libraries are already installed.
+
+Download and extract [this archive](https://www.cse.chalmers.se/~richajo/diverse/lmdemo.zip), which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed. (We'll actually just use the training and validation sets, and you can ignore the test file.)
 
 ## Step 1: Preprocessing the text
 
 You will need a *tokenizer* that splits English text into separate words (tokens). In this assignment, you will just use an existing tokenizer. Popular NLP libraries such as SpaCy and NLTK come with built-in tokenizers. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
 
 <details>
-<summary><b>Hint</b>: how to use NLTK's English tokenizer</summary>
+<summary><b>Hint</b>: How to use NLTK's English tokenizer.</summary>
 
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
 
@@ -33,7 +35,7 @@ For instance, <code>word_tokenize("Let's test!!")</code> should give the result 
 </div>
 </details>
 
-Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
+Each nonempty line in the text files correspond to one paragraph in Wikipedia. Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
 
 **Sanity check**: after this step, your training set should consist of around 147,000 paragraphs and the validation set around 18,000 paragraphs. (The exact number depends on what tokenizer you selected.)
 
@@ -55,7 +57,14 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">A <code>Counter</code> is like a regular Python dictionary, with some additional functionality for computing frequencies. For instance, you can go through each paragraph and call <a href="https://docs.python.org/3/library/collections.html#collections.Counter.update"><code>update</code></a>. After building the <code>Counter</code> on your dataset, <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items.</div>
 </details>
 
-Also create some tool that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we use the model to predict the next word.
+Also create some tool that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we look at model outputs and word embedding neighbors.
+
+**Example**: you might end up with something like this:
+<pre>
+str_to_int = { 'BEGINNING':0, 'END':1, 'UNKNOWN':2, 'the':3, 'and':4, ... }
+
+int_to_str = { 0:'BEGINNING', 1:'END', 2:'UNKNOWN', 3:'the', 4:'and', ... }
+</pre>
 
 **Sanity check**: after creating the vocabulary, make sure that
 - the size of your vocabulary is not greater than the max vocabulary size you specified,
@@ -65,7 +74,7 @@ Also create some tool that allows you to go back from the integer to the origina
 
 ### Encoding the texts and creating training instances
 
-We will now collect training instances for our language model, where we learn to predict the next token given the previous *N* tokens.
+The model we are going to train will predict the next token given the previous *N* tokens. We will now create the examples we will use for training and evaluation by extracting word sequences from the provided texts.
 
 Go through the training and validation data and extract all sequences of *N*+1 tokens and map them to the corresponding integer values. Remember to use the special symbols when necessary:
 - the "unseen" symbol for tokens not in your vocabulary,
@@ -73,6 +82,8 @@ Go through the training and validation data and extract all sequences of *N*+1 t
 - an "end" symbol after each paragraph.
 
 Store all these sequences in lists.
+
+**Example**: If our training text consists of the three tokens *Wonderful news !*, and we use a context window size of 1, we would extract the training instances `[['BEGINNING', 'wonderful'], ['wonderful', 'news'], ['news', '!'], ['!', 'END']]`. After integer encoding, we might have something like `[[0, 2], [2, 3], [3, 4], [4, 1]]`, depending on how our encoding works.
 
 **Sanity check**: after these steps, you should have around 12 million training instances and 1.5 million validation instances.
 
@@ -201,14 +212,85 @@ While developing the code, work with very small datasets until you know it doesn
 ### Predicting the next word
 
 Take some example context window and use the model to predict the next word.
-
+- Apply the model to the integer-encoded context window. As usual, this gives you (the logits of) a probability distribution over your vocabulary.
+- Use <a href="https://pytorch.org/docs/stable/generated/torch.argmax.html"><code>argmax</code></a> to find the index of the highest-scoring item, or <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> to find the indices and scores of the *k* highest-scoring items.
+- Apply the inverse vocabulary encoder (that you created in Step 2) so that you can understand what words the model thinks are the most likely in this context.
 
 ### Quantitative evaluation
 
-Compute the [perplexity](https://huggingface.co/docs/transformers/perplexity) of your model on the validation set.
+The most common way to evaluate language models quantitatively is the [perplexity](https://huggingface.co/docs/transformers/perplexity) score on a test dataset. The better the model is at predicting the actually occurring words, the lower the perplexity. This quantity is formally defined as follows:
 
-**Hint**: the perplexity is `exp` applied to the mean of the negative log probability of each token. The cross-entropy loss can be practical here, since it computes the mean negative log probability.
+$$\text{perplexity} = 2^{-\frac{1}{m}\sum_{i=1}^m \log_2 P(w_i | c_i)}$$
+
+In this formula, $m$ is the number of words in the dataset, $P$ is the probability assigned by our model, $w_i$ and $c_i$ the word and context window at each position.
+
+Compute the perplexity of your model on the validation set. The exact value will depend on various implementation choices you have made, how much of the training data you have been able to use, etc. Roughly speaking, if you get perplexity scores around 700 or more, there are probably problems. Carefully implemented and well-trained models will probably have perplexity scores in the range of 200&ndash;300.
+
+<details>
+<summary><b>Hint</b>: An easy way to compute the perplexity in PyTorch.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+As you can see in the formula, the perplexity is an exponential function applied to the mean of the negative log probability of each token.
+You are probably already computing the <em>cross-entropy loss</em> as part of your training loop, and this actually computes what you need here.
+
+The perplexity is traditionally defined in terms of logarithms of base 2. However, we will get the same result regardless of what logarithmic base we use. So it is OK to use the natural logarithms and exponential functions, as long as we are consistent: this means that we can compute the perplexity by applying <code>exp</code> to the mean of the cross-entropy loss over your batches in the validation set.
+</div>
+</details>
 
 ### Inspecting the word embeddings
 
-Testing.
+It is common to say that neural networks are "black boxes" and that we cannot fully understand their internal mechanics, especially as they grow larger and structurally more complex. The research area of model interpretability aims to develop methods to help us reason about the high-level functions the models implement.
+
+In this assignment, we will briefly investigate the [embeddings](https://en.wikipedia.org/wiki/Word_embedding) that your model learned while you trained it.
+If we have successfully trained a word embedding model, an embedding vector stores a crude representation of "word meaning", so we can reason about the learned meaning representations by investigating the geometry of the vector space of word embeddings.
+The most common way to do this is to look at nearest neighbors in the vector space: intuitively, if we look at some example word, its neighbors should correspond to words that have a similar meaning.
+
+Select some example words (e.g. `"sweden"`) and look at their nearest neighbors in the vector space of word embeddings. Does it seem that the nearest neighbors make sense?
+
+<details>
+<summary><b>Hint</b>: Example code for computing nearest neighbors.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+The following code shows how to compute the nearest neighbors in the embedding space of a given word. Depending on your implementation, you may need to change some details. Here, <code>emb</code> is the <code>nn.Embedding</code> module of your language model, while <code>voc</code> and <code>inv_voc</code> are the string-to-integer and integer-to-string mappings you created in Step 2.
+<pre>
+def nearest_neighbors(emb, voc, inv_voc, word, n_neighbors=5):
+
+    # Look up the embedding for the test word.
+    test_emb = emb.weight[voc[word]]
+    
+    # We'll use a cosine similarity function to find the most similar words.
+    sim_func = nn.CosineSimilarity(dim=1)
+    cosine_scores = sim_func(test_emb, emb.weight)
+    
+    # Find the positions of the highest cosine values.
+    near_nbr = cosine_scores.topk(n_neighbors+1)
+    topk_cos = near_nbr.values[1:]
+    topk_indices = near_nbr.indices[1:]
+    # NB: the first word in the top-k list is the query word itself!
+    # That's why we skip the first position in the code above.
+    
+    # Finally, map word indices back to strings, and put the result in a list.
+    return [ (inv_voc[ix.item()], cos.item()) for ix, cos in zip(topk_indices, topk_cos) ]
+</pre>
+</div>
+</details>
+
+Optionally, you may visualize some word embeddings in a two-dimensional plot.
+<details>
+<summary><b>Hint</b>: Example code for PCA-based embedding scatterplot.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<pre>
+from sklearn.decomposition import TruncatedSVD
+import matplotlib.pyplot as plt
+def plot_embeddings_pca(emb, inv_voc, words):
+    vectors = np.vstack([emb.weight[inv_voc[w]].cpu().detach().numpy() for w in words])
+    vectors -= vectors.mean(axis=0)
+    twodim = TruncatedSVD(n_components=2).fit_transform(vectors)
+    plt.figure(figsize=(5,5))
+    plt.scatter(twodim[:,0], twodim[:,1], edgecolors='k', c='r')
+    for word, (x,y) in zip(words, twodim):
+        plt.text(x+0.02, y, word)
+    plt.axis('off')
+
+plot_embeddings_pca(model[0], prepr, ['sweden', 'denmark', 'europe', 'africa', 'london', 'stockholm', 'large', 'small', 'great', 'black', '3', '7', '10', 'seven', 'three', 'ten', '1984', '2005', '2010'])
+</pre>
+</div>
+</details>
