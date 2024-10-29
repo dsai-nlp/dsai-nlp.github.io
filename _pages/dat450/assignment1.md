@@ -186,7 +186,7 @@ for each training epoch:
 <details>
 <summary><b>Hint</b>: Some advice on development.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-While developing the code, work with very small datasets until you know it doesn't crash. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error. For instance, if the learning rate is set to a value that is too large, 
+While developing the code, work with very small datasets until you know it doesn't crash, and then use the full training set. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error. For instance, if the learning rate is set to a value that is too large, the loss values may be unstable or increase.
 </div>
 </details>
 
