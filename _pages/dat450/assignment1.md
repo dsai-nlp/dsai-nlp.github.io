@@ -213,7 +213,7 @@ $$\text{perplexity} = 2^{-\frac{1}{m}\sum_{i=1}^m \log_2 P(w_i | c_i)}$$
 
 In this formula, $m$ is the number of words in the dataset, $P$ is the probability assigned by our model, $w_i$ and $c_i$ the word and context window at each position.
 
-Compute the perplexity of your model on the validation set.
+Compute the perplexity of your model on the validation set. The exact value will depend on various implementation choices you have made, how much of the training data you have been able to use, etc. Roughly speaking, if you get perplexity scores around 700 or more, there are probably problems. Carefully implemented and well-trained models will probably have perplexity scores in the range 200&ndash;300.
 
 <details>
 <summary><b>Hint</b>: An easy way to compute the perplexity in PyTorch.</summary>
