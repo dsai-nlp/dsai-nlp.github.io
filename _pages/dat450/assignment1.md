@@ -93,9 +93,9 @@ dl = DataLoader(your_list, batch_size=..., shuffle=..., collate_fn=torch.as_tens
 </pre>
 The arguments here are as follows:
 <ul>
-<li><code>batch_size</code>: the number of instances in each batch.
-<li><code>shuffle</code>: whether or not we rearrange the instances randomly. It is common to shuffle instances while training.
-<li><code>collate_fn</code>: a function that defines how each batch is created. In our case, we just want to put each batch in a tensor.
+<li><code>batch_size</code>: the number of instances in each batch.</li>
+<li><code>shuffle</code>: whether or not we rearrange the instances randomly. It is common to shuffle instances while training.</li>
+<li><code>collate_fn</code>: a function that defines how each batch is created. In our case, we just want to put each batch in a tensor.</li>
 </ul>
 When you have created a <code>DataLoader</code>, you can iterate through the dataset batch by batch:
 <pre>for batch in dl:
@@ -189,7 +189,6 @@ for each training epoch:
 </div>
 </details>
 
-
 <details>
 <summary><b>Hint</b>: Some advice on development.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
@@ -202,6 +201,7 @@ While developing the code, work with very small datasets until you know it doesn
 ### Predicting the next word
 
 Take some example context window and use the model to predict the next word.
+
 
 ### Quantitative evaluation
 
