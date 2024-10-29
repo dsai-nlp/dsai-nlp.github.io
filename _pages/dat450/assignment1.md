@@ -115,7 +115,7 @@ Set up a neural network inspired by the neural language model proposed by [Bengi
 You are free to experiment with the design of the intermediate layers and you don't have to follow the exact structure used in the paper.
 
 <details>
-<summary><b>Hint</b>: Setting up a neural network in PyTorch</summary>
+<summary><b>Hint</b>: Setting up a neural network in PyTorch.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">There are a few different ways that we can write code to set up a neural network in PyTorch.
 
 If your model has the traditional structure of stacked layers, then the most concise way to declare the model is to use <code>nn.Sequential</code>:
@@ -149,7 +149,7 @@ The second coding style, while more verbose, has the advantage that it is easier
 
 <details>
 <summary><b>Hint</b>: It can be useful to put a <a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> after the embedding layer.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;"><a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of <em>B</em> inputs, each of which is a context window of size <em>N</em>, so our input tensor has the shape (<em>B</em>, <em>N</em>). The output from the embedding layer will have the shape (<em>B</em>, <em>N</em>, <em>D</em>) where <em>D</em> is the embedding dimensionality. If you use a <code>nn.Flatten</code>, we go back to a two-dimensional tensor of shape (<em>B</em>, <em>N</em>*<em>D</em>). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.</div>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;"><a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of <em>B</em> inputs, each of which is a context window of size <em>N</em>, so our input tensor has the shape (<em>B</em>, <em>N</em>). The output from the embedding layer will then have the shape (<em>B</em>, <em>N</em>, <em>D</em>) where <em>D</em> is the embedding dimensionality. If you use a <code>nn.Flatten</code>, we go back to a two-dimensional tensor of shape (<em>B</em>, <em>N</em>*<em>D</em>). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.</div>
 </details>
 
 **Sanity check**: carry out the following steps:
@@ -159,13 +159,15 @@ The second coding style, while more verbose, has the advantage that it is easier
 
 ### Training the model
 
+Now, we are ready to train the neural network on the training set.
+
+- A *loss* that we want to minimize. In our case, this is going to be the cross-entropy loss, implemented in PyTorch as <a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>nn.CrossEntropyLoss</a>.
+- An *optimizer* that updates model parameters, based on the gradients with respect to the model parameters. The optimizer typically implements some variant of [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). A common choice recently is <a href="https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html"><code>AdamW</code></a>.
+
 <details>
 <summary><b>Hint</b>: A typical PyTorch training loop.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-
 <pre>
-select a loss function
-select an optimizer
 for each training epoch:
     for each batch B in the training set:
     	FORWARD PASS:
