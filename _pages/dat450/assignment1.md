@@ -168,16 +168,17 @@ Now, we are ready to train the neural network on the training set. Using the los
 
 <details>
 <summary><b>Hint</b>: A typical PyTorch training loop.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;"><pre>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<pre>
 for each training epoch:
     for each batch B in the training set:
-    	FORWARD PASS:
-	apply the model to B and compute the loss
+        FORWARD PASS:
+        apply the model to B and compute the loss
 
-	BACKWARD PASS (updating the model parameters):
-	optimizer.zero_grad()
-	loss.backward()
-	optimizer.step()	
+        BACKWARD PASS (updating the model parameters):
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()	
 </pre>
 </div>
 </details>
