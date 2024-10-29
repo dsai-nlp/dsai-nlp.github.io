@@ -168,8 +168,7 @@ Now, we are ready to train the neural network on the training set. Using the los
 
 <details>
 <summary><b>Hint</b>: A typical PyTorch training loop.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-<pre>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;"><pre>
 for each training epoch:
     for each batch B in the training set:
     	FORWARD PASS:
@@ -183,7 +182,13 @@ for each training epoch:
 </div>
 </details>
 
-**Hint**: while developing the code, work with very small datasets until you know it doesn't crash. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error.
+<details>
+<summary><b>Hint</b>: Some advice on development.</summary>
+</details>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+While developing the code, work with very small datasets until you know it doesn't crash. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error. For instance, if the learning rate is set to a value that is too large, 
+</div>
+</details>
 
 ## Step 4: Evaluation and analysis
 
