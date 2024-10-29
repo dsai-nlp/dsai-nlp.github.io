@@ -174,7 +174,6 @@ for each training epoch:
     for each batch B in the training set:
         FORWARD PASS:
         apply the model to B and compute the loss
-
         BACKWARD PASS (updating the model parameters):
         optimizer.zero_grad()
         loss.backward()
@@ -182,6 +181,7 @@ for each training epoch:
 </pre>
 </div>
 </details>
+
 
 <details>
 <summary><b>Hint</b>: Some advice on development.</summary>
