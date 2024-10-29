@@ -25,7 +25,7 @@ Download and extract the following zip file, which contains three text files. Th
 You will need a *tokenizer* that splits English text into separate words (tokens). In this assignment, you will just use an existing tokenizer. Popular NLP libraries such as SpaCy and NLTK come with built-in tokenizers. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
 
 <details>
-<summary><b>Hint</b>: how to use NLTK's English tokenizer</summary>
+<summary><b>Hint</b>: How to use NLTK's English tokenizer.</summary>
 
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
 
@@ -203,7 +203,7 @@ While developing the code, work with very small datasets until you know it doesn
 Take some example context window and use the model to predict the next word.
 - Apply the model to the integer-encoded context window. As usual, this gives you (the logits of) a probability distribution over your vocabulary.
 - Use <a href="https://pytorch.org/docs/stable/generated/torch.argmax.html"><code>argmax</code></a> to find the index of the highest-scoring item, or <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> to find the indices and scores of the *k* highest-scoring items.
-- Apply the inverse vocabulary encoder so that you can understand what words the model thinks are the most likely in this context.
+- Apply the inverse vocabulary encoder (that you created in Step 2) so that you can understand what words the model thinks are the most likely in this context.
 
 ### Quantitative evaluation
 
@@ -218,4 +218,26 @@ The perplexity is <code>exp</code> applied to the mean of the negative log proba
 
 ### Inspecting the word embeddings
 
-Testing.
+Optionally, you may visualize some word embeddings in a two-dimensional plot.
+<details>
+<summary><b>Hint</b>: Example code for PCA-based embedding scatterplot.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<pre>
+from sklearn.decomposition import TruncatedSVD
+
+def plot_embeddings_pca(emb, inv_voc, words):
+    vectors = np.vstack([emb.weight[inv_voc[w]].cpu().detach().numpy() for w in words])
+    vectors -= vectors.mean(axis=0)
+        
+    twodim = TruncatedSVD(n_components=2).fit_transform(vectors)
+    
+    plt.figure(figsize=(5,5))
+    plt.scatter(twodim[:,0], twodim[:,1], edgecolors='k', c='r')
+    for word, (x,y) in zip(words, twodim):
+        plt.text(x+0.02, y, word)
+    plt.axis('off')
+
+plot_embeddings_pca(model[0], prepr, ['sweden', 'denmark', 'europe', 'africa', 'london', 'stockholm', 'large', 'small', 'great', 'black', '3', '7', '10', 'seven', 'three', 'ten', '1984', '2005', '2010'])
+</pre>
+</div>
+</details>
