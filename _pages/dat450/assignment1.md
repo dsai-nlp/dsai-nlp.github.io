@@ -74,6 +74,7 @@ Go through the training and validation data and extract all sequences of *N*+1 t
 
 Store all these sequences in lists.
 
+**Example**: If our text consists of the three tokens *Wonderful news !*, and we use a context window size of 1, we would extract the sequences `[['BEGINNING', 'wonderful'], ['wonderful', 'news'], ['news', '!'], ['!', 'END']]`. After integer encoding, we might have something like `[[0, 2], [2, 3], [3, 4], [4, 1]]`, depending on how our encoding works.
 **Sanity check**: after these steps, you should have around 12 million training instances and 1.5 million validation instances.
 
 ## Step 3: Developing a language model
