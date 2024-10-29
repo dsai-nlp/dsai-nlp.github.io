@@ -20,7 +20,7 @@ If you are working on your own machine, make sure that the following libraries a
 
 If you are using a Colab notebook, these libraries are already installed.
 
-Download and extract the following zip file, which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed. (We'll actually just use the training and validation sets, and you can ignore the test file.)
+Download and extract [this archive](https://www.cse.chalmers.se/~richajo/diverse/lmdemo.zip), which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed. (We'll actually just use the training and validation sets, and you can ignore the test file.)
 
 ## Step 1: Preprocessing the text
 
