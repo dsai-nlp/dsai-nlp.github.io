@@ -207,9 +207,11 @@ Take some example context window and use the model to predict the next word.
 
 ### Quantitative evaluation
 
-The most common way to evaluate language models quantitatively is the [perplexity](https://huggingface.co/docs/transformers/perplexity) score on a test dataset. The better the model is at predicting the actually occurring words, the lower the perplexity.
+The most common way to evaluate language models quantitatively is the [perplexity](https://huggingface.co/docs/transformers/perplexity) score on a test dataset. The better the model is at predicting the actually occurring words, the lower the perplexity. This quantity is formally defined as follows:
 
-$$\text{perplexity} = 2^{-\frac{1}{N}\sum_{i=1}^N \log_2 P(w_i | c_i)}$$
+$$\text{perplexity} = 2^{-\frac{1}{m}\sum_{i=1}^m \log_2 P(w_i | c_i)}$$
+
+In this formula, $m$ is the number of words in the dataset, $P$ is the probability assigned by our model, $w_i$ and $c_i$ the word and context window at each position.
 
 Compute the perplexity of your model on the validation set.
 
