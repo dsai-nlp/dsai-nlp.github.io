@@ -159,10 +159,12 @@ The second coding style, while more verbose, has the advantage that it is easier
 
 ### Training the model
 
-Now, we are ready to train the neural network on the training set.
+Before training, we need two final pieces:
 
 - A *loss* that we want to minimize. In our case, this is going to be the cross-entropy loss, implemented in PyTorch as <a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>nn.CrossEntropyLoss</code></a>. Minimizing this loss corresponds to minimizing the negative log probability of the observed tokens.
 - An *optimizer* that updates model parameters, based on the gradients with respect to the model parameters. The optimizer typically implements some variant of [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). An example of a popular optimizer is <a href="https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html"><code>AdamW</code></a>.
+
+Now, we are ready to train the neural network on the training set. Using the loss, the optimizer, and the training batches, write a *training loop* that iterates through the batches and updates the model incrementally to minimize the loss.
 
 <details>
 <summary><b>Hint</b>: A typical PyTorch training loop.</summary>
