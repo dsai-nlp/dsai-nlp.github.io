@@ -224,7 +224,6 @@ Optionally, you may visualize some word embeddings in a two-dimensional plot.
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 <pre>
 from sklearn.decomposition import TruncatedSVD
-
 def plot_embeddings_pca(emb, inv_voc, words):
     vectors = np.vstack([emb.weight[inv_voc[w]].cpu().detach().numpy() for w in words])
     vectors -= vectors.mean(axis=0)
