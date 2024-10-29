@@ -55,7 +55,14 @@ The total size of the vocabulary (including the 3 symbols) should be at most `ma
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">A <code>Counter</code> is like a regular Python dictionary, with some additional functionality for computing frequencies. For instance, you can go through each paragraph and call <a href="https://docs.python.org/3/library/collections.html#collections.Counter.update"><code>update</code></a>. After building the <code>Counter</code> on your dataset, <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items.</div>
 </details>
 
-Also create some tool that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we use the model to predict the next word.
+Also create some tool that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we look at model outputs and word embedding neighbors.
+
+**Example**: you might end up with something like this:
+<pre>
+str_to_int = { 'BEGINNING':0, 'END':1, 'UNKNOWN':2, 'the':3, 'and':4, ... }
+
+int_to_str = { 0:'BEGINNING', 1:'END', 2:'UNKNOWN', 3:'the', 4:'and', ... }
+</pre>
 
 **Sanity check**: after creating the vocabulary, make sure that
 - the size of your vocabulary is not greater than the max vocabulary size you specified,
@@ -74,7 +81,8 @@ Go through the training and validation data and extract all sequences of *N*+1 t
 
 Store all these sequences in lists.
 
-**Example**: If our text consists of the three tokens *Wonderful news !*, and we use a context window size of 1, we would extract the sequences `[['BEGINNING', 'wonderful'], ['wonderful', 'news'], ['news', '!'], ['!', 'END']]`. After integer encoding, we might have something like `[[0, 2], [2, 3], [3, 4], [4, 1]]`, depending on how our encoding works.
+**Example**: If our training text consists of the three tokens *Wonderful news !*, and we use a context window size of 1, we would extract the training instances `[['BEGINNING', 'wonderful'], ['wonderful', 'news'], ['news', '!'], ['!', 'END']]`. After integer encoding, we might have something like `[[0, 2], [2, 3], [3, 4], [4, 1]]`, depending on how our encoding works.
+
 **Sanity check**: after these steps, you should have around 12 million training instances and 1.5 million validation instances.
 
 ## Step 3: Developing a language model
