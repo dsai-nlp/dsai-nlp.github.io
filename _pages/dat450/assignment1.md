@@ -212,7 +212,7 @@ The most common way to evaluate language models quantitatively is the [perplexit
 <details>
 <summary><b>Hint</b>: An easy way to compute the perplexity.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-The perplexity is `exp` applied to the mean of the negative log probability of each token. The cross-entropy loss can be practical here, since it computes the mean negative log probability.
+The perplexity is <code>exp</code> applied to the mean of the negative log probability of each token. The cross-entropy loss can be practical here, since it computes the mean negative log probability.
 </div>
 </details>
 
