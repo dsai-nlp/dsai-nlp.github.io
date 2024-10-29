@@ -228,9 +228,7 @@ from sklearn.decomposition import TruncatedSVD
 def plot_embeddings_pca(emb, inv_voc, words):
     vectors = np.vstack([emb.weight[inv_voc[w]].cpu().detach().numpy() for w in words])
     vectors -= vectors.mean(axis=0)
-        
     twodim = TruncatedSVD(n_components=2).fit_transform(vectors)
-    
     plt.figure(figsize=(5,5))
     plt.scatter(twodim[:,0], twodim[:,1], edgecolors='k', c='r')
     for word, (x,y) in zip(words, twodim):
