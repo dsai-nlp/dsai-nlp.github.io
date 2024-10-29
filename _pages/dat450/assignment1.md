@@ -231,21 +231,21 @@ Select some example words (e.g. `"sweden"`) and look at their nearest neighbors 
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 The following code shows how to compute the nearest neighbors in the embedding space of a given word. Depending on your implementation, you may need to change some details. Here, <code>emb</code> is the <code>nn.Embedding</code> module of your language model, while <code>voc</code> and <code>inv_voc</code> are the string-to-integer and integer-to-string mappings you created in Step 2.
 <pre>
-def nearest_neighbors(emb, voc, inv_voc, word, n_neighbors=5):
-    # Encode the words as integers, and put them into a PyTorch tensor.    
-    word_index = torch.as_tensor([voc[word]])
-    word_index = word_index.to(emb.weight.device)
+def nearest_neighbors(emb, voc, inv_voc, word, n_neighbors=5):        
     # Look up the embedding for the test word.
-    test_emb = emb(word_index)
+    test_emb = emb.weight[voc[word]]
+    
     # We'll use a cosine similarity function to find the most similar words.
     sim_func = nn.CosineSimilarity(dim=1)
     cosine_scores = sim_func(test_emb, emb.weight)
+    
     # Find the positions of the highest cosine values.
     near_nbr = cosine_scores.topk(n_neighbors+1)
     topk_cos = near_nbr.values[1:]
     topk_indices = near_nbr.indices[1:]
     # NB: the first word in the top-k list is the query word itself!
     # That's why we skip the first position in the code above.
+    
     # Finally, map word indices back to strings, and put the result in a list.
     return [ (inv_voc[ix.item()], cos.item()) for ix, cos in zip(topk_indices, topk_cos) ]
 </pre>
