@@ -221,6 +221,7 @@ The perplexity is <code>exp</code> applied to the mean of the negative log proba
 <details>
 <summary><b>Hint</b>: Example code for computing nearest neighbors.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+The following code shows how to compute the nearest neighbors in the embedding space of a given word. Depending on your implementation, you may need to change some details. Here, <code>emb</code> is the <code>nn.Embedding</code> module of your language model, while <code>voc</code> and <code>inv_voc</code> are the string-to-integer and integer-to-string mappings you created in Step 2.
 <pre>
 def nearest_neighbors(emb, voc, inv_voc, word, n_neighbors=5):
     # Encode the words as integers, and put them into a PyTorch tensor.    
