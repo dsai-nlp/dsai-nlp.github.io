@@ -218,6 +218,13 @@ The perplexity is <code>exp</code> applied to the mean of the negative log proba
 
 ### Inspecting the word embeddings
 
+It is common to say that neural networks are "black boxes" and that we cannot fully understand their internal mechanics, especially as they grow larger and structurally more complex. The research area of model interpretability aims to develop methods to understand how the models function.
+
+In this assignment, we will briefly investigate the [embeddings](https://en.wikipedia.org/wiki/Word_embedding) that your model learned while you trained it.
+Intuitively, a word embedding stores a crude representation of "word meaning". One way to
+
+Select some example words (e.g. `"sweden"`) and look at their nearest neighbors in the vector space of word embeddings. Does it seem that the nearest neighbors make sense?
+
 <details>
 <summary><b>Hint</b>: Example code for computing nearest neighbors.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
