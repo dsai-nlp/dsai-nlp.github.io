@@ -65,7 +65,7 @@ Also create some tool that allows you to go back from the integer to the origina
 
 ### Encoding the texts and creating training instances
 
-We will now collect training instances for our language model, where we learn to predict the next token given the previous *N* tokens.
+The model we are going to train will predict the next token given the previous *N* tokens. We will now create the examples we will use for training and evaluation by extracting word sequences from the provided texts.
 
 Go through the training and validation data and extract all sequences of *N*+1 tokens and map them to the corresponding integer values. Remember to use the special symbols when necessary:
 - the "unseen" symbol for tokens not in your vocabulary,
