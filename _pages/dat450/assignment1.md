@@ -201,7 +201,9 @@ While developing the code, work with very small datasets until you know it doesn
 ### Predicting the next word
 
 Take some example context window and use the model to predict the next word.
-
+- Apply the model to the integer-encoded context window. As usual, this gives you (the logits of) a probability distribution over your vocabulary.
+- Use <a href="https://pytorch.org/docs/stable/generated/torch.argmax.html"><code>argmax</code></a> to find the index of the highest-scoring item, or <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> to find the indices and scores of the *k* highest-scoring items.
+- Apply the inverse vocabulary encoder so that you can understand what words the model thinks are the most likely in this context.
 
 ### Quantitative evaluation
 
