@@ -166,7 +166,7 @@ Before training, we need two final pieces:
 
 Now, we are ready to train the neural network on the training set. Using the loss, the optimizer, and the training batches, write a *training loop* that iterates through the batches and updates the model incrementally to minimize the loss.
 
-If you followed our previous implementation advice, your training batches will be integer tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* is the number of previous tokens in a context window. The "rightmost" column corresponds to the tokens we are predicting.
+If you followed our previous implementation advice, your training batches will be integer tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* is the number of previous tokens in a context window. The rightmost column corresponds to the tokens we are predicting. So while you are training, you will apply the model to the first *N* columns of the batch and compute the loss with respect to the rightmost column.
 
 <details>
 <summary><b>Hint</b>: A typical PyTorch training loop.</summary>
