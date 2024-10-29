@@ -161,7 +161,7 @@ The second coding style, while more verbose, has the advantage that it is easier
 
 Now, we are ready to train the neural network on the training set.
 
-- A *loss* that we want to minimize. In our case, this is going to be the cross-entropy loss, implemented in PyTorch as <a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>nn.CrossEntropyLoss</a>.
+- A *loss* that we want to minimize. In our case, this is going to be the cross-entropy loss, implemented in PyTorch as <a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>nn.CrossEntropyLoss</code></a>.
 - An *optimizer* that updates model parameters, based on the gradients with respect to the model parameters. The optimizer typically implements some variant of [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). A common choice recently is <a href="https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html"><code>AdamW</code></a>.
 
 <details>
