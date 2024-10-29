@@ -88,23 +88,18 @@ Put each batch in a PyTorch tensor (e.g. by calling `torch.as_tensor`).
 <summary><b>Hint</b>: More information about <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a>.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 PyTorch provides a utility called <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a> to help us create batches. It can work on a variety of underlying data structures, but in this assignment, we'll just apply it to the list you prepared previously.
-
 <pre>
 dl = DataLoader(your_list, batch_size=..., shuffle=..., collate_fn=torch.as_tensor)
 </pre>
-
 The arguments here are as follows:
 <ul>
 <li><code>batch_size</code>: the number of instances in each batch.
 <li><code>shuffle</code>: whether or not we rearrange the instances randomly. It is common to shuffle instances while training.
 <li><code>collate_fn</code>: a function that defines how each batch is created. In our case, we just want to put each batch in a tensor.
 </ul>
-
 When you have created a <code>DataLoader</code>, you can iterate through the dataset batch by batch:
-<pre>
-for batch in dl:
-   ... do something with each batch ...
-</pre>
+<pre>for batch in dl:
+   ... do something with each batch ...</pre>
 </div>
 </details>
 
