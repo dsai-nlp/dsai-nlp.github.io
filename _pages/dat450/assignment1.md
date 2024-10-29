@@ -216,10 +216,10 @@ Compute the perplexity of your model on the validation set.
 <details>
 <summary><b>Hint</b>: An easy way to compute the perplexity in PyTorch.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-The perplexity is <code>exp</code> applied to the mean of the negative log probability of each token.
-The cross-entropy loss can be practical here, since it computes the mean negative log probability.
+As you can see in the formula, the perplexity is an exponential function applied to the mean of the negative log probability of each token.
+You are probably already computing the <em>cross-entropy loss</em> as part of your training loop, and this actually computes what you need here.
 
-The perplexity is a concept arising in information theory, and is traditionally defined in terms of logarithms of base 2. However, we will get the same result regardless of what logarithmic base we use. So it is OK to use the natural logarithms and exponential functions, as long as we are consistent: this means that we can compute the perplexity by applying <code>exp</code> to the mean of the cross-entropy loss over your batches in the validation set.
+The perplexity is traditionally defined in terms of logarithms of base 2. However, we will get the same result regardless of what logarithmic base we use. So it is OK to use the natural logarithms and exponential functions, as long as we are consistent: this means that we can compute the perplexity by applying <code>exp</code> to the mean of the cross-entropy loss over your batches in the validation set.
 </div>
 </details>
 
