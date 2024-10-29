@@ -16,7 +16,7 @@ Our goal in this assignment is to implement a neural network-based language mode
 If you are working on your own machine, make sure that the following libraries are installed:
 - NLTK or SpaCy, for tokenization
 - PyTorch, for building and training the models
-- Matplotlib, for the visualizations in the last step (optional)
+- Optional: Matplotlib and scikit-learn, for the embedding visualization in the last step
 
 Download and extract the following zip file, which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed.
 
@@ -218,12 +218,38 @@ The perplexity is <code>exp</code> applied to the mean of the negative log proba
 
 ### Inspecting the word embeddings
 
+<details>
+<summary><b>Hint</b>: Example code for computing nearest neighbors.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<pre>
+def nearest_neighbors(emb, voc, inv_voc, word, n_neighbors=5):
+    # Encode the words as integers, and put them into a PyTorch tensor.    
+    word_index = torch.as_tensor([voc[word]])
+    word_index = word_index.to(emb.weight.device)
+    # Look up the embedding for the test word.
+    test_emb = emb(word_index)
+    # We'll use a cosine similarity function to find the most similar words.
+    sim_func = nn.CosineSimilarity(dim=1)
+    cosine_scores = sim_func(test_emb, emb.weight)
+    # Find the positions of the highest cosine values.
+    near_nbr = cosine_scores.topk(n_neighbors+1)
+    topk_cos = near_nbr.values[1:]
+    topk_indices = near_nbr.indices[1:]
+    # NB: the first word in the top-k list is the query word itself!
+    # That's why we skip the first position in the code above.
+    # Finally, map word indices back to strings, and put the result in a list.
+    return [ (inv_voc[ix.item()], cos.item()) for ix, cos in zip(topk_indices, topk_cos) ]
+</pre>
+</div>
+</details>
+
 Optionally, you may visualize some word embeddings in a two-dimensional plot.
 <details>
 <summary><b>Hint</b>: Example code for PCA-based embedding scatterplot.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 <pre>
 from sklearn.decomposition import TruncatedSVD
+import matplotlib.pyplot as plt
 def plot_embeddings_pca(emb, inv_voc, words):
     vectors = np.vstack([emb.weight[inv_voc[w]].cpu().detach().numpy() for w in words])
     vectors -= vectors.mean(axis=0)
