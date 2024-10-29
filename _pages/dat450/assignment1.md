@@ -13,7 +13,12 @@ Our goal in this assignment is to implement a neural network-based language mode
 
 ## Step 0: Preliminaries
 
-Download the following text files. They consist of Wikipedia articles converted into raw text.
+If you are working on your own machine, make sure that the following libraries are installed:
+- NLTK or SpaCy, for tokenization
+- PyTorch, for building and training the models
+- Matplotlib, for the visualizations in the last step (optional)
+
+Download and extract the following zip file, which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed.
 
 ## Step 1: Preprocessing the text
 
@@ -83,23 +88,18 @@ Put each batch in a PyTorch tensor (e.g. by calling `torch.as_tensor`).
 <summary><b>Hint</b>: More information about <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a>.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 PyTorch provides a utility called <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a> to help us create batches. It can work on a variety of underlying data structures, but in this assignment, we'll just apply it to the list you prepared previously.
-
 <pre>
 dl = DataLoader(your_list, batch_size=..., shuffle=..., collate_fn=torch.as_tensor)
 </pre>
-
 The arguments here are as follows:
 <ul>
 <li><code>batch_size</code>: the number of instances in each batch.
 <li><code>shuffle</code>: whether or not we rearrange the instances randomly. It is common to shuffle instances while training.
 <li><code>collate_fn</code>: a function that defines how each batch is created. In our case, we just want to put each batch in a tensor.
 </ul>
-
 When you have created a <code>DataLoader</code>, you can iterate through the dataset batch by batch:
-<pre>
-for batch in dl:
-   ... do something with each batch ...
-</pre>
+<pre>for batch in dl:
+   ... do something with each batch ...</pre>
 </div>
 </details>
 
@@ -166,7 +166,9 @@ Before training, we need two final pieces:
 
 Now, we are ready to train the neural network on the training set. Using the loss, the optimizer, and the training batches, write a *training loop* that iterates through the batches and updates the model incrementally to minimize the loss.
 
-If you followed our previous implementation advice, your training batches will be integer tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* is the number of previous tokens in a context window. The rightmost column corresponds to the tokens we are predicting. So while you are training, you will apply the model to the first *N* columns of the batch and compute the loss with respect to the rightmost column.
+If you followed our previous implementation advice, your training batches will
+be integer tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* is the context window size; the first *N* columns correspond to the context windows and the last column the tokens we are predicting.
+So while you are training, you will apply the model to the first *N* columns of the batch and compute the loss with respect to the last column.
 
 <details>
 <summary><b>Hint</b>: A typical PyTorch training loop.</summary>
