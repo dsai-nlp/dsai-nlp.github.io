@@ -35,7 +35,7 @@ For instance, <code>word_tokenize("Let's test!!")</code> should give the result 
 </div>
 </details>
 
-Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
+Each nonempty line in the text files correspond to one paragraph in Wikipedia. Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
 
 **Sanity check**: after this step, your training set should consist of around 147,000 paragraphs and the validation set around 18,000 paragraphs. (The exact number depends on what tokenizer you selected.)
 
