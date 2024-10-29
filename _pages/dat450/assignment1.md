@@ -13,7 +13,12 @@ Our goal in this assignment is to implement a neural network-based language mode
 
 ## Step 0: Preliminaries
 
-Download the following text files. They consist of Wikipedia articles converted into raw text.
+If you are working on your own machine, make sure that the following libraries are installed:
+- NLTK or SpaCy, for tokenization
+- PyTorch, for building and training the models
+- Matplotlib, for the visualizations in the last step (optional)
+
+Download and extract the following zip file, which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed.
 
 ## Step 1: Preprocessing the text
 
