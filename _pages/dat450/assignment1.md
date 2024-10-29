@@ -207,7 +207,7 @@ Take some example context window and use the model to predict the next word.
 
 ### Quantitative evaluation
 
-Compute the [perplexity](https://huggingface.co/docs/transformers/perplexity) of your model on the validation set.
+The most common way to evaluate language models quantitatively is the [perplexity](https://huggingface.co/docs/transformers/perplexity) score. Compute the perplexity of your model on the validation set.
 
 <details>
 <summary><b>Hint</b>: An easy way to compute the perplexity.</summary>
