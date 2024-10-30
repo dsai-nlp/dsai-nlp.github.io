@@ -129,7 +129,7 @@ When you have created a <code>DataLoader</code>, you can iterate through the dat
 </div>
 </details>
 
-**Sanity check**: Make sure that your batches are PyTorch tensors of shape (*B*, *N*) where *B* is the batch size and *N* the number of context tokens. (Depending on your batch size, the last batch in the training set might be smaller than *B*.) Each batch should contain integers, not floating-point numbers.
+**Sanity check**: Make sure that your batches are PyTorch tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* the number of context tokens. (Depending on your batch size, the last batch in the training set might be smaller than *B*.) Each batch should contain integers, not floating-point numbers.
 
 ### Setting up the neural network structure
 
