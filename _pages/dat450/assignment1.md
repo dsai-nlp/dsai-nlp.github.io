@@ -21,6 +21,8 @@ In the course, we will cover a variety of technical solutions to this fundamenta
 
 ### Requirements
 
+Please submit your solution in [Canvas](https://chalmers.instructure.com/courses/31739/assignments/98342).
+
 Submit a notebook containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the notebook: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 
 ## Step 0: Preliminaries
