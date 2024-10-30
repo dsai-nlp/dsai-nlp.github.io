@@ -1,28 +1,43 @@
 ---
 layout: page
-title: 'DAT450/DIT247: Programming Assignment 1'
+title: 'DAT450/DIT247: Programming Assignment 1: Introduction to language modeling'
 permalink: /courses/dat450/assignment1/
 description:
 nav: false
 nav_order: 4
 ---
 
-# DAT450/DIT247: Programming Assignment 1
+# DAT450/DIT247: Programming Assignment 1: Introduction to language modeling
 
-Our goal in this assignment is to implement a neural network-based language model similar to the one described by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf).
+*Language modeling* is the foundation that recent advances in NLP technlogies build on. In essence, language modeling means that we learn how to imitate the language that we observe in the wild. More formally, we want to train a system that models the statistical distribution of natural language. Solving this task is exactly what the famous commercial large language models do (with some additional post-hoc tweaking to make the systems more interactive and avoid generating provocative outputs).
+
+In the course, we will cover a variety of technical solutions to this fundamental task (e.g. recurrent models and Transformers). In this first assignment of the course, we are going to build a neural network-based language model using simple techniques that should be familiar to anyone with an experience of neural networks. In essence, our solution is going to be similar to the one described by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf).
+
+### Pedagogical purposes of this assignment
+- Introducing the task of language modeling
+- Getting experience of preprocessing text
+- Understanding the concept of word embeddings
+- Refreshing basic skills in how to set up and train a neural network
+
+### Requirements
+
+Please submit your solution in [Canvas](https://chalmers.instructure.com/courses/31739/assignments/98342).
+
+Submit a notebook containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the notebook: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 
 ## Step 0: Preliminaries
 
 If you are working on your own machine, make sure that the following libraries are installed:
-- [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage), for tokenization
-- [PyTorch](https://pytorch.org/get-started/locally/), for building and training the models
-- Optional: [Matplotlib](https://matplotlib.org/stable/users/getting_started/) and [scikit-learn](https://scikit-learn.org/stable/install.html), for the embedding visualization in the last step
-
+- [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage) for tokenization,
+- [PyTorch](https://pytorch.org/get-started/locally/) for building and training the models,
+- Optional: [Matplotlib](https://matplotlib.org/stable/users/getting_started/) and [scikit-learn](https://scikit-learn.org/stable/install.html) for the embedding visualization in the last step.
 If you are using a Colab notebook, these libraries are already installed.
 
-Download and extract [this archive](https://www.cse.chalmers.se/~richajo/diverse/lmdemo.zip), which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed. (We'll actually just use the training and validation sets, and you can ignore the test file.)
+For the third part of the assignment, you will need to understand some basic concepts of PyTorch such as tensors, models, optimizers, loss functions and how to write the training loop. There are plenty of tutorials available, for instance on the [PyTorch website](https://pytorch.org/tutorials/). From the Applied Machine Learning course, there is also an [example notebook](https://www.cse.chalmers.se/~richajo/dit866/lectures/l7/Implementing%20classifiers%20with%20PyTorch.html) that shows how to train a basic classifier in PyTorch. (But note that if you take code from this notebook, several technical details have to change since our input data and prediction task are different!)
 
 ## Step 1: Preprocessing the text
+
+Download and extract [this archive](https://www.cse.chalmers.se/~richajo/diverse/lmdemo.zip), which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed. (We'll actually just use the training and validation sets, and you can ignore the test file.)
 
 You will need a *tokenizer* that splits English text into separate words (tokens). In this assignment, you will just use an existing tokenizer. Popular NLP libraries such as SpaCy and NLTK come with built-in tokenizers. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
 
@@ -76,6 +91,8 @@ int_to_str = { 0:'BEGINNING', 1:'END', 2:'UNKNOWN', 3:'the', 4:'and', ... }
 
 The model we are going to train will predict the next token given the previous *N* tokens. We will now create the examples we will use for training and evaluation by extracting word sequences from the provided texts.
 
+First, make an educated guess about the size of the context window *N* you are going to use. (You can go back later on and try out other values.) Any value of *N* greater than 0 should work for the purposes of this assignment. Intuitively, small context windows (e.g. *N*=1) makes the model more stupid but a bit more efficient in terms of time and memory.
+
 Go through the training and validation data and extract all sequences of *N*+1 tokens and map them to the corresponding integer values. Remember to use the special symbols when necessary:
 - the "unseen" symbol for tokens not in your vocabulary,
 - *N* "beginning" symbols before each paragraph,
@@ -114,7 +131,7 @@ When you have created a <code>DataLoader</code>, you can iterate through the dat
 </div>
 </details>
 
-**Sanity check**: Make sure that your batches are PyTorch tensors of shape (*B*, *N*) where *B* is the batch size and *N* the number of context tokens. (Depending on your batch size, the last batch in the training set might be smaller than *B*.) Each batch should contain integers, not floating-point numbers.
+**Sanity check**: Make sure that your batches are PyTorch tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* the number of context tokens. (Depending on your batch size, the last batch in the training set might be smaller than *B*.) Each batch should contain integers, not floating-point numbers.
 
 ### Setting up the neural network structure
 
@@ -190,6 +207,7 @@ for each training epoch:
         FORWARD PASS:
 	X = first N columns in B
 	Y = last column in B
+	put X and Y on the GPU
         apply the model to X
 	compute the loss for the model output and Y
         BACKWARD PASS (updating the model parameters):
@@ -222,7 +240,7 @@ The most common way to evaluate language models quantitatively is the [perplexit
 
 $$\text{perplexity} = 2^{-\frac{1}{m}\sum_{i=1}^m \log_2 P(w_i | c_i)}$$
 
-In this formula, $m$ is the number of words in the dataset, $P$ is the probability assigned by our model, $w_i$ and $c_i$ the word and context window at each position.
+In this formula, *m* is the number of words in the dataset, *P* is the probability assigned by our model, <em>w<sub>i</sub></em> and <em>c<sub>i</sub></em> the word and context window at each position.
 
 Compute the perplexity of your model on the validation set. The exact value will depend on various implementation choices you have made, how much of the training data you have been able to use, etc. Roughly speaking, if you get perplexity scores around 700 or more, there are probably problems. Carefully implemented and well-trained models will probably have perplexity scores in the range of 200&ndash;300.
 
@@ -235,6 +253,8 @@ You are probably already computing the <em>cross-entropy loss</em> as part of yo
 The perplexity is traditionally defined in terms of logarithms of base 2. However, we will get the same result regardless of what logarithmic base we use. So it is OK to use the natural logarithms and exponential functions, as long as we are consistent: this means that we can compute the perplexity by applying <code>exp</code> to the mean of the cross-entropy loss over your batches in the validation set.
 </div>
 </details>
+
+If you have time for exploration, investigate the effect of the context window size *N* (and possibly other hyperparameters such as embedding dimensionality) on the model's perplexity.
 
 ### Inspecting the word embeddings
 
