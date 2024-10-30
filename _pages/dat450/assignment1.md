@@ -11,6 +11,12 @@ nav_order: 4
 
 Our goal in this assignment is to implement a neural network-based language model similar to the one described by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf).
 
+### Pedagogical purposes of this assignment
+- Introducing the task of language modeling
+- Getting experience of preprocessing text
+- Understanding the concept of word embeddings
+- Refreshing basic skills in how to set up and train a neural network
+
 ## Step 0: Preliminaries
 
 If you are working on your own machine, make sure that the following libraries are installed:
