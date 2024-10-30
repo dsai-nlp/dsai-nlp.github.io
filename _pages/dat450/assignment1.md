@@ -19,6 +19,10 @@ In the course, we will cover a variety of technical solutions to this fundamenta
 - Understanding the concept of word embeddings
 - Refreshing basic skills in how to set up and train a neural network
 
+### Requirements
+
+Submit a notebook containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the notebook: there will be a separate individual assignment where you will answer some conceptual questions about the assignment.
+
 ## Step 0: Preliminaries
 
 If you are working on your own machine, make sure that the following libraries are installed:
