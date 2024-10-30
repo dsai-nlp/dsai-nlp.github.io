@@ -91,6 +91,8 @@ int_to_str = { 0:'BEGINNING', 1:'END', 2:'UNKNOWN', 3:'the', 4:'and', ... }
 
 The model we are going to train will predict the next token given the previous *N* tokens. We will now create the examples we will use for training and evaluation by extracting word sequences from the provided texts.
 
+First, make an educated guess about the size of the context window *N* you are going to use. (You can go back later on and try out other values.) Any value of *N* greater than 0 should work for the purposes of this assignment. Intuitively, small context windows (e.g. *N*=1) makes the model more stupid but a bit more efficient in terms of time and memory.
+
 Go through the training and validation data and extract all sequences of *N*+1 tokens and map them to the corresponding integer values. Remember to use the special symbols when necessary:
 - the "unseen" symbol for tokens not in your vocabulary,
 - *N* "beginning" symbols before each paragraph,
