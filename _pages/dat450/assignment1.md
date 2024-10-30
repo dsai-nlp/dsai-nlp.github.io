@@ -29,12 +29,13 @@ If you are working on your own machine, make sure that the following libraries a
 - [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage), for tokenization
 - [PyTorch](https://pytorch.org/get-started/locally/), for building and training the models
 - Optional: [Matplotlib](https://matplotlib.org/stable/users/getting_started/) and [scikit-learn](https://scikit-learn.org/stable/install.html), for the embedding visualization in the last step
-
 If you are using a Colab notebook, these libraries are already installed.
 
-Download and extract [this archive](https://www.cse.chalmers.se/~richajo/diverse/lmdemo.zip), which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed. (We'll actually just use the training and validation sets, and you can ignore the test file.)
+For the third part of the assignment, you will need to understand some basic concepts of PyTorch such as tensors, models, optimizers, loss functions and how to write the training loop. There are plenty of tutorials available, for instance on the [PyTorch website](https://pytorch.org/tutorials/). From the Applied Machine Learning course, there is also an [example notebook](https://www.cse.chalmers.se/~richajo/dit866/lectures/l7/Implementing%20classifiers%20with%20PyTorch.html) that shows how to train a basic classifier in PyTorch. (But note that if you take code from this notebook, several technical details have to change since our input data and prediction task are different!)
 
 ## Step 1: Preprocessing the text
+
+Download and extract [this archive](https://www.cse.chalmers.se/~richajo/diverse/lmdemo.zip), which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed. (We'll actually just use the training and validation sets, and you can ignore the test file.)
 
 You will need a *tokenizer* that splits English text into separate words (tokens). In this assignment, you will just use an existing tokenizer. Popular NLP libraries such as SpaCy and NLTK come with built-in tokenizers. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
 
