@@ -1,15 +1,17 @@
 ---
 layout: page
-title: 'DAT450/DIT247: Programming Assignment 1'
+title: 'DAT450/DIT247: Programming Assignment 1: Introduction to language modeling'
 permalink: /courses/dat450/assignment1/
 description:
 nav: false
 nav_order: 4
 ---
 
-# DAT450/DIT247: Programming Assignment 1
+# DAT450/DIT247: Programming Assignment 1: Introduction to language modeling
 
-Our goal in this assignment is to implement a neural network-based language model similar to the one described by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf).
+*Language modeling* is the foundation that recent advances in NLP technlogies build on. In essence, language modeling means that we learn how to imitate the language that we observe in the wild. More formally, we want to train a system that models the statistical distribution of natural language. Solving this task is exactly what the famous commercial large language models do (with some additional post-hoc tweaking to make the systems more interactive).
+
+In the course, we will cover a variety of technical solutions to this fundamental task (e.g. recurrent models and Transformers). In this first assignment of the course, we are going to build a neural network-based language model using simple techniques that should be familiar to anyone with an experience of neural networks. In essence, our solution is going to be similar to the one described by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf).
 
 ### Pedagogical purposes of this assignment
 - Introducing the task of language modeling
