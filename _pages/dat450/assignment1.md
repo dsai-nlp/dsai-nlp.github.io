@@ -254,6 +254,8 @@ The perplexity is traditionally defined in terms of logarithms of base 2. Howeve
 </div>
 </details>
 
+If you have time for exploration, investigate the effect of the context window size *N* (and possibly other hyperparameters such as embedding dimensionality) on the model's perplexity.
+
 ### Inspecting the word embeddings
 
 It is common to say that neural networks are "black boxes" and that we cannot fully understand their internal mechanics, especially as they grow larger and structurally more complex. The research area of model interpretability aims to develop methods to help us reason about the high-level functions the models implement.
