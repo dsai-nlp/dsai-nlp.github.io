@@ -26,9 +26,9 @@ Submit a notebook containing your solution to the programming tasks described be
 ## Step 0: Preliminaries
 
 If you are working on your own machine, make sure that the following libraries are installed:
-- [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage), for tokenization
-- [PyTorch](https://pytorch.org/get-started/locally/), for building and training the models
-- Optional: [Matplotlib](https://matplotlib.org/stable/users/getting_started/) and [scikit-learn](https://scikit-learn.org/stable/install.html), for the embedding visualization in the last step
+- [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage) for tokenization,
+- [PyTorch](https://pytorch.org/get-started/locally/) for building and training the models,
+- Optional: [Matplotlib](https://matplotlib.org/stable/users/getting_started/) and [scikit-learn](https://scikit-learn.org/stable/install.html) for the embedding visualization in the last step.
 If you are using a Colab notebook, these libraries are already installed.
 
 For the third part of the assignment, you will need to understand some basic concepts of PyTorch such as tensors, models, optimizers, loss functions and how to write the training loop. There are plenty of tutorials available, for instance on the [PyTorch website](https://pytorch.org/tutorials/). From the Applied Machine Learning course, there is also an [example notebook](https://www.cse.chalmers.se/~richajo/dit866/lectures/l7/Implementing%20classifiers%20with%20PyTorch.html) that shows how to train a basic classifier in PyTorch. (But note that if you take code from this notebook, several technical details have to change since our input data and prediction task are different!)
