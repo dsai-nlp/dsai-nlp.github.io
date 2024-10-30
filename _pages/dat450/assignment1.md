@@ -21,7 +21,7 @@ In the course, we will cover a variety of technical solutions to this fundamenta
 
 ### Requirements
 
-Submit a notebook containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the notebook: there will be a separate individual assignment where you will answer some conceptual questions about the assignment.
+Submit a notebook containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the notebook: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 
 ## Step 0: Preliminaries
 
@@ -202,6 +202,7 @@ for each training epoch:
         FORWARD PASS:
 	X = first N columns in B
 	Y = last column in B
+	put X and Y on the GPU
         apply the model to X
 	compute the loss for the model output and Y
         BACKWARD PASS (updating the model parameters):
