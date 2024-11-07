@@ -9,7 +9,7 @@ nav_order: 4
 
 # DAT450/DIT247: Programming Assignment 2: Generating text from a language model
 
-We extend the models we invest
+We extend the models we investigated in the previous assignment.
 
 ### Pedagogical purposes of this assignment
 - Investigating more capable neural network architectures for language modeling
@@ -17,7 +17,7 @@ We extend the models we invest
 
 ### Requirements
 
-Please submit your solution in [Canvas](http://xxx). **Submission deadline**: November 18.
+Please submit your solution in [Canvas](https://chalmers.instructure.com/courses/31739/assignments/98455). **Submission deadline**: November 18.
 
 Submit a notebook containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the notebook: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 
