@@ -55,13 +55,29 @@ The function you created can be used as the `collate_fn` in a `DataLoader`.
 
 ### Setting up the neural network structure
 
+Define a neural network that implements an RNN-based language model. It should include the following layers:
+
 - an *embedding layer* that maps token integers to floating-point vectors,
 - an *recurrent layer* implementing some RNN variant (we suggest [`nn.LSTM`](https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html) or [`nn.GRU`](https://pytorch.org/docs/stable/generated/torch.nn.GRU.html)),
 - an *output layer* that computes (the logits of) a probability distribution over the vocabulary.
 
+You will have to define some hyperparameters such as the embedding size (as in the previous assignment) and the size of the RNN's hidden state.
+
+<details>
+<summary><b>Hint</b>: If you are doing the batching as recommended above, you should set <code>batch_first=True</code> when declaring the RNN.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+The input to an RNN is a 3-dimensional tensor. If we set <code>batch_first=True</code>, then we assume that the input tensor is arranged as (*B*, *N*, *E*) where *B* is the batch size, *N* is the sequence length, and *E* the embedding dimensionality. In this case, the RNN "walks" along the second dimension: that is, over the sequence of tokens.
+
+If on the other hand you set <code>batch_first=False</code>, then the RNN walks along the first dimension of the input tensor and it is assumed to be arranged as (*N*, *B*, *E*).
+</div>
+</details>
+
 <details>
 <summary><b>Hint</b>: How to apply RNNs in PyTorch.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">xxx
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+As we discussed in the previous assignment, PyTorch allows users to set up neural networks in different ways: the more compact approach using <code>nn.Sequential</code>, and the more powerful approach by inheriting from <code>nn.Module</code>.
+
+
 </div>
 </details>
 
