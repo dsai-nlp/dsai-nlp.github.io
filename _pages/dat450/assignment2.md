@@ -37,7 +37,7 @@ Preprocess the text and build the vocabulary as in the previous assignment.
 
 Store the integer-encoded paragraphs in two lists, corresponding to the training and validation sets. They should *not* be split into fixed-length windows as in the previous assignment.
 
-**Sanity check**: after these steps, you should have around 147,000 million training instances and 18,000 million validation instances.
+**Sanity check**: after these steps, you should have around 147,000 training instances and 18,000 validation instances.
 
 ## Step 2: Adapting the batcher
 
@@ -49,18 +49,21 @@ Write a function that takes a list of integer-encoded lists as inputs, and puts 
 
 The function you created can be used as the `collate_fn` in a `DataLoader`.
 
-**Sanity check**: Inspect a few batches. Make sure that they are 2-dimensional integer tensors with *B* rows, where *B* is the batch size you defined. The number of columns probably varies from batch to batch.
+**Sanity check**: Inspect a few batches. Make sure that they are 2-dimensional integer tensors with *B* rows, where *B* is the batch size you defined. The number of columns probably varies from batch to batch, but should not be longer than the maximal passage length you defined.
 
 ## Step 3: Designing a language model using a recurrent neural network
-
-### Creating training batches
-
-**Sanity check**: Make sure that your batches are PyTorch tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* the number of context tokens. (Depending on your batch size, the last batch in the training set might be smaller than *B*.) Each batch should contain integers, not floating-point numbers.
 
 ### Setting up the neural network structure
 
 - an *embedding layer* that maps token integers to floating-point vectors,
+- an *recurrent layer* implementing some RNN variant (we suggest [`nn.LSTM`](https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html) or [`nn.GRU`](https://pytorch.org/docs/stable/generated/torch.nn.GRU.html)),
 - an *output layer* that computes (the logits of) a probability distribution over the vocabulary.
+
+<details>
+<summary><b>Hint</b>: How to apply RNNs in PyTorch.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">xxx
+</div>
+</details>
 
 <details>
 <summary><b>Hint</b>: You won't need a <code>Flatten</code> this time.</summary>
