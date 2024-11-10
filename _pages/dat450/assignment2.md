@@ -178,6 +178,6 @@ This function takes a tensor as input and returns the <em>k</em> highest scores 
 </div>
 </details>
 
-**Sanity check**: There are two ways to make this random sampling algorithm behave like *greedy decoding*. Make sure you get the same output
+**Sanity check**: There are two ways to make this random sampling algorithm behave like *greedy decoding* (that is: there is no randomness, and the most likely next word is selected in each step). Run the function in these two ways and make sure you get the same output in both cases.
 
 **Optional tasks**: 
