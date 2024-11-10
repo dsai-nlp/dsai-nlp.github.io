@@ -70,9 +70,9 @@ You will have to define some hyperparameters such as the embedding size (as in t
 <details>
 <summary><b>Hint</b>: If you are doing the batching as recommended above, you should set <code>batch_first=True</code> when declaring the RNN.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-The input to an RNN is a 3-dimensional tensor. If we set <code>batch_first=True</code>, then we assume that the input tensor is arranged as (*B*, *N*, *E*) where *B* is the batch size, *N* is the sequence length, and *E* the embedding dimensionality. In this case, the RNN "walks" along the second dimension: that is, over the sequence of tokens.
+The input to an RNN is a 3-dimensional tensor. If we set <code>batch_first=True</code>, then we assume that the input tensor is arranged as (<em>B</em>, <em>N</em>, <em>E</em>) where <em>B</em> is the batch size, <em>N</em> is the sequence length, and <em>E</em> the embedding dimensionality. In this case, the RNN "walks" along the second dimension: that is, over the sequence of tokens.
 
-If on the other hand you set <code>batch_first=False</code>, then the RNN walks along the first dimension of the input tensor and it is assumed to be arranged as (*N*, *B*, *E*).
+If on the other hand you set <code>batch_first=False</code>, then the RNN walks along the first dimension of the input tensor and it is assumed to be arranged as (<em>N</em>, <em>B</em>, <em>E</em>).
 </div>
 </details>
 
