@@ -195,4 +195,16 @@ This function takes a tensor as input and returns the <em>k</em> highest scores 
 
 **Sanity check**: There are two ways to make this random sampling algorithm behave like *greedy decoding* (that is: there is no randomness, and the most likely next word is selected in each step). Run the function in these two ways and make sure you get the same output in both cases.
 
-**Optional tasks**: 
+## Optional tasks
+
+These tasks can be done if you are curious but will not affect your score.
+
+### Dealing with repetition
+
+As you might have observed, it is a common problem when generating from an autoregressive language model that some words or phrases are repeated over and over, in particular if you use greedy decoding (or beam search) or random sampling with a low temperature.
+
+Implement some trick to try to reduce the amount of repetition, for instance by penalizing the generation algorithm if it wants to generate words that it has already generated.
+
+### Transformer language models
+
+Compare the RNN-based language model to an autoregressive Transformer. See the PyTorch tutorial for an example of how to set up a Transformer-based language model using PyTorch's Transformer implementation.
