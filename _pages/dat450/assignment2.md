@@ -145,8 +145,10 @@ This means that the input consists of all the columns in the batch except the la
 <summary><b>Hint</b>: how to apply the loss function when training a language model.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 The loss function (<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a>) expects two input tensors:
-- the *logits* (that is: the unnormalized log probabilities) of the predictions,
-- the *targets*, that is the true output values we want the model to predict.
+<ul>
+<li>the <em>logits</em> (that is: the unnormalized log probabilities) of the predictions,</li>
+<li>the <em>targets</em>, that is the true output values we want the model to predict.</li>
+</ul>
 
 Here, the tensor is expected to be one-dimensional (of length <em>B</em>, where <em>B</em> is the batch size) and the logits tensor to be two-dimensional (of shape (<em>B</em>, <em>V</em>) where <em>V</em> is the number of choices).
 
@@ -161,7 +163,8 @@ logits = logits.view(-1, logits.shape[-1])  # 3-dimensional -> 2-dimensional
 <details>
 <summary><b>Hint</b>: take padding into account when defining the loss.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a>
+When the loss is computed, we don't want to include the positions where we have inserted the dummy padding tokens.
+<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a> has a parameter <code>ignore_index</code> that you can set to the integer you use to represent the padding tokens.
 </div>
 </details>
 
