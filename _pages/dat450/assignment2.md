@@ -88,16 +88,26 @@ If you implement your language model by inheriting from <code>nn.Module</code>, 
 
 <pre>
 class MyRNNBasedLanguageModel(nn.Module):
-  def __init__(self, preprocessor, params):
+  def __init__(self, ... ):
     super().__init__()
     ... initialize model components here ...
     
-  def forward(self, tokens):
+  def forward(self, batch):
     embedded = ... apply the embedding layer ...
     rnn_out, _ = self.rnn(embedded)
     ... do the rest ...
 </pre>
 
+If you define your model using a <code>nn.Sequential</code>, we need a workaround to deal with the complication that the RNN returns two outputs. Here is one way to do it.
+<pre>
+class RNNOutputExtractor(nn.Module):
+    def __init__(self):
+        super().__init__()
+    
+    def forward(self, rnn_out):
+        return rnn_out[0]
+</pre>
+The <code>RNNOutputExtractor</code> can then be put after the RNN in your list of layers.
 </div>
 </details>
 
