@@ -168,7 +168,7 @@ Run the training function and compute the perplexity on the validation set as in
 
 ### Predicting the next word
 
-As a starting point, we'll repeat the exercise from the first assignment where we take some example
+As a starting point, we'll repeat the exercise from the first assignment where we see what the model predicts as the next word of a given sequence. For instance, for the sequence `he lives in san`, a well-trained model will typically predic the word `francisco`. The steps will typically be something like the following:
 
 - Apply the model to the integer-encoded input text.
 - Take the model's output at the last position.
