@@ -111,12 +111,6 @@ The <code>RNNOutputExtractor</code> can then be put after the RNN in your list o
 </div>
 </details>
 
-<details>
-<summary><b>Hint</b>: You won't need a <code>Flatten</code> this time.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">xxx
-</div>
-</details>
-
 **Sanity check**: carry out the following steps:
 - Create an integer tensor of shape 1x*N* where *N* is the length of the sequene. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
 - Apply the model to this input tensor. It shouldn't crash here.
