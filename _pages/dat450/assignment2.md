@@ -9,11 +9,13 @@ nav_order: 4
 
 # DAT450/DIT247: Programming Assignment 2: Generating text from a language model
 
-We extend the models we investigated in the previous assignment.
+In this assignment, we extend the models we investigated in the previous assignment in two different ways:
+- In the previous assignment, we used a model that takes a fixed number of previous words into account. Now, we will use a model capable of a variable number of previous words: a *recurrent neural network*. (Optionally, you can also investigate *Transformers*.)
+- In this assignment, we will also use our language model to generate texts.
 
 ### Pedagogical purposes of this assignment
-- Investigating more capable neural network architectures for language modeling
-- Understanding text-generating algorithms
+- Investigating more capable neural network architectures for language modeling.
+- Understanding text-generating algorithms.
 
 ### Requirements
 
@@ -27,11 +29,15 @@ Make sure you have access to your solution for Programming Assignment 1 since yo
 
 Copy the tokenization and integer encoding part into a new notebook.
 
-## Step 1: Adapting the vocabulary builder
+## Step 1: Adapting the preprocessing
+
+We'll adapt the preprocessing 
 
 In the previous assignment, you developed a tool that finds the most frequent words in order to build a vocabulary. In this vocabulary, you defined special symbols to cover a number of corner cases: the beginning and end of text passages, and when a word is previously unseen or too infrequent.
 
 Now, adapt your vocabulary builder to include a new special symbol that we will call *padding*: this will be used when our batches contain full texts but these texts are of different lengths.
+
+
 
 Preprocess the text and build the vocabulary as in the previous assignment.
 
