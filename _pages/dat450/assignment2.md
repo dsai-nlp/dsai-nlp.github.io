@@ -79,7 +79,24 @@ If on the other hand you set <code>batch_first=False</code>, then the RNN walks 
 <details>
 <summary><b>Hint</b>: How to apply RNNs in PyTorch.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+
+Take a look at the documentation of one of the RNN types in PyTorch. For instance, here is the documentation of <a href="https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html"><code>nn.LSTM</code></a>. In particular, look at the section called <b>Outputs</b>. It is important to note here that all RNNs return <b>two</b> outputs when you call them in the forward pass. In this assignment, you will need the <b>first</b> of these outputs, which correspond to the RNN's output for each <em>token</em>. (The other outputs are the <em>layer-wise</em> outputs.)
+
 As we discussed in the previous assignment, PyTorch allows users to set up neural networks in different ways: the more compact approach using <code>nn.Sequential</code>, and the more powerful approach by inheriting from <code>nn.Module</code>.
+
+If you implement your language model by inheriting from <code>nn.Module</code>, just remember that the RNN gives two outputs in the forward pass, and that you just need the first of them.
+
+<pre>
+class MyRNNBasedLanguageModel(nn.Module):
+  def __init__(self, preprocessor, params):
+    super().__init__()
+    ... initialize model components here ...
+    
+  def forward(self, tokens):
+    embedded = ... apply the embedding layer ...
+    rnn_out, _ = self.rnn(embedded)
+    ... do the rest ...
+</pre>
 
 </div>
 </details>
