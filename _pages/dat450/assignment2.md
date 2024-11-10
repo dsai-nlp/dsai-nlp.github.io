@@ -167,7 +167,7 @@ Implement a random sampling algorithm as described in the recording ([video](htt
 - `prompt`: the prompt that initializes the text generation.
 - `max_length`: the maximal number of steps before terminating.
 - `temperature`: controls the degree of randomness by scaling the predicted logits.
-- `topk`: 
+- `topk`: to implement top-K sampling, i.e. the next-word distribution is truncated so that it only includes the `topk` most probable tokens.
 
 The text generation should proceed until it an end-of-text symbol has been generated, or for at most `max_length` steps.
 
@@ -178,6 +178,6 @@ This function takes a tensor as input and returns the <em>k</em> highest scores 
 </div>
 </details>
 
+**Sanity check**: There are two ways to make this random sampling algorithm behave like *greedy decoding*. Make sure you get the same output
 
-
-**Sanity check**: There are two ways to make this random sampling algorithm behave like *greedy decoding*. Make sure you get the same output 
+**Optional tasks**: 
