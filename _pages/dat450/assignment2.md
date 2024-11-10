@@ -29,32 +29,33 @@ Make sure you have access to your solution for Programming Assignment 1 since yo
 
 Copy the tokenization and integer encoding part into a new notebook.
 
-## Step 1: Adapting the preprocessing
+## Step 1: Adapting your code for RNNs
+
+### Adapting the preprocessing
 
 In the previous assignment, you developed preprocessing tools that extracted fixed-length sequences from the training data. You will now adapt the preprocessing so that you can deal with inputs of variable length.
 
 **Splitting**: While we will deal with longer sequences than in the previous assignment, we'll still have to control the maximal sequence length (or we'll run out of GPU memory). Define a hyperparameter `max_sequence_length` and split your equences into pieces that are at most of that length. (Side note: in RNN training, limiting the sequence length is called <a href="https://d2l.ai/chapter_recurrent-neural-networks/bptt.html"><em>truncated backpropagation through time</em></a>.)
 
 **Padding**: In the previous assignment, you developed a tool that finds the most frequent words in order to build a vocabulary. In this vocabulary, you defined special symbols to cover a number of corner cases: the beginning and end of text passages, and when a word is previously unseen or too infrequent.
-Now, change your vocabulary builder to include a new special symbol that we will call *padding*: this will be used when our batches contain full texts but these texts are of different lengths.
+Now, change your vocabulary builder to include a new special symbol that we will call *padding*: this will be used when our batches contain texts of different lengths.
 
 After these changes, preprocess the text and build the vocabulary as in the previous assignment. Store the integer-encoded paragraphs in two lists, corresponding to the training and validation sets. 
 
 **Sanity check**: You should have around 147,000 training paragraphs and 18,000 validation paragraphs. However, since you split the sequences, you will in the end get a larger number of training and validation instances. (The exact numbers depend on `max_sequence_length`.
 
-## Step 2: Adapting the batcher
+### Adapting the batcher
 
-In the previous assignment, we created training and validation instances by extracting sequences of a fixed length.
+In the previous assignment, you implemented some function to create training batches: that is, to put some number of training instances into a PyTorch tensor.
 
-Write a function that takes a list of integer-encoded lists as inputs, and puts them into a PyTorch tensor.
-- Define a maximal length: this can be a large number (e.g. around 1000) and truncate paragraphs that are longer than the maximal length.
-- Pad the sequences to the right. 
+Now, change your batching function so that it can deal with sequences of variable lengths.
+Since the output of the batching function are rectangular tensors, you need to *pad* sequences so they are of the same length.
+So for each instance that is shorter than the longest instance in the batch, you should append the padding symbol until it has the right length.
 
-The function you created can be used as the `collate_fn` in a `DataLoader`.
+**Sanity check**: Inspect a few batches. Make sure that they are 2-dimensional integer tensors with *B* rows, where *B* is the batch size you defined. The number of columns probably varies from batch to batch, but should never be longer than `max_sequence_length` you defined previously.
+The integer-encoded padding symbol should only occur at the end of sequences.
 
-**Sanity check**: Inspect a few batches. Make sure that they are 2-dimensional integer tensors with *B* rows, where *B* is the batch size you defined. The number of columns probably varies from batch to batch, but should not be longer than the maximal passage length you defined.
-
-## Step 3: Designing a language model using a recurrent neural network
+## Step 2: Designing a language model using a recurrent neural network
 
 ### Setting up the neural network structure
 
