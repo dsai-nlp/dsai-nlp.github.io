@@ -129,8 +129,7 @@ Adapt your training loop from the previous assignment, with the following change
 <details>
 <summary><b>Hint</b>: the output tensor is the input tensor, shifted one step to the right.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-For instance, let's say our training text is <em>This is great !</em>
-
+For instance, let's say our training text is <em>This is great !</em> (in practice, the words will be integer-coded).
 That means that at the first word (<em>This</em>), we want the model to predict the second word (<em>is</em>). At the second word, the goal is to predict <em>great</em>, and so on.
 
 So when you process a batch in the training loop, you should probably split it into an input and an output part:
@@ -139,14 +138,7 @@ input_tokens = batch[:, :-1]
 output_tokens = batch[:, 1:]
 </pre>
 </div>
-</details>
-
-
-<details>
-<summary><b>Hint</b>: take padding into account when defining the loss.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a>
-</div>
+This means that the input consists of all the columns in the batch except the last one, and the output of all the columns except the first one.
 </details>
 
 <details>
@@ -156,7 +148,14 @@ XYZ
 </div>
 </details>
 
-Compute the perplexity on the validation set.
+<details>
+<summary><b>Hint</b>: take padding into account when defining the loss.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a>
+</div>
+</details>
+
+Run the training function and compute the perplexity on the validation set as in the previous assignment.
 
 ## Step 3: Generating text
 
