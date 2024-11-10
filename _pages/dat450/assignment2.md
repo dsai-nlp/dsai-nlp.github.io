@@ -77,7 +77,6 @@ If on the other hand you set <code>batch_first=False</code>, then the RNN walks 
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 As we discussed in the previous assignment, PyTorch allows users to set up neural networks in different ways: the more compact approach using <code>nn.Sequential</code>, and the more powerful approach by inheriting from <code>nn.Module</code>.
 
-
 </div>
 </details>
 
@@ -99,7 +98,7 @@ Adapt your training loop from the previous assignment, with the following change
 <details>
 <summary><b>Hint</b>: take padding into account when defining the loss.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-XYZ
+<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a>
 </div>
 </details>
 
