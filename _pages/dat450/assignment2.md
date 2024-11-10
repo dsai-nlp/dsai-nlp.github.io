@@ -10,7 +10,7 @@ nav_order: 4
 # DAT450/DIT247: Programming Assignment 2: Generating text from a language model
 
 In this assignment, we extend the models we investigated in the previous assignment in two different ways:
-- In the previous assignment, we used a model that takes a fixed number of previous words into account. Now, we will use a model capable of a variable number of previous words: a *recurrent neural network*. (Optionally, you can also investigate *Transformers*.)
+- In the previous assignment, we used a model that takes a fixed number of previous words into account. Now, we will use a model capable of considering a variable number of previous words: a *recurrent neural network*. (Optionally, you can also investigate *Transformers*.)
 - In this assignment, we will also use our language model to generate texts.
 
 ### Pedagogical purposes of this assignment
@@ -31,19 +31,16 @@ Copy the tokenization and integer encoding part into a new notebook.
 
 ## Step 1: Adapting the preprocessing
 
-We'll adapt the preprocessing 
+In the previous assignment, you developed preprocessing tools that extracted fixed-length sequences from the training data. You will now adapt the preprocessing so that you can deal with inputs of variable length.
 
-In the previous assignment, you developed a tool that finds the most frequent words in order to build a vocabulary. In this vocabulary, you defined special symbols to cover a number of corner cases: the beginning and end of text passages, and when a word is previously unseen or too infrequent.
+**Splitting**: While we will deal with longer sequences than in the previous assignment, we'll still have to control the maximal sequence length (or we'll run out of GPU memory). Define a hyperparameter `max_sequence_length` and split your equences into pieces that are at most of that length. (Side note: in RNN training, limiting the sequence length is called <a href="https://d2l.ai/chapter_recurrent-neural-networks/bptt.html"><em>truncated backpropagation through time</em></a>.)
 
-Now, adapt your vocabulary builder to include a new special symbol that we will call *padding*: this will be used when our batches contain full texts but these texts are of different lengths.
+**Padding**: In the previous assignment, you developed a tool that finds the most frequent words in order to build a vocabulary. In this vocabulary, you defined special symbols to cover a number of corner cases: the beginning and end of text passages, and when a word is previously unseen or too infrequent.
+Now, change your vocabulary builder to include a new special symbol that we will call *padding*: this will be used when our batches contain full texts but these texts are of different lengths.
 
+After these changes, preprocess the text and build the vocabulary as in the previous assignment. Store the integer-encoded paragraphs in two lists, corresponding to the training and validation sets. 
 
-
-Preprocess the text and build the vocabulary as in the previous assignment.
-
-Store the integer-encoded paragraphs in two lists, corresponding to the training and validation sets. They should *not* be split into fixed-length windows as in the previous assignment.
-
-**Sanity check**: after these steps, you should have around 147,000 training instances and 18,000 validation instances.
+**Sanity check**: You should have around 147,000 training paragraphs and 18,000 validation paragraphs. However, since you split the sequences, you will in the end get a larger number of training and validation instances. (The exact numbers depend on `max_sequence_length`.
 
 ## Step 2: Adapting the batcher
 
