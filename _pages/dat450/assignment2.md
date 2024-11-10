@@ -80,7 +80,7 @@ If on the other hand you set <code>batch_first=False</code>, then the RNN walks 
 <summary><b>Hint</b>: How to apply RNNs in PyTorch.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 
-Take a look at the documentation of one of the RNN types in PyTorch. For instance, here is the documentation of <a href="https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html"><code>nn.LSTM</code></a>. In particular, look at the section called <b>Outputs</b>. It is important to note here that all RNNs return <b>two</b> outputs when you call them in the forward pass. In this assignment, you will need the <b>first</b> of these outputs, which correspond to the RNN's output for each <em>token</em>. (The other outputs are the <em>layer-wise</em> outputs.)
+Take a look at the documentation of one of the RNN types in PyTorch. For instance, here is the documentation of <a href="https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html"><code>nn.LSTM</code></a>. In particular, look at the section called <b>Outputs</b>. It is important to note here that all types of RNNs return <b>two</b> outputs when you call them in the forward pass. In this assignment, you will need the <b>first</b> of these outputs, which correspond to the RNN's output for each <em>token</em>. (The other outputs are the <em>layer-wise</em> outputs.)
 
 As we discussed in the previous assignment, PyTorch allows users to set up neural networks in different ways: the more compact approach using <code>nn.Sequential</code>, and the more powerful approach by inheriting from <code>nn.Module</code>.
 
@@ -160,20 +160,24 @@ As a starting point, we'll repeat the exercise from the first assignment where w
 - Use <a href="https://pytorch.org/docs/stable/generated/torch.argmax.html"><code>argmax</code></a> to find the index of the highest-scoring item.
 - Apply the inverse vocabulary encoder (that you created in Step 2) so that you can understand what words the model thinks are the most likely in this context.
 
-### Greedy decoding
+### Generating texts
 
-Implement a greedy decoding algorithm as described in the recording.
+Implement a random sampling algorithm as described in the recording ([video](https://youtu.be/QtwpM-OGOew), [pdf](http://www.cse.chalmers.se/~richajo/dat450/lectures/l4/m4_3.pdf)). The function should take the following inputs:
 
-This algorithm should select the highest-scoring output token at each step. Each generated token becomes a new input token in the next step.
+- `prompt`: the prompt that initializes the text generation.
+- `max_length`: the maximal number of steps before terminating.
+- `temperature`: controls the degree of randomness by scaling the predicted logits.
+- `topk`: 
 
-Write a function that takes an input prompt and generates an output text for a given number of steps.
+The text generation should proceed until it an end-of-text symbol has been generated, or for at most `max_length` steps.
 
-Consider the following examples...
+<details>
+<summary><b>Hint</b>: The <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> function will be useful here.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+This function takes a tensor as input and returns the <em>k</em> highest scores and their corresponding indices.
+</div>
+</details>
 
-### Random sampling
-
-Implement a random sampling algorithm as described in the recording.
-
-Write a function that takes an input prompt and generates an output text for a given number of steps. The function should use a *temperature* value that scales the output logits to control the randomness of the generation process. It should also use top-k sampling.
 
 
+**Sanity check**: There are two ways to make this random sampling algorithm behave like *greedy decoding*. Make sure you get the same output 
