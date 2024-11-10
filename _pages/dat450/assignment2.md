@@ -142,9 +142,19 @@ This means that the input consists of all the columns in the batch except the la
 </details>
 
 <details>
-<summary><b>Hint</b>: how to apply the loss to the tensors.</summary>
+<summary><b>Hint</b>: how to apply the loss function when training a language model.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-XYZ
+The loss function (<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a>) expects two input tensors:
+- the *logits* (that is: the unnormalized log probabilities) of the predictions,
+- the *targets*, that is the true output values we want the model to predict.
+
+Here, the tensor is expected to be one-dimensional (of length <em>B</em>, where <em>B</em> is the batch size) and the logits tensor to be two-dimensional (of shape (<em>B</em>, <em>V</em>) where <em>V</em> is the number of choices).
+
+In our case, the loss function's expected input format requires a small trick, since our targets tensor is two-dimensional (<em>B</em>, <em>N</em>) where <em>N</em> is the maximal text length in the batch. Analogously, the logits tensor is three-dimensional (<em>B</em>, <em>N</em>, <em>V</em>). To deal with this, you need to reshape the tensors before applying the loss function.
+<pre>
+targets = targets.view(-1)                  # 2-dimensional -> 1-dimensional
+logits = logits.view(-1, logits.shape[-1])  # 3-dimensional -> 2-dimensional
+</pre>
 </div>
 </details>
 
