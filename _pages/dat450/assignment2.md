@@ -35,7 +35,7 @@ Copy the tokenization and integer encoding part into a new notebook.
 
 In the previous assignment, you developed preprocessing tools that extracted fixed-length sequences from the training data. You will now adapt the preprocessing so that you can deal with inputs of variable length.
 
-**Splitting**: While we will deal with longer sequences than in the previous assignment, we'll still have to control the maximal sequence length (or we'll run out of GPU memory). Define a hyperparameter `max_sequence_length` and split your equences into pieces that are at most of that length. (Side note: in RNN training, limiting the sequence length is called <a href="https://d2l.ai/chapter_recurrent-neural-networks/bptt.html"><em>truncated backpropagation through time</em></a>.)
+**Splitting**: While we will deal with longer sequences than in the previous assignment, we'll still have to control the maximal sequence length (or we'll run out of GPU memory). Define a hyperparameter `max_sequence_length` and split your sequences into pieces that are at most of that length. (Side note: in RNN training, limiting the sequence length is called <a href="https://d2l.ai/chapter_recurrent-neural-networks/bptt.html"><em>truncated backpropagation through time</em></a>.)
 
 **Padding**: In the previous assignment, you developed a tool that finds the most frequent words in order to build a vocabulary. In this vocabulary, you defined special symbols to cover a number of corner cases: the beginning and end of text passages, and when a word is previously unseen or too infrequent.
 Now, change your vocabulary builder to include a new special symbol that we will call *padding*: this will be used when our batches contain texts of different lengths.
