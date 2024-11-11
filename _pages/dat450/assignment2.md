@@ -215,7 +215,7 @@ sampled = example_distr.sample()
 </details>
 
 <details>
-<summary><b>Hint</b>: The <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> function will be useful here.</summary>
+<summary><b>Hint</b>: The <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> function will be useful when you implement top-K sampling.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 This function takes a tensor as input and returns the <em>k</em> highest scores and their corresponding indices.
 </div>
