@@ -79,13 +79,16 @@ If on the other hand you set <code>batch_first=False</code>, then the RNN walks 
 <details>
 <summary><b>Hint</b>: How to apply RNNs in PyTorch.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-
+<p>
 Take a look at the documentation of one of the RNN types in PyTorch. For instance, here is the documentation of <a href="https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html"><code>nn.LSTM</code></a>. In particular, look at the section called <b>Outputs</b>. It is important to note here that all types of RNNs return <b>two</b> outputs when you call them in the forward pass. In this assignment, you will need the <b>first</b> of these outputs, which correspond to the RNN's output for each <em>token</em>. (The other outputs are the <em>layer-wise</em> outputs.)
-
+</p>
+<p>
 As we discussed in the previous assignment, PyTorch allows users to set up neural networks in different ways: the more compact approach using <code>nn.Sequential</code>, and the more powerful approach by inheriting from <code>nn.Module</code>.
+</p>
 
+<p>
 If you implement your language model by inheriting from <code>nn.Module</code>, just remember that the RNN gives two outputs in the forward pass, and that you just need the first of them.
-
+</p>
 <pre>
 class MyRNNBasedLanguageModel(nn.Module):
   def __init__(self, ... ):
@@ -98,7 +101,9 @@ class MyRNNBasedLanguageModel(nn.Module):
     ... do the rest ...
 </pre>
 
+<p>
 If you define your model using a <code>nn.Sequential</code>, we need a workaround to deal with the complication that the RNN returns two outputs. Here is one way to do it.
+</p>
 <pre>
 class RNNOutputExtractor(nn.Module):
     def __init__(self):
@@ -107,7 +112,9 @@ class RNNOutputExtractor(nn.Module):
     def forward(self, rnn_out):
         return rnn_out[0]
 </pre>
+<p>
 The <code>RNNOutputExtractor</code> can then be put after the RNN in your list of layers.
+</p>
 </div>
 </details>
 
@@ -182,9 +189,30 @@ Implement a random sampling algorithm as described in the recording ([video](htt
 - `prompt`: the prompt that initializes the text generation.
 - `max_length`: the maximal number of steps before terminating.
 - `temperature`: controls the degree of randomness by scaling the predicted logits.
-- `topk`: to implement top-K sampling, i.e. the next-word distribution is truncated so that it only includes the `topk` most probable tokens.
+- `topk`: to implement top-K sampling, i.e. the next-token distribution is truncated so that it only includes the `topk` most probable tokens.
 
 The text generation should proceed until it an end-of-text symbol has been generated, or for at most `max_length` steps.
+
+<details>
+<summary><b>Hint</b>: How to sample from the next-token distribution.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<p>
+The easiest option is probably to use <a href="https://pytorch.org/docs/stable/distributions.html#categorical"><code>torch.distributions.Categorical</code></a>.
+<code>Categorical</code> is a probability distribution over a set of choices, each of which has its own probability. So this is equivalent to the case where we have a set of possible next tokens, with different probabilities.
+</p>
+
+<p>
+The following code shows an example of how <code>Categorical</code> can be used. In your code, you will replace <code>example_logits</code> with the next-token distribution predicted by your language model.
+</p>
+
+<pre>
+# Logits of the probabilities of 5 different choices.
+example_logits = torch.tensor([0.0, 0.5, -0.2, 0.1, 0.05])
+example_distr = Categorical(logits=example_logits)
+sampled = example_distr.sample()
+</pre>
+</div>
+</details>
 
 <details>
 <summary><b>Hint</b>: The <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> function will be useful here.</summary>
