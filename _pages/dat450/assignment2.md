@@ -42,7 +42,7 @@ Now, change your vocabulary builder to include a new special symbol that we will
 
 After these changes, preprocess the text and build the vocabulary as in the previous assignment. Store the integer-encoded paragraphs in two lists, corresponding to the training and validation sets. 
 
-**Sanity check**: You should have around 147,000 training paragraphs and 18,000 validation paragraphs. However, since you split the sequences, you will in the end get a larger number of training and validation instances. (The exact numbers depend on `max_sequence_length`.
+**Sanity check**: You should have around 147,000 training paragraphs and 18,000 validation paragraphs. However, since you split the sequences, you will in the end get a larger number of training and validation instances. (The exact numbers depend on `max_sequence_length`.)
 
 ### Adapting the batcher
 
@@ -119,7 +119,7 @@ The <code>RNNOutputExtractor</code> can then be put after the RNN in your list o
 </details>
 
 **Sanity check**: carry out the following steps:
-- Create an integer tensor of shape 1x*N* where *N* is the length of the sequene. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
+- Create an integer tensor of shape 1x*N* where *N* is the length of the sequence. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
 - Apply the model to this input tensor. It shouldn't crash here.
 - Make sure that the shape of the returned output tensor is 1x*N*x*V* where *V* is the size of the vocabulary. This output corresponds to the logits of the next-token probability distribution, but it is useless at this point because we haven't yet trained the model.
 
@@ -186,6 +186,7 @@ As a starting point, we'll repeat the exercise from the first assignment where w
 
 Implement a random sampling algorithm as described in the recording ([video](https://youtu.be/QtwpM-OGOew), [pdf](http://www.cse.chalmers.se/~richajo/dat450/lectures/l4/m4_3.pdf)). The function should take the following inputs:
 
+- `model`: the language model that we use to predict the next token.
 - `prompt`: the prompt that initializes the text generation.
 - `max_length`: the maximal number of steps before terminating.
 - `temperature`: controls the degree of randomness by scaling the predicted logits.
