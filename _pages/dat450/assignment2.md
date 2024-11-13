@@ -222,6 +222,8 @@ This function takes a tensor as input and returns the <em>k</em> highest scores 
 </div>
 </details>
 
+Run your generation algorithm with some different prompts and input parameters, and try to investigate the effects. In the reflection questions, you will be asked to summarize your impression of how texts are generated with different prompts and input parameters.
+
 **Sanity check**: There are two ways to make this random sampling algorithm behave like *greedy decoding* (that is: there is no randomness, and the most likely next word is selected in each step). Run the function in these two ways and make sure you get the same output in both cases.
 
 ## Optional tasks
