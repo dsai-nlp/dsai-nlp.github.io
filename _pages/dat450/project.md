@@ -34,7 +34,7 @@ It is not compulsory to submit the preliminary description, but we strongly reco
 
 When writing your report, please use one of these style templates (available for Word and LaTeX). The text should be structured as a typical academic research paper, including an abstract, statement of problem, method description, experiments and results, and a conclusion. We will not enforce any page limits strictly, but we think that the optimal length of a report is something similar to a typical short research paper: around 4 pages in a two-column format, plus references.
 
-For examples of how such a text can look, take a look at some short papers published at the ACL conference. In addition, there are some examples of project reports from previous instances of this course provided in this directory. (Please note that the 2020 examples used another document style.)
+For examples of how such a text can look, take a look at some [short papers published at the ACL conference](https://aclanthology.org/events/acl-2024/#2024acl-short). In addition, there are some examples of project reports from previous instances of this course provided [in this directory](https://www.cse.chalmers.se/~richajo/dat450/assignments/examples/). (Please note that the 2020 examples used another document style.)
 
 Please submit the project report via the Canvas page. The deadline for submitting the report is January XX.
 
@@ -57,7 +57,7 @@ If you need help deciding on a topic, here are a few suggestions. Some of these 
 - Machine translation for a language pair of your choice.
 - Retreival-augmented generation in an application domain of your choice. Maybe you'd like a chatbot that can answer questions about the courses available at the university?
 - Caption generation. Build a system that generates descriptions of images.
-- Entity and/or relation extraction using a dataset such as DrugProt or something else.
+- Entity and/or relation extraction using a dataset such as [DrugProt](https://zenodo.org/record/5042151) or something else.
 - Knowledge distillation. Modern representation models for language are huge and slow. Can you use knowledge distillation or some other compression technique to develop something that is more efficient (in some application)?
 - Shared tasks. Every year, several NLP competitions are arranged at the SemEval conference. Participate in one of the 2025 tasks or get the data from some task from previous years. Additionally, there are shared tasks organized by CoNLL, BioNLP and other conferences, where datasets can often be accessed easily. 
 
