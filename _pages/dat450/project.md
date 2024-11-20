@@ -26,7 +26,7 @@ The projects are done in groups of up to four.
 
 Please submit a short text that describes what you intend to work on. For suggestions of topics, see below.
 
-You should submit this description in Canvas. The text should include a project title and one or a couple of paragraphs giving a rough outline of how you intend to work. If you have found any related work or relevant dataset, this is useful information to include. The deadline for this preliminary description is **December XYZ**.
+You should submit this description [in Canvas](https://chalmers.instructure.com/courses/31739/assignments/98459). The text should include a project title and one or a couple of paragraphs giving a rough outline of how you intend to work. If you have found any related work or relevant dataset, this is useful information to include. The deadline for this preliminary description is **December 6**.
 
 It is not compulsory to submit the preliminary description, but we strongly recommend it so that we have the opportunity to give you some initial feedback. 
 
