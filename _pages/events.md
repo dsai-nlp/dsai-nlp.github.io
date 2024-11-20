@@ -41,10 +41,11 @@ If you would like to join the reading group, please send an email to
 
 ### Upcoming meetings
 
-- 2024-11-15, 13:00&ndash;15:00, [EDIT-6128](https://maps.chalmers.se/#f6db5480-36ae-11ea-95e6-15f261a81417) - [RAVEL: Evaluating Interpretability Methods on Disentangling Language Model Representations](https://aclanthology.org/2024.acl-long.470/)
+- 2024-12-06, 15:00&ndash;17:00, details TBA
 
 ### Previous meetings
 
+- 2024-11-15, 13:00&ndash;15:00, [EDIT-6128](https://maps.chalmers.se/#f6db5480-36ae-11ea-95e6-15f261a81417) - [RAVEL: Evaluating Interpretability Methods on Disentangling Language Model Representations](https://aclanthology.org/2024.acl-long.470/)
 - 2024-10-17, 13:00&ndash;15:00, [EDIT-5128](https://maps.chalmers.se/#e04e51e0-36ae-11ea-a7b1-c33e025140ed) - [Analyzing Semantic Change through Lexical Replacements](https://aclanthology.org/2024.acl-long.246.pdf) and [Using Synchronic Definitions and Semantic Relations to Classify Semantic Change Types](https://aclanthology.org/2024.acl-long.249.pdf), with invited guests [Pierluigi Cassotti](https://www.gu.se/om-universitetet/hitta-person/pierluigicassotti) and [Nina Tahmasebi](http://tahmasebi.se/)
 - 2024-09-25, 13:00&ndash;15:00, [EDIT-5128](https://maps.chalmers.se/#e04e51e0-36ae-11ea-a7b1-c33e025140ed) - [Using Large Language Model Annotations for the Social Sciences:
 A General Framework of Using Predicted Variables in Downstream Analyses](https://naokiegami.com/paper/dsl_ss.pdf)
