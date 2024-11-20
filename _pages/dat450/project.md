@@ -67,7 +67,7 @@ Alternatively, if you don't have an idea and you don't like the suggested topics
 
 **Q:** Can I use someone else's software in my project.
 
-**A:** Generally, yes. In particular, it is completely standard to use various libraries (e.g. HuggingFace) and pre-trained models. But your project work can't be *only* that software: your addition has to be nontrivial. For instance, if you work on image captioning, you can't just take an existing image captioning implementation and submit it as your own work.
+**A:** Generally, yes. In particular, it is completely standard to use various libraries (e.g. HuggingFace) and pre-trained models. But your project work can't be *only* that software: your addition has to be nontrivial. For instance, if you work on image captioning, you can't just take an existing image captioning implementation and submit it as your own work. Discuss with the examiner if you are unsure.
 
 **Q:** Are we allowed to use commercial large language models (such as one of the OpenAI models)?
 
