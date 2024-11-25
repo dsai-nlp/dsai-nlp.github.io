@@ -41,7 +41,7 @@ If you would like to join the reading group, please send an email to
 
 ### Upcoming meetings
 
-- 2024-12-06, 15:00&ndash;17:00, details TBA
+- 2024-12-06, 15:00&ndash;17:00, [EDIT-5128](https://maps.chalmers.se/#e04e51e0-36ae-11ea-a7b1-c33e025140ed) - [Visual Instruction Tuning](https://papers.nips.cc/paper_files/paper/2023/hash/6dcf277ea32ce3288914faf369fe6de0-Abstract-Conference.html)
 
 ### Previous meetings
 
