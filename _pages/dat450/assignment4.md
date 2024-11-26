@@ -221,7 +221,7 @@ We now define a new type of layer that will be used as a drop-in replacement for
 
 In [the paper by Hu et al. (2021)](https://arxiv.org/pdf/2106.09685), the structure is presented visually in Figure 1, and equation (3) shows the same idea.
 
-Start from the following skeleton:
+Start from the following skeleton and implement the missing pieces:
 
 <pre>
 import torch.nn as nn
