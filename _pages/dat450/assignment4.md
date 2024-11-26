@@ -41,6 +41,8 @@ If you use Colab, you will need to install Datasets and Evaluate, while Transfor
 
 The data we use in this assignment is a subset of the [Large Movie Review Dataset](https://ai.stanford.edu/~amaas/data/sentiment/). The full dataset consists of 50,000 highly polar movie reviews collected from the Internet Movie Database (IMDB). We use a random sample consisting of 2,000 reviews for training and 500 reviews for evaluation.
 
+Download [this zip file](https://www.cse.chalmers.se/~richajo/dat450/data/pa4/pa4.zip), which contains the training and evaluation CSV files.
+
 ## Step 1: Full fine-tuning
 
 In this assignment, we will use a compressed version of BERT called [DistilBERT](https://huggingface.co/docs/transformers/model_doc/distilbert).
