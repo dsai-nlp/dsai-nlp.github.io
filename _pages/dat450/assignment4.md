@@ -217,7 +217,7 @@ def replace_layers(model, named_layers):
 
 ### Implementing the LoRA layer
 
-We now define a new type of layer that will be used as a drop-in replacement for a regular linear layer.
+To implement the LoRA approach, we define a new type of layer that will be used as a drop-in replacement for a regular linear layer.
 
 In [the paper by Hu et al. (2021)](https://arxiv.org/pdf/2106.09685), the structure is presented visually in Figure 1, and equation (3) shows the same idea.
 
