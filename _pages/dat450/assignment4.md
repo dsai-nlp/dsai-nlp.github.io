@@ -165,18 +165,64 @@ Once again, we recommend that you re-create the model using <code>AutoModelForSe
 <details>
 <summary><b>Hint</b>: How to disable gradient computation for a parameter tensor.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<p>
 For a parameter tensor in a model, we can set the attribute <code>requires_grad</code> to <code>False</code>, which means that during backpropagation, gradients will not be computed with respect to these parameters. So the training process will not change these parameters.
+</p>
 
-To find the parameter tensors to switch off, you can either 1) go into the <code>distilbert</code> component and iterate through its <code>parameters</code>, or 2) go through all the model's named parameters, and switch off all parameter tensors except <code>classfier</code> and <code>pre_classifier</code>.
+<p>
+To find the parameter tensors to switch off, you can either 1) go into the <code>distilbert</code> component and iterate through its <code>parameters</code>, or 2) go through all the model's named parameters, and switch off all parameter tensors except <code>classifier</code> and <code>pre_classifier</code>.
+</p>
 </div>
 </details>
 
 Train this model and compare the training speed and classification accuracy to the results from Step 1.
 
-## Interlude: Replacing layers
+## Interlude: Making a utility to modify an existing model
+
+Define a function `extract_qv_layers` that extracts the query and value linear layers from all Transformer blocks in a DistilBERT model.
+
+<details>
+<summary><b>Hint</b>: How to access the Q and V linear layers.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<p>
+As we saw earlier, the DistilBERT model consists of a hierarchy of nested submodules. Each of these can be addressed by a fully-qualified name.
+For instance, <code>distilbert.transformer.layer[0].attention.q_lin</code> gives you the Q part of layer 0.
+</p>
+
+<p>
+You can also use get_submodule() to retrieve a layer by a string name. For instance, <code>'distilbert.transformer.layer.0.attention.q_lin'</code> refers to the same layer as above.
+</p>
+
+<p>
+It's OK to hard-code this part, so that you just enumerate the Q and V parts of all layers here.
+</p>
+</div>
+</details>
+
+<pre>
+def replace_layers(model, named_layers):
+    for name, layer in named_layers.items():
+        components = name.split('.')
+        submodule = model
+        for component in components[:-1]:
+            submodule = getattr(submodule, component)
+        setattr(submodule, components[-1], layer)
+</pre>
 
 ## Step 3: Fine-tuning with LoRA
 
+<pre>
+import torch.nn as nn
+
+class LoRALayer(nn.Module):
+    def __init__(self, W, rank=12, alpha=24):
+        super().__init__()
+        # TODO: Add your code here
+
+    def forward(self, x):
+        # TODO: Replace the next line with your own code
+        raise NotImplementedError
+</pre>
 
 
 
