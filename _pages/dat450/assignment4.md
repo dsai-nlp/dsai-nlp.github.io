@@ -183,7 +183,7 @@ Define a function `extract_qv_layers` that extracts the query and value linear l
 Return a dictionary that maps the component name to the corresponding linear layer.
 
 <details>
-<summary><b>Hint</b>: How to access the Q and V linear layers.</summary>
+<summary><b>Hint</b>: How to access the query and value linear layers.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 <p>
 As we saw earlier, the DistilBERT model consists of a hierarchy of nested submodules. Each of these can be addressed by a fully-qualified string name.
