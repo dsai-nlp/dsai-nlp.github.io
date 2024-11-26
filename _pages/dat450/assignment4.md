@@ -72,7 +72,7 @@ tokenized_imdb_dataset = imdb_dataset.map(tokenize_helper, batched=True)
 </div>
 </details>
 
-### Defining your model
+### Creating your classification model for fine-tuning
 
 Use the HuggingFace utility `AutoModelForSequenceClassification` to set up a model that you can fine-tune. Use the `from_pretrained` method with the model name set as above, and `num_labels=2` (because we have two-class classification task). This method carries out the following steps:
 - It loads the pre-trained DistillBERT model from the HuggingFace repository (or from a cached file, if you have used the model before).
