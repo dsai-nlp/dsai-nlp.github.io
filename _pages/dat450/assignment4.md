@@ -9,24 +9,16 @@ nav_order: 4
 
 # DAT450/DIT247: Programming Assignment 4: Comparing fine-tuning methods
 
-In this assignment, TODO
+In this assignment, you will fine-tune a pre-trained Transformer model for a *classification* task: sentiment analysis of movie reviews. 
 
 ### Pedagogical purposes of this assignment
-- You will fine-tune a pre-trained Transformer model for a *classification* task (sentiment analysis of movie reviews).
-- You will investigate how the accuracy and computational efficiency are affected by the different methods.
+- You will investigate how the accuracy and computational efficiency are affected by the different fine-tuning methods.
 - In particular, we are going to consider the LoRA method for parameter-efficient fine-tuning.
 - As a side benefit, you will get some practical experience of working with HuggingFace libraries, which provide useful utilities for preprocessing and training.
 
-<details>
-<summary><b>Hint</b>: Testing.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-Testing.
-</div>
-</details>
-
 ### Requirements
 
-Please submit your solution in [Canvas](). **Submission deadline**: November XYZ.
+Please submit your solution in [Canvas](https://chalmers.instructure.com/courses/31739/assignments/98456). **Submission deadline**: December 6.
 
 Submit a notebook containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the notebook: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 
@@ -94,10 +86,10 @@ os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 ### Creating your classification model for fine-tuning
 
 Use the HuggingFace utility `AutoModelForSequenceClassification` to set up a model that you can fine-tune. Use the `from_pretrained` method with the model name set as above, and `num_labels=2` (because we have two-class classification task). This method carries out the following steps:
-- It loads the pre-trained DistillBERT model from the HuggingFace repository (or from a cached file, if you have used the model before).
-- It sets up untrained layers to map from the DistillBERT output to the two class labels. They will be trained during the fine-tuning process below.
+- It loads the pre-trained DistilBERT model from the HuggingFace repository (or from a cached file, if you have used the model before).
+- It sets up untrained layers to map from the DistilBERT output to the two class labels. They will be trained during the fine-tuning process below.
 
-**Sanity check**: Print the model in a notebook cell. You should see a visual representation of layers the model consists of. You should see the DistillBERT model including embedding layers and Transfomer layers. At the bottom of the list of layers, you should see two layers called `pre_classifier` and `classifier`, which are the newly created classification layers.
+**Sanity check**: Print the model in a notebook cell. You should see a visual representation of layers the model consists of. You should see the DistilBERT model including embedding layers and Transfomer layers. At the bottom of the list of layers, you should see two layers called `pre_classifier` and `classifier`, which are the newly created classification layers.
 
 ### Counting the number of trainable parameters
 
@@ -203,7 +195,7 @@ It's OK to hard-code this part, so that you just enumerate the Q and V parts of 
 </div>
 </details>
 
-**Sanity check**: If you apply this on a DistillBERT model, the result should contain 12 named linear layers.
+**Sanity check**: If you apply this on a DistilBERT model, the result should contain 12 named linear layers.
 
 Then, 
 
