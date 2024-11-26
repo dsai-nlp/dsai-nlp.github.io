@@ -133,7 +133,7 @@ Import `Trainer` from the `transformers` library. Create a `Trainer` using the f
 - `args`: the training arguments you defined above;
 - `train_dataset`: the `train` section of your tokenized `Dataset`;
 - `eval_dataset`: the `eval` section of your tokenized `Dataset`;
-- `compute_metrics`: the evaluation helper function you defined.
+- `compute_metrics`: the evaluation helper function you defined above.
 
 Run the fine-tuning process by calling `train()` on your `Trainer`.
 This will train for the specified number of epochs, computing loss and accuracy after each epoch.
@@ -148,6 +148,14 @@ It is probably a good idea to re-create the model (using `AutoModelForSequenceCl
 </details>
 
 ## Step 2: Tuning the final layers only
+
+<details>
+<summary><b>Hint</b>: Avoiding accidental model reuse, again!</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+Once again, we recommend that you re-create the model using `AutoModelForSequenceClassification.from_pretrained` so that you don't accidentelly work with the model that you fine-tuned in Step 1.
+</div>
+</details>
+
 
 ## Interlude: Replacing layers
 
