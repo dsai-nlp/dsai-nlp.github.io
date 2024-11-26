@@ -171,6 +171,7 @@ To find the parameter tensors to switch off, you can either 1) go into the <code
 </div>
 </details>
 
+Train this model and compare the training speed and classification accuracy to the results from Step 1.
 
 ## Interlude: Replacing layers
 
