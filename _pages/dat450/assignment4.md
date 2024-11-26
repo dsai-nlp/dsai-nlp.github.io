@@ -185,12 +185,11 @@ Define a function `extract_qv_layers` that extracts the query and value linear l
 <summary><b>Hint</b>: How to access the Q and V linear layers.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 <p>
-As we saw earlier, the DistilBERT model consists of a hierarchy of nested submodules. Each of these can be addressed by a fully-qualified name.
-For instance, <code>distilbert.transformer.layer[0].attention.q_lin</code> gives you the Q part of layer 0.
+As we saw earlier, the DistilBERT model consists of a hierarchy of nested submodules. Each of these can be addressed by a fully-qualified string name.
 </p>
 
 <p>
-You can also use get_submodule() to retrieve a layer by a string name. For instance, <code>'distilbert.transformer.layer.0.attention.q_lin'</code> refers to the same layer as above.
+You can use get_submodule() to retrieve a layer by a string name. For instance, <code>'distilbert.transformer.layer.0.attention.q_lin'</code> refers to the Q part of Transformer layer 0.
 </p>
 
 <p>
@@ -198,6 +197,8 @@ It's OK to hard-code this part, so that you just enumerate the Q and V parts of 
 </p>
 </div>
 </details>
+
+**Sanity check**: If you apply this on a DistillBERT model, the result should contain 12 named linear layers.
 
 <pre>
 def replace_layers(model, named_layers):
