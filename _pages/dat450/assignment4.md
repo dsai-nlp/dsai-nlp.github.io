@@ -232,6 +232,19 @@ class LoRALayer(nn.Module):
 
 Here, `W` is the linear layer we are fine-tuning, while `r` and `alpha` are hyperparameters described in section 4.1. of the paper. The `r` parameter controls the parameter efficiency: by setting it to a low value, we save memory but make a rougher approximation. The `alpha` parameter is a scaling factor.
 
+<details>
+<summary><b>Hint</b>: How to initialize <code>A</code> and <code>B</code>.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<p>
+To follow the description closely, we should use the parameter initialization approach recommended in the paper (see Figure 1).
+</p>
+
+<p>
+You can use <code>nn.init.normal_</code> and <code>nn.init.zeros_</code> here.
+</p>
+</div>
+</details>
+
 ### Fine-tuning with LoRA
 
 Set up a model where you replace the query and value linear layers with LoRA layers. Use the following steps:
