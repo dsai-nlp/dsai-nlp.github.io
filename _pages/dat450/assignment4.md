@@ -180,6 +180,7 @@ Train this model and compare the training speed and classification accuracy to t
 ## Interlude: Making a utility to modify an existing model
 
 Define a function `extract_qv_layers` that extracts the query and value linear layers from all Transformer blocks in a DistilBERT model.
+Return a dictionary that maps the component name to the corresponding linear layer.
 
 <details>
 <summary><b>Hint</b>: How to access the Q and V linear layers.</summary>
