@@ -197,7 +197,7 @@ It's OK to hard-code this part, so that you just enumerate the Q and V parts of 
 
 **Sanity check**: If you apply this on a DistilBERT model, the result should contain 12 named linear layers.
 
-Then, 
+We also need a convenience function that puts layers back into a model. The following function does the trick. The `named_layers` argument uses the same format as returned by `extract_qv_layers`.
 
 <pre>
 def replace_layers(model, named_layers):
