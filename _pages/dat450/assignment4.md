@@ -74,20 +74,20 @@ tokenized_imdb_dataset = imdb_dataset.map(tokenize_helper, batched=True)
 
 ### Defining your model
 
-<pre>
-pretrained_model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=2)
-</pre>
+Use the HuggingFace utility `AutoModelForSequenceClassification` to set up a model that you can fine-tune. Use the `from_pretrained` method with the model name set as above, and `num_labels=2` (because we have two-class classification task).
+
+**Sanity check**: Print the model in a notebook cell. You should see a visual representation of layers the model consists of. You should see the DistillBERT model including a number of Transfomer layers. At the bottom of the list of layers, you should see two layers called `pre_classifier` and `classifier`.
 
 ### Counting the number of trainable parameters
 
 Define a function `count_trainable_parameters` that computes the number of floating-point numbers that a given model will update during training.
 
 - The methods `.parameters()` and `.named_parameters()` return a sequence of tensors containing the model parameters.
-- When counting the **trainable** parameters, you should only include those tensors where `requires_grad` is `True`.
+- When counting the **trainable** parameters, you should only include those tensors where `requires_grad` is `True`. That is: we want to exclude tensors containing parameters we will not update during training.
 
 **Sanity check**: The number of trainable parameters for the model above should be 66955010.
 
-### Creating a Trainer
+### Setting up a Trainer
 
 ### Running the Trainer
 
