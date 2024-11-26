@@ -49,6 +49,11 @@ The data for this lab comes from the [Large Movie Review Dataset](https://ai.sta
 
 ## Step 1: Full fine-tuning
 
+In this assignment, we will use a compressed version of BERT called [DistilBERT](https://huggingface.co/docs/transformers/model_doc/distilbert).
+We'll use the "uncased" version: that is, the tokenizer will not distinguish uppercase and lowercase.
+
+In the HuggingFace utilities that require you to specify a model name, you should use `distilbert-base-uncased`.
+
 ### Preprocessing
 
 <details>
@@ -60,6 +65,8 @@ imdb_dataset = load_dataset('csv', data_files = {'train': 'path/to/train.csv', '
 </pre>
 </div>
 </details>
+
+Create a tokenizer using `AutoTokenizer` for the 
 
 <details>
 <summary><b>Hint</b>: Applying a tokenizer to a Dataset.</summary>
@@ -78,7 +85,7 @@ Use the HuggingFace utility `AutoModelForSequenceClassification` to set up a mod
 - It loads the pre-trained DistillBERT model from the HuggingFace repository (or from a cached file, if you have used the model before).
 - It sets up untrained layers to map from the DistillBERT output to the two class labels. They will be trained during the fine-tuning process below.
 
-**Sanity check**: Print the model in a notebook cell. You should see a visual representation of layers the model consists of. You should see the DistillBERT model including a number of Transfomer layers. At the bottom of the list of layers, you should see two layers called `pre_classifier` and `classifier`, which are the newly created classification layers.
+**Sanity check**: Print the model in a notebook cell. You should see a visual representation of layers the model consists of. You should see the DistillBERT model including embedding layers and Transfomer layers. At the bottom of the list of layers, you should see two layers called `pre_classifier` and `classifier`, which are the newly created classification layers.
 
 ### Counting the number of trainable parameters
 
