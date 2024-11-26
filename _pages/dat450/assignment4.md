@@ -83,7 +83,7 @@ pretrained_model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME
 Define a function `count_trainable_parameters` that computes the number of floating-point numbers that a given model will update during training.
 
 - The methods `.parameters()` and `.named_parameters()` return a sequence of tensors containing the model parameters.
--
+- When counting the **trainable** parameters, you should only include those tensors where `requires_grad` is `True`.
 - 
 
 <details>
