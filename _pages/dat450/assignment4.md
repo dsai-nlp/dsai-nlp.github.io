@@ -106,6 +106,13 @@ Define a function `count_trainable_parameters` that computes the number of float
 
 **Sanity check**: The number of trainable parameters for the model above should be 66955010.
 
+### Preparing for training
+
+The class `TrainingArguments` defines some parameters controlling the training process. We'll mostly use default values here. You only need to set the following parameters:
+- `output_dir`: the name of some directory where the `Trainer` will keep its file.
+- `num_train_epochs`: the number of training epochs.
+- `eval_strategy`: set this to `epoch` to see evaluation scores after each epoch.
+
 ### Training the model
 
 Import `Trainer` from the `transformers` library. Create a `Trainer` using the following arguments:
@@ -115,7 +122,10 @@ Import `Trainer` from the `transformers` library. Create a `Trainer` using the f
 - `eval_dataset`: the `eval` section of your tokenized `Dataset`;
 - `compute_metrics`: the evaluation helper function you defined.
 
-Run the fine-tuning process by calling `train()` on your `Trainer`. This should run the
+Run the fine-tuning process by calling `train()` on your `Trainer`.
+This will train for the specified number of epochs, computing loss and accuracy after each epoch.
+
+After training, you may call `save_model` on the `Trainer` to save the model's parameters. In this way, you can reload it later without having to retrain it.
 
 <details>
 <summary><b>Hint</b>: Avoiding accidental model reuse.</summary>
