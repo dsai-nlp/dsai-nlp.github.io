@@ -219,7 +219,7 @@ def replace_layers(model, named_layers):
 
 We now define a new type of layer that will be used as a drop-in replacement for a regular linear layer.
 
-In [the paper by Hu et al. (2021)](https://arxiv.org/abs/2106.09685), the structure is presented visually in Figure 1, and equation (3) shows the same idea.
+In [the paper by Hu et al. (2021)](https://arxiv.org/pdf/2106.09685), the structure is presented visually in Figure 1, and equation (3) shows the same idea.
 
 Start from the following skeleton:
 
