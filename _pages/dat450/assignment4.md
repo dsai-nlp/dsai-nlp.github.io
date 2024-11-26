@@ -50,12 +50,13 @@ The data for this lab comes from the [Large Movie Review Dataset](https://ai.sta
 ## Step 1: Full fine-tuning
 
 In this assignment, we will use a compressed version of BERT called [DistilBERT](https://huggingface.co/docs/transformers/model_doc/distilbert).
-We'll use the "uncased" version: that is, the tokenizer will not distinguish uppercase and lowercase.
+We'll use the uncased version: that is, the tokenizer will not distinguish uppercase and lowercase.
 
 In the HuggingFace utilities that require you to specify a model name, you should use `distilbert-base-uncased`.
 
 ### Preprocessing
 
+[Create a Dataset](https://huggingface.co/docs/datasets/create_dataset) by loading the training and evaluation CSV files you previously downloaded.
 <details>
 <summary><b>Hint</b>: Creating a Dataset.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
@@ -66,7 +67,7 @@ imdb_dataset = load_dataset('csv', data_files = {'train': 'path/to/train.csv', '
 </div>
 </details>
 
-Create a tokenizer using `AutoTokenizer` for the 
+Load the pre-trained tokenizer using `AutoTokenizer` and apply it to the Dataset.
 
 <details>
 <summary><b>Hint</b>: Applying a tokenizer to a Dataset.</summary>
