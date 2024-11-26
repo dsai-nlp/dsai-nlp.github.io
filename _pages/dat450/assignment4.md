@@ -113,6 +113,19 @@ The class `TrainingArguments` defines some parameters controlling the training p
 - `num_train_epochs`: the number of training epochs.
 - `eval_strategy`: set this to `epoch` to see evaluation scores after each epoch.
 
+In addition, we need to define a helper function that will be used for evaluation after each epoch. We use a utility from the Evaluate library for this:
+
+<pre>
+import evaluate
+
+accuracy_scorer = evaluate.load('accuracy')
+
+def evaluation_helper(eval_pred):
+    logits, labels = eval_pred
+    predictions = logits.argmax(axis=-1)
+    return accuracy_scorer.compute(predictions=predictions, references=labels)
+</pre>
+
 ### Training the model
 
 Import `Trainer` from the `transformers` library. Create a `Trainer` using the following arguments:
