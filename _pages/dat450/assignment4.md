@@ -12,8 +12,10 @@ nav_order: 4
 In this assignment, TODO
 
 ### Pedagogical purposes of this assignment
-- x
-- y
+- You will fine-tune a pre-trained Transformer model for a *classification* task (sentiment analysis of movie reviews).
+- You will investigate how the accuracy and computational efficiency are affected by the different methods.
+- In particular, we are going to consider the LoRA method for parameter-efficient fine-tuning.
+- As a side benefit, you will get some practical experience of working with HuggingFace libraries, which provide useful utilities for preprocessing and training.
 
 <details>
 <summary><b>Hint</b>: Testing.</summary>
@@ -221,7 +223,7 @@ To implement the LoRA approach, we define a new type of layer that will be used 
 
 In [the paper by Hu et al. (2021)](https://arxiv.org/pdf/2106.09685), the structure is presented visually in Figure 1, and equation (3) shows the same idea.
 
-Start from the following skeleton and implement the missing pieces:
+Start from the following skeleton and fill in the missing pieces:
 
 <pre>
 import torch.nn as nn
