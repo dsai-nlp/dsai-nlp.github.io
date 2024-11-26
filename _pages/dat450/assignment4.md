@@ -72,15 +72,17 @@ Load the pre-trained tokenizer using `AutoTokenizer` and apply it to the Dataset
 <details>
 <summary><b>Hint</b>: Applying a tokenizer to a Dataset.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+It's easiest if we create a helper function that applies the tokenizer to the right Dataset columns and with the right parameters.
 <pre>
 def tokenize_helper(batch):
     return tokenizer(batch['review'], padding=True, truncation=True)
 tokenized_imdb_dataset = imdb_dataset.map(tokenize_helper, batched=True)
 </pre>
+This step will create new Dataset columns `input_ids` and `attention_mask`.
 </div>
 </details>
 
-**Note**: you may receive some warning caused by parallelism in the tokenizer. To get rid of the warnings, you can use the following workaround.
+**Note**: you may receive some warnings caused by parallelism in the tokenizer. To get rid of the warnings, you can use the following workaround.
 
 <pre>
 import os
