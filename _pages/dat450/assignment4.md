@@ -45,7 +45,7 @@ If you use Colab, you will need to install Datasets and Evaluate, while Transfor
 
 ### Getting the files
 
-The data for this lab comes from the [Large Movie Review Dataset](https://ai.stanford.edu/~amaas/data/sentiment/). The full dataset consists of 50,000 highly polar movie reviews collected from the Internet Movie Database (IMDB). Here, we use a random sample consisting of 2,000 reviews for training and 500 reviews for evaluation.
+The data we use in this assignment is a subset of the [Large Movie Review Dataset](https://ai.stanford.edu/~amaas/data/sentiment/). The full dataset consists of 50,000 highly polar movie reviews collected from the Internet Movie Database (IMDB). We use a random sample consisting of 2,000 reviews for training and 500 reviews for evaluation.
 
 ## Step 1: Full fine-tuning
 
@@ -106,9 +106,23 @@ Define a function `count_trainable_parameters` that computes the number of float
 
 **Sanity check**: The number of trainable parameters for the model above should be 66955010.
 
-### Setting up a Trainer
+### Training the model
 
-### Running the Trainer
+Import `Trainer` from the `transformers` library. Create a `Trainer` using the following arguments:
+- `model`: the model that you are fine-tuning;
+- `args`: the training arguments you defined above;
+- `train_dataset`: the `train` section of your tokenized `Dataset`;
+- `eval_dataset`: the `eval` section of your tokenized `Dataset`;
+- `compute_metrics`: the evaluation helper function you defined.
+
+Run the fine-tuning process by calling `train()` on your `Trainer`. This should run the
+
+<details>
+<summary><b>Hint</b>: Avoiding accidental model reuse.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+It is probably a good idea to re-create the model (using `AutoModelForSequenceClassification.from_pretrained`) before each time you train it. Otherwise, you may accidentally train a model that has already been trained.
+</div>
+</details>
 
 ## Step 2: Tuning the final layers only
 
