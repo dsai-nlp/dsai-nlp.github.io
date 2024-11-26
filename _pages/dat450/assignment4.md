@@ -28,11 +28,63 @@ Please submit your solution in [Canvas](). **Submission deadline**: November XYZ
 
 Submit a notebook containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the notebook: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 
+### Acknowledgement
+
+This assignment is a lightly modified version of a similar assignment by Marco Kuhlmann.
+
 ## Step 0: Preliminaries
 
-Make sure you have access to your solution for Programming Assignment 1 since you will reuse some parts.
+### Libraries
+In this assignment, we will rely on a set of libraries from the [HuggingFace](https://huggingface.co/) community:
+- [Transformers](https://huggingface.co/docs/transformers/index)
+- [Datasets](https://huggingface.co/docs/datasets/index)
+- [Evaluate](https://huggingface.co/docs/evaluate/en/index)
 
-Copy the tokenization and integer encoding part into a new notebook.
+Make sure all libraries are installed in your environment. 
+If you use Colab, you will need to install Datasets and Evaluate, while Transformers is included in the pre-installed environment.
 
-## Step 1: XXX
+### Getting the files
+
+The data for this lab comes from the [Large Movie Review Dataset](https://ai.stanford.edu/~amaas/data/sentiment/). The full dataset consists of 50,000 highly polar movie reviews collected from the Internet Movie Database (IMDB). Here, we use a random sample consisting of 2,000 reviews for training and 500 reviews for evaluation.
+
+## Step 1: Full fine-tuning
+
+### Preprocessing
+
+<details>
+<summary><b>Hint</b>: Creating a Dataset.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<pre>
+from datasets import load_dataset
+imdb_dataset = load_dataset('csv', data_files = {'train': 'path/to/train.csv', 'eval': 'path/to/eval.csv'})
+</pre>
+</div>
+</details>
+
+<details>
+<summary><b>Hint</b>: Applying a tokenizer to a Dataset.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<pre>
+def tokenize_helper(batch):
+    return tokenizer(batch['review'], padding=True, truncation=True)
+tokenized_imdb_dataset = imdb_dataset.map(tokenize_helper, batched=True)
+</pre>
+</div>
+</details>
+
+### Defining your model
+
+### Creating a Trainer
+
+### Running the Trainer
+
+## Step 2: Tuning the final layers only
+
+## Interlude: Replacing layers
+
+## Step 3: Fine-tuning with LoRA
+
+
+
+
 
