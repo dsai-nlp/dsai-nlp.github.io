@@ -143,16 +143,31 @@ After training, you may call `save_model` on the `Trainer` to save the model's p
 <details>
 <summary><b>Hint</b>: Avoiding accidental model reuse.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-It is probably a good idea to re-create the model (using `AutoModelForSequenceClassification.from_pretrained`) before each time you train it. Otherwise, you may accidentally train a model that has already been trained.
+It is probably a good idea to re-create the model (using <code>AutoModelForSequenceClassification.from_pretrained</code>) before each time you train it. Otherwise, you may accidentally train a model that has already been trained.
 </div>
 </details>
 
 ## Step 2: Tuning the final layers only
 
+Even with a minimal model such as DistilBERT, fine-tuning the full model is rather time-consuming. We will now consider fine-tuning approaches where we only work with a subset of the model's parameters.
+
+Set up the model once again. Disable gradient computation for all parameter tensors except those that are trained from scratch. That is: the two layers in the classification head will be updated during training, while the DistilBERT model will be kept fixed.
+
+**Sanity check**: The number of trainable parameters for this model should be 592130.
+
 <details>
 <summary><b>Hint</b>: Avoiding accidental model reuse, again!</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-Once again, we recommend that you re-create the model using `AutoModelForSequenceClassification.from_pretrained` so that you don't accidentelly work with the model that you fine-tuned in Step 1.
+Once again, we recommend that you re-create the model using <code>AutoModelForSequenceClassification.from_pretrained</code> before this step, so that you don't accidentelly work with the model that you fine-tuned in Step 1.
+</div>
+</details>
+
+<details>
+<summary><b>Hint</b>: How to disable gradient computation for a parameter tensor.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+For a parameter tensor in a model, we can set the attribute <code>requires_grad</code> to <code>False</code>, which means that during backpropagation, gradients will not be computed with respect to these parameters. So the training process will not change these parameters.
+
+To find the parameter tensors to switch off, you can either 1) go into the <code>distilbert</code> component and iterate through its <code>parameters</code>, or 2) go through all the model's named parameters, and switch off all parameter tensors except <code>classfier</code> and <code>pre_classifier</code>.
 </div>
 </details>
 
