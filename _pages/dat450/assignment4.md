@@ -230,6 +230,8 @@ class LoRALayer(nn.Module):
         raise NotImplementedError
 </pre>
 
+Here, `W` is the linear layer we are fine-tuning, while `r` and `alpha` are hyperparameters described in section 4.1. of the paper. The `r` parameter controls the parameter efficiency: by setting it to a low value, we save memory but make a rougher approximation. The `alpha` parameter is a scaling factor.
+
 ### Fine-tuning with LoRA
 
 Set up a model where you replace the query and value linear layers with LoRA layers. Use the following steps:
