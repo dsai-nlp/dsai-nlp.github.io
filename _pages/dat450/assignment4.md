@@ -217,11 +217,17 @@ def replace_layers(model, named_layers):
 
 ### Implementing the LoRA layer
 
+We now define a new type of layer that will be used as a drop-in replacement for a regular linear layer.
+
+In [the paper by Hu et al. (2021)](https://arxiv.org/abs/2106.09685), the structure is presented visually in Figure 1, and equation (3) shows the same idea.
+
+Start from the following skeleton:
+
 <pre>
 import torch.nn as nn
 
 class LoRALayer(nn.Module):
-    def __init__(self, W, rank=12, alpha=24):
+    def __init__(self, W, r, alpha):
         super().__init__()
         # TODO: Add your code here
 
