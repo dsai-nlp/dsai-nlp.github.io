@@ -177,7 +177,9 @@ To find the parameter tensors to switch off, you can either 1) go into the <code
 
 Train this model and compare the training speed and classification accuracy to the results from Step 1.
 
-## Interlude: Making a utility to modify an existing model
+## Step 3: Fine-tuning with LoRA
+
+### Utilities for modifying models
 
 Define a function `extract_qv_layers` that extracts the query and value linear layers from all Transformer blocks in a DistilBERT model.
 Return a dictionary that maps the component name to the corresponding linear layer.
@@ -201,6 +203,8 @@ It's OK to hard-code this part, so that you just enumerate the Q and V parts of 
 
 **Sanity check**: If you apply this on a DistillBERT model, the result should contain 12 named linear layers.
 
+Then, 
+
 <pre>
 def replace_layers(model, named_layers):
     for name, layer in named_layers.items():
@@ -211,7 +215,7 @@ def replace_layers(model, named_layers):
         setattr(submodule, components[-1], layer)
 </pre>
 
-## Step 3: Fine-tuning with LoRA
+### Implementing the LoRA layer
 
 <pre>
 import torch.nn as nn
@@ -226,6 +230,13 @@ class LoRALayer(nn.Module):
         raise NotImplementedError
 </pre>
 
+### Fine-tuning with LoRA
 
+Set up a model where you replace the query and value linear layers with LoRA layers. Use the following steps:
+- First use `extract_qv_layers` to get the relevant linear layers.
+- Each of the linear layers in the returned dictionary should be wrapped inside a LoRA layer.
+- Then use `replace_layers` to put them back into the model.
 
+**Sanity check**: Use your function <code>count_trainable_parameters</code>. The number of trainable parameters should be less than in Step 1 but more than in Step 2. The exact number will depend on the rank.
 
+Train this model and compare the training speed and classification accuracy to the results from Steps 1 and 2.
