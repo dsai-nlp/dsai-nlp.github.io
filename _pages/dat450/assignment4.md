@@ -74,9 +74,11 @@ tokenized_imdb_dataset = imdb_dataset.map(tokenize_helper, batched=True)
 
 ### Defining your model
 
-Use the HuggingFace utility `AutoModelForSequenceClassification` to set up a model that you can fine-tune. Use the `from_pretrained` method with the model name set as above, and `num_labels=2` (because we have two-class classification task).
+Use the HuggingFace utility `AutoModelForSequenceClassification` to set up a model that you can fine-tune. Use the `from_pretrained` method with the model name set as above, and `num_labels=2` (because we have two-class classification task). This method carries out the following steps:
+- It loads the pre-trained DistillBERT model from the HuggingFace repository (or from a cached file, if you have used the model before).
+- It sets up untrained layers to map from the DistillBERT output to the two class labels. They will be trained during the fine-tuning process below.
 
-**Sanity check**: Print the model in a notebook cell. You should see a visual representation of layers the model consists of. You should see the DistillBERT model including a number of Transfomer layers. At the bottom of the list of layers, you should see two layers called `pre_classifier` and `classifier`.
+**Sanity check**: Print the model in a notebook cell. You should see a visual representation of layers the model consists of. You should see the DistillBERT model including a number of Transfomer layers. At the bottom of the list of layers, you should see two layers called `pre_classifier` and `classifier`, which are the newly created classification layers.
 
 ### Counting the number of trainable parameters
 
