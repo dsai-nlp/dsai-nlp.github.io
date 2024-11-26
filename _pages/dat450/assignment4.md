@@ -74,6 +74,26 @@ tokenized_imdb_dataset = imdb_dataset.map(tokenize_helper, batched=True)
 
 ### Defining your model
 
+<pre>
+pretrained_model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=2)
+</pre>
+
+### Counting the number of trainable parameters
+
+Define a function `count_trainable_parameters` that computes the number of floating-point numbers that a given model will update during training.
+
+- The methods `.parameters()` and `.named_parameters()` return a sequence of tensors containing the model parameters.
+-
+- 
+
+<details>
+<summary><b>Hint</b>: Applying a tokenizer to a Dataset.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+</div>
+</details>
+
+**Sanity check**: The number of trainable parameters for the model above should be 66955010.
+
 ### Creating a Trainer
 
 ### Running the Trainer
