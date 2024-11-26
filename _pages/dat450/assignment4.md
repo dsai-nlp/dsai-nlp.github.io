@@ -84,13 +84,6 @@ Define a function `count_trainable_parameters` that computes the number of float
 
 - The methods `.parameters()` and `.named_parameters()` return a sequence of tensors containing the model parameters.
 - When counting the **trainable** parameters, you should only include those tensors where `requires_grad` is `True`.
-- 
-
-<details>
-<summary><b>Hint</b>: Applying a tokenizer to a Dataset.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-</div>
-</details>
 
 **Sanity check**: The number of trainable parameters for the model above should be 66955010.
 
