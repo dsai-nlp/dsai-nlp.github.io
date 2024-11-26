@@ -12,9 +12,9 @@ nav_order: 4
 In this assignment, you will fine-tune a pre-trained Transformer model for a *classification* task: sentiment analysis of movie reviews. 
 
 ### Pedagogical purposes of this assignment
-- You will investigate how the accuracy and computational efficiency are affected by the different fine-tuning methods.
-- In particular, we are going to consider the LoRA method for parameter-efficient fine-tuning.
-- As a side benefit, you will get some practical experience of working with HuggingFace libraries, which provide useful utilities for preprocessing and training.
+- You will see how the accuracy and computational efficiency are affected by the different fine-tuning methods.
+- You will learn about the LoRA method for parameter-efficient fine-tuning.
+- You will get some practical experience of working with HuggingFace libraries, which provide useful utilities for preprocessing and training.
 
 ### Requirements
 
