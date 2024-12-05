@@ -32,13 +32,19 @@ It is not compulsory to submit the preliminary description, but we strongly reco
 
 ## The report and the presentation
 
-When writing your report, please use one of these style templates (available for Word and LaTeX). The text should be structured as a typical academic research paper, including an abstract, statement of problem, method description, experiments and results, and a conclusion. We will not enforce any page limits strictly, but we think that the optimal length of a report is something similar to a typical short research paper: around 4 pages in a two-column format, plus references.
+When writing your report, please use one of [these style templates](https://www.cse.chalmers.se/~richajo/dit866/files/cth_course_template.zip) (available for Word and LaTeX). The text should be structured as a typical academic research paper, including an abstract, statement of problem, method description, experiments and results, and a conclusion.
 
-For examples of how such a text can look, take a look at some [short papers published at the ACL conference](https://aclanthology.org/events/acl-2024/#2024acl-short). In addition, there are some examples of project reports from previous instances of this course provided [in this directory](https://www.cse.chalmers.se/~richajo/dat450/assignments/examples/). (Please note that the 2020 examples used another document style.)
+The report should follow the format required for a **short paper** submission at a conferences organized by the ACL. You can read [here](https://acl-org.github.io/ACLPUB/formatting.html) about the formatting requirements, but in summary:
+- The main body of text must be **at most 4 pages**. This should include everything required to understand what you have done and the key conclusions.
+- After the main text, you must include two short sections called **Limitations** and **Ethics statement**. The Limitations section should briefly discuss issues you think could potentially be improved in your work. The Ethics statement should mention any ethics-related issue you think is relevant: this could include something about the data or potential misuse of the technology you have developed; alternatively, describe why you think there are no ethical issues in your work.
+- In addition, you may optionally include additional material in an **appendix**. Here, you can put additional details that are not essential for understanding the work, but that you want to include for completeness. (Examples of what to put here could be a detailed list of hyperparameter settings, example outputs, some extra evaluation, etc.)
+- The limitations, ethics statement, bibliography, and appendix do not count towards the limit of 4 pages.
 
-Please submit the project report via the Canvas page. The deadline for submitting the report is January XX.
+For examples of how such a text can look, take a look at some [short papers published at the ACL conference](https://aclanthology.org/events/acl-2024/#2024acl-short). In addition, there are some examples of project reports from previous instances of this course provided [in this directory](https://www.cse.chalmers.se/~richajo/dat450/project_examples/).
 
-In addition, you should prepare a presentation of up to 10 minutes. You should create a recording of this presentation and make it available for other students to see. You can present the project even if your project work and report aren't finished. Please submit the recording of your oral presentation via this Canvas page. The deadline for making your recording available is January YY. Finally, you will be expected to watch the presentations by at least two other groups and provide some feedback. 
+Please submit the project report [via the Canvas page](https://chalmers.instructure.com/courses/31739/assignments/100314). The deadline for submitting the report is **January 19**.
+
+In addition, you should prepare a presentation of up to 10 minutes. You should create a recording of this presentation and make it available for other students to see. You can present the project even if your project work and report aren't finished. Please submit the recording of your oral presentation on [this Canvas page](https://chalmers.instructure.com/courses/31739/assignments/100313). The deadline for making your recording available is *January 14*. Finally, you will be expected to watch the presentations by at least two other groups and provide some feedback. 
 
 ## Grading
 
