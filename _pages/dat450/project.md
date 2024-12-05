@@ -48,7 +48,7 @@ Please submit the project report [via the Canvas page](https://chalmers.instruct
 
 You should prepare a presentation of up to 10 minutes. This presentation will be recorded and made available for other students to see. You can present the project even if your project work and report aren't finished. Please submit the recording of your oral presentation on [this Canvas page](https://chalmers.instructure.com/courses/31739/assignments/100313). The deadline for making your recording available is *January 14*.
 
-Finally, you will be expected to watch the presentations by at least two other groups and provide some feedback. 
+Finally, you will be expected to watch the presentations by at two other groups and provide some feedback. There are some suggestions for how to write the feedback on [the Canvas submission page](https://chalmers.instructure.com/courses/31739/quizzes/23291).
 
 ## Grading
 
