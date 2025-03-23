@@ -9,21 +9,21 @@ nav_order: 2
 # Events
 
 On this page, we post information about upcoming events within the NLP@DSAI group.
-<!--we hold  regular events at NLP@DSAI: a weekly fika and a
-reading group.
-
-If you have a question about either, feel free to send an email to:
-[nicolas.audinet@chalmers.se](mailto:nicolas.audinet@chalmers.se).
--->
 
 <!--
+we hold  regular events at NLP@DSAI: a weekly fika and a
+reading group.
+If you have a question about either, feel free to send an email to:
+[nicolas.audinet@chalmers.se](mailto:nicolas.audinet@chalmers.se).
+
 ## Fika
 
 We like to have a weekly fika together at **15:00 on Wednesday afternoons** in
 the 8th floor lunchroom in the EDIT building. We sometimes have a particular
 topic for these fikas, but mostly we tend to just catch up and talk about what
 we have on our mind. Come join us if you'd like to get to know the group a bit
-more!-->
+more!
+-->
 
 ## Reading Group
 
