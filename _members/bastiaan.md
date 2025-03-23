@@ -2,7 +2,7 @@
 name: Bastiaan Bruinsma
 image: "https://github.com/SCJBruinsma.png"
 position: Post Doc
-state: current
+state: alumni
 start-date: 2022-01-01
 end-date:
 pronouns: he/his
