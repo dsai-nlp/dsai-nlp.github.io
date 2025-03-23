@@ -8,6 +8,7 @@
   author = {Hagstr\"{o}m, Lovisa and Ercong Nie and Ruben Halifa and Helmut Schmid and Richard Johansson and Alexander Junge},
   year = {2025},
   pdf = {https://arxiv.org/pdf/2502.17036},
+  abstract = {Language model (LM) re-rankers are used to refine retrieval results for retrieval-augmented generation (RAG). They are more expensive than lexical matching methods like BM25 but assumed to better process semantic information. To understand whether LM re-rankers always live up to this assumption, we evaluate 6 different LM re-rankers on the NQ, LitQA2 and DRUID datasets. Our results show that LM re-rankers struggle to outperform a simple BM25 re-ranker on DRUID. Leveraging a novel separation metric based on BM25 scores, we explain and identify re-ranker errors stemming from lexical dissimilarities. We also investigate different methods to improve LM re-ranker performance and find these methods mainly useful for NQ. Taken together, our work identifies and explains weaknesses of LM re-rankers and points to the need for more adversarial and realistic datasets for their evaluation.}
 }
 
 @article{saynova2025fact,
@@ -17,6 +18,7 @@
   author = {Saynova, Denitsa and Hagstr\"{o}m, Lovisa and Johansson, Moa and Johansson, Richard and Kuhlmann, Marco},
   year = {2025},
   pdf = {https://arxiv.org/pdf/2410.14405},
+  abstract = {Language models (LMs) can make a correct prediction based on many possible signals in a prompt, not all corresponding to recall of factual associations. However, current interpretations of LMs fail to take this into account. For example, given the query "Astrid Lindgren was born in" with the corresponding completion "Sweden", no difference is made between whether the prediction was based on knowing where the author was born or assuming that a person with a Swedish-sounding name was born in Sweden. In this paper, we present a model-specific recipe - PrISM - for constructing datasets with examples of four different prediction scenarios: generic language modeling, guesswork, heuristics recall and exact fact recall. We apply two popular interpretability methods to the scenarios: causal tracing (CT) and information flow analysis. We find that both yield distinct results for each scenario. Results for exact fact recall and generic language modeling scenarios confirm previous conclusions about the importance of mid-range MLP sublayers for fact recall, while results for guesswork and heuristics indicate a critical role of late last token position MLP sublayers. In summary, we contribute resources for a more extensive and granular study of fact completion in LMs, together with analyses that provide a more nuanced understanding of how LMs process fact-related queries.}
 }
 
 
@@ -48,6 +50,29 @@
   address = {Mexico City, Mexico},
   pdf = {https://aclanthology.org/2024.nlpcss-1.5.pdf},
   abstract = {We investigate the potential of large language models (LLMs) to disentangle text variables--to remove the textual traces of an undesired forbidden variable in a task sometimes known as text distillation and closely related to the fairness in AI and causal inference literature. We employ a range of various LLM approaches in an attempt to disentangle text by identifying and removing information about a target variable while preserving other relevant signals. We show that in the strong test of removing sentiment, the statistical association between the processed text and sentiment is still detectable to machine learning classifiers post-LLM-disentanglement. Furthermore, we find that human annotators also struggle to disentangle sentiment while preserving other semantic content. This suggests there may be limited separability between concept variables in some text contexts, highlighting limitations of methods relying on text-level transformations and also raising questions about the robustness of disentanglement methods that achieve statistical independence in representation space.}
+}
+
+@inproceedings{bruinsma2024setting,
+  author = {Bastiaan Bruinsma and Annika Fred\'{e}n and Kajsa Hansson and Moa Johansson and Pasko Kisi\'{c}-Merino and Denitsa Saynova},
+  title = {Setting the {AI} Agenda -- Evidence from {S}weden in the {ChatGPT} Era},
+  year = {2024},
+  booktitle = {Proceedings of AEQUITAS 2024: Workshop on Fairness and Bias in AI},
+  url = {https://ceur-ws.org/Vol-3808/paper1.pdf},
+  address = {Santiago de Compostela, Spain},
+  pdf = {https://ceur-ws.org/Vol-3808/paper1.pdf},
+  abstract = {This paper examines the development of the Artificial Intelligence (AI) meta-debate in Sweden before and after the release of ChatGPT. From the perspective of agenda-setting theory, we propose that it is an elite outside of party politics that is leading the debate – i.e. that the politicians are relatively silent when it comes to this rapid development. We also suggest that the debate has become more substantive and risk-oriented in recent years. To investigate this claim, we draw on an original dataset of elite-level documents from the early 2010s to the present, using op-eds published in a number of leading Swedish  newspapers. By conducting a qualitative content analysis of these materials, our preliminary findings lend support to the expectation that an academic, rather than a political elite is steering the debate.},
+}
+
+@article{freden2024word,
+author = {Annika Fred\'{e}n and Moa Johansson and Denitsa Saynova},
+title = {Word embeddings on ideology and issues from {S}wedish parliamentarians' motions: a comparative approach},
+journal = {Journal of Elections, Public Opinion and Parties},
+pages = {1--22},
+year = {2024},
+publisher = {Routledge},
+doi = {10.1080/17457289.2024.2433979},
+url = {https://doi.org/10.1080/17457289.2024.2433979},
+pdf = {https://doi.org/10.1080/17457289.2024.2433979},
 }
 
 @inproceedings{johansson2024what,
@@ -156,6 +181,27 @@
     pdf = "https://aclanthology.org/2023.nodalida-1.12.pdf",
     pages = "103--112",
     abstract = "We address two understudied areas related to explainability for neural text models. First, \textit{class explanations}. What features are descriptive across a class, rather than explaining single input instances? Second, the \textit{type of features} that are used for providing explanations. Does the explanation involve the statistical pattern of word usage or the presence of domain-specific content words? Here, we present a method to extract both class explanations and strategies to differentiate between two types of explanations {--} domain-specific signals or statistical variations in frequencies of common words. We demonstrate our method using a case study in which we analyse transcripts of political debates in the Swedish Riksdag.",
+}
+
+@inproceedings{bonafilia2023sudden,
+    title = "Sudden Semantic Shifts in {S}wedish {NATO} discourse",
+    author = "Bonafilia, Brian  and
+      Bruinsma, Bastiaan  and
+      Saynova, Denitsa  and
+      Johansson, Moa",
+    editor = "Padmakumar, Vishakh  and
+      Vallejo, Gisela  and
+      Fu, Yao",
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 4: Student Research Workshop)",
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.acl-srw.28/",
+    pdf = "https://aclanthology.org/2023.acl-srw.28.pdf",
+    doi = "10.18653/v1/2023.acl-srw.28",
+    pages = "184--193",
+    abstract = "In this paper, we investigate a type of semantic shift that occurs when a sudden event radically changes public opinion on a topic. Looking at Sweden`s decision to apply for NATO membership in 2022, we use word embeddings to study how the associations users on Twitter have regarding NATO evolve. We identify several changes that we successfully validate against real-world events. However, the low engagement of the public with the issue often made it challenging to distinguish true signals from noise. We thus find that domain knowledge and data selection are of prime importance when using word embeddings to study semantic shifts."
 }
 
 # 2022
