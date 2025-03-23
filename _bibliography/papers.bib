@@ -21,6 +21,16 @@
   abstract = {Language models (LMs) can make a correct prediction based on many possible signals in a prompt, not all corresponding to recall of factual associations. However, current interpretations of LMs fail to take this into account. For example, given the query "Astrid Lindgren was born in" with the corresponding completion "Sweden", no difference is made between whether the prediction was based on knowing where the author was born or assuming that a person with a Swedish-sounding name was born in Sweden. In this paper, we present a model-specific recipe - PrISM - for constructing datasets with examples of four different prediction scenarios: generic language modeling, guesswork, heuristics recall and exact fact recall. We apply two popular interpretability methods to the scenarios: causal tracing (CT) and information flow analysis. We find that both yield distinct results for each scenario. Results for exact fact recall and generic language modeling scenarios confirm previous conclusions about the importance of mid-range MLP sublayers for fact recall, while results for guesswork and heuristics indicate a critical role of late last token position MLP sublayers. In summary, we contribute resources for a more extensive and granular study of fact completion in LMs, together with analyses that provide a more nuanced understanding of how LMs process fact-related queries.}
 }
 
+@article{saynova2025identifying,
+  title = {Identifying Non-Replicable Social Science Studies with Language Models},
+  url = {https://arxiv.org/abs/2503.10671},
+  journal = {arXiv preprint arXiv:2503.10671},
+  author = {Denitsa Saynova and Kajsa Hansson and Bastiaan Bruinsma and Annika Fred\'{e}n and Moa Johansson},
+  year = {2025},
+  pdf = {https://arxiv.org/pdf/2503.10671},
+  abstract = {In this study, we investigate whether LLMs can be used to indicate if a study in the behavioural social sciences is replicable. Using a dataset of 14 previously replicated studies (9 successful, 5 unsuccessful), we evaluate the ability of both open-source (Llama 3 8B, Qwen 2 7B, Mistral 7B) and proprietary (GPT-4o) instruction-tuned LLMs to discriminate between replicable and non-replicable findings. We use LLMs to generate synthetic samples of responses from behavioural studies and estimate whether the measured effects support the original findings. When compared with human replication results for these studies, we achieve F1 values of up to 77\% with Mistral 7B, 67\% with GPT-4o and Llama 3 8B, and 55\% with Qwen 2 7B, suggesting their potential for this task. We also analyse how effect size calculations are affected by sampling temperature and find that low variance (due to temperature) leads to biased effect estimates.},
+}
+
 
 # 2024
 @inproceedings{farahani2024deciphering,
