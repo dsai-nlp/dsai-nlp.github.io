@@ -44,7 +44,7 @@ If you would like to join the reading group, please send an email to
 
 ### Upcoming meetings
 
-- 2025-04-10, 10:00&ndash;12:00 - [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948)
+- TBD - [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948)
 
 ### Previous meetings
 
