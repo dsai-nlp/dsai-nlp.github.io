@@ -8,13 +8,18 @@ nav_order: 2
 
 # Events
 
+Our reading group has a new home!
+
+👉 **We've moved all info and updates about our events and reading group to [GitHub Discussions](https://github.com/orgs/dsai-nlp/discussions).**
+
+------
+
 On this page, we post information about upcoming events within the NLP@DSAI group.
 
 <!--
 we hold  regular events at NLP@DSAI: a weekly fika and a
 reading group.
-If you have a question about either, feel free to send an email to:
-[nicolas.audinet@chalmers.se](mailto:nicolas.audinet@chalmers.se).
+If you have a question about either, feel free to send an email to our coordinator.
 
 ## Fika
 
@@ -39,8 +44,7 @@ notes. We are committed to maintaining a respectful and positive atmosphere,
 where members are encouraged to critique ideas constructively and listen
 actively to each other.
 
-If you would like to join the reading group, please send an email to
-[nicolas.audinet@chalmers.se](mailto:nicolas.audinet@chalmers.se).
+If you would like to join the reading group, please send an email to our coordinator.
 
 ### Upcoming meetings
 
