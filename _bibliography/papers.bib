@@ -1,6 +1,29 @@
 ---
 ---
-# 2025
+
+@inproceedings{saynova2025fact,
+  title = {Fact Recall, Heuristics or Pure Guesswork? {P}recise Interpretations of Language Models for Fact Completion},
+  url = {https://arxiv.org/abs/2410.14405},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2025},
+  author = {Saynova, Denitsa and Hagstr\"{o}m, Lovisa and Johansson, Moa and Johansson, Richard and Kuhlmann, Marco},
+  year = {2025},
+  note = {to appear},
+  pdf = {https://arxiv.org/pdf/2410.14405},
+  abstract = {Language models (LMs) can make a correct prediction based on many possible signals in a prompt, not all corresponding to recall of factual associations. However, current interpretations of LMs fail to take this into account. For example, given the query "Astrid Lindgren was born in" with the corresponding completion "Sweden", no difference is made between whether the prediction was based on knowing where the author was born or assuming that a person with a Swedish-sounding name was born in Sweden. In this paper, we present a model-specific recipe - PrISM - for constructing datasets with examples of four different prediction scenarios: generic language modeling, guesswork, heuristics recall and exact fact recall. We apply two popular interpretability methods to the scenarios: causal tracing (CT) and information flow analysis. We find that both yield distinct results for each scenario. Results for exact fact recall and generic language modeling scenarios confirm previous conclusions about the importance of mid-range MLP sublayers for fact recall, while results for guesswork and heuristics indicate a critical role of late last token position MLP sublayers. In summary, we contribute resources for a more extensive and granular study of fact completion in LMs, together with analyses that provide a more nuanced understanding of how LMs process fact-related queries.}
+}
+
+@inproceedings{hagstrom2025reality,
+  title = {A Reality Check on Context Utilisation for Retrieval-Augmented Generation
+},
+  url = {https://arxiv.org/abs/2412.17031},
+  booktitle = {Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics},
+  note = {to appear},
+  author = {Lovisa Hagstr\"{o}m and Marjanovi\'{c}, Sara Vera and Haeun Yu and Arnav Arora and Christina Lioma and Maria Maistro and Pepa Atanasova and Isabelle Augenstein},
+  year = {2025},
+  pdf = {https://arxiv.org/abs/2412.17031},
+  abstract = {Retrieval-augmented generation (RAG) helps address the limitations of the parametric knowledge embedded within a language model (LM). However, investigations of how LMs utilise retrieved information of varying complexity in real-world scenarios have been limited to synthetic contexts. We introduce DRUID (Dataset of Retrieved Unreliable, Insufficient and Difficult-to-understand contexts) with real-world queries and contexts manually annotated for stance. The dataset is based on the prototypical task of automated claim verification, for which automated retrieval of real-world evidence is crucial. We compare DRUID to synthetic datasets (CounterFact, ConflictQA) and find that artificial datasets often fail to represent the complex and diverse real-world context settings. We show that synthetic datasets exaggerate context characteristics rare in real retrieved data, which leads to inflated context utilisation results, as measured by our novel ACU score. Moreover, while previous work has mainly focused on singleton context characteristics to explain context utilisation, correlations between singleton context properties and ACU on DRUID are surprisingly small compared to other properties related to context source. Overall, our work underscores the need for real-world aligned context utilisation studies to represent and improve performance in real-world RAG settings.}
+}
+
 @article{hagstrom2025rerankers,
   title = {Language Model Re-rankers are Steered by Lexical Similarities},
   url = {https://arxiv.org/abs/2502.17036},
@@ -9,16 +32,6 @@
   year = {2025},
   pdf = {https://arxiv.org/pdf/2502.17036},
   abstract = {Language model (LM) re-rankers are used to refine retrieval results for retrieval-augmented generation (RAG). They are more expensive than lexical matching methods like BM25 but assumed to better process semantic information. To understand whether LM re-rankers always live up to this assumption, we evaluate 6 different LM re-rankers on the NQ, LitQA2 and DRUID datasets. Our results show that LM re-rankers struggle to outperform a simple BM25 re-ranker on DRUID. Leveraging a novel separation metric based on BM25 scores, we explain and identify re-ranker errors stemming from lexical dissimilarities. We also investigate different methods to improve LM re-ranker performance and find these methods mainly useful for NQ. Taken together, our work identifies and explains weaknesses of LM re-rankers and points to the need for more adversarial and realistic datasets for their evaluation.}
-}
-
-@article{saynova2025fact,
-  title = {Fact Recall, Heuristics or Pure Guesswork? {P}recise Interpretations of Language Models for Fact Completion},
-  url = {https://arxiv.org/abs/2410.14405},
-  journal = {arXiv preprint arXiv:2410.14405},
-  author = {Saynova, Denitsa and Hagstr\"{o}m, Lovisa and Johansson, Moa and Johansson, Richard and Kuhlmann, Marco},
-  year = {2025},
-  pdf = {https://arxiv.org/pdf/2410.14405},
-  abstract = {Language models (LMs) can make a correct prediction based on many possible signals in a prompt, not all corresponding to recall of factual associations. However, current interpretations of LMs fail to take this into account. For example, given the query "Astrid Lindgren was born in" with the corresponding completion "Sweden", no difference is made between whether the prediction was based on knowing where the author was born or assuming that a person with a Swedish-sounding name was born in Sweden. In this paper, we present a model-specific recipe - PrISM - for constructing datasets with examples of four different prediction scenarios: generic language modeling, guesswork, heuristics recall and exact fact recall. We apply two popular interpretability methods to the scenarios: causal tracing (CT) and information flow analysis. We find that both yield distinct results for each scenario. Results for exact fact recall and generic language modeling scenarios confirm previous conclusions about the importance of mid-range MLP sublayers for fact recall, while results for guesswork and heuristics indicate a critical role of late last token position MLP sublayers. In summary, we contribute resources for a more extensive and granular study of fact completion in LMs, together with analyses that provide a more nuanced understanding of how LMs process fact-related queries.}
 }
 
 @article{saynova2025identifying,
