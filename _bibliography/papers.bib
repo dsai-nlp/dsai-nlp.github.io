@@ -1,6 +1,16 @@
 ---
 ---
 
+@article{hagstrom2025cub,
+  title = {{CUB}: Benchmarking Context Utilisation Techniques for Language Models},
+  author = {Lovisa Hagstr\"{o}m and Youna Kim and Haeun Yu and Sang-goo Lee and Richard Johansson and Hyunsoo Cho and Isabelle Augenstein},
+  year = {2025},
+  journal={arXiv preprint arXiv:2505.16518},
+  url = {https://arxiv.org/abs/2505.16518},
+  pdf = {https://arxiv.org/pdf/2505.16518},
+  abstract = {Incorporating external knowledge is crucial for knowledge-intensive tasks, such as question answering and fact checking. However, language models (LMs) may ignore relevant information that contradicts outdated parametric memory or be distracted by irrelevant contexts. While many context utilisation manipulation techniques (CMTs) that encourage or suppress context utilisation have recently been proposed to alleviate these issues, few have seen systematic comparison. In this paper, we develop CUB (Context Utilisation Benchmark) to help practitioners within retrieval-augmented generation (RAG) identify the best CMT for their needs. CUB allows for rigorous testing on three distinct context types, observed to capture key challenges in realistic context utilisation scenarios. With this benchmark, we evaluate seven state-of-the-art methods, representative of the main categories of CMTs, across three diverse datasets and tasks, applied to nine LMs. Our results show that most of the existing CMTs struggle to handle the full set of types of contexts that may be encountered in real-world retrieval-augmented scenarios. Moreover, we find that many CMTs display an inflated performance on simple synthesised datasets, compared to more realistic datasets with naturally occurring samples. Altogether, our results show the need for holistic tests of CMTs and the development of CMTs that can handle multiple context types.}
+}
+
 @inproceedings{saynova2025fact,
   title = {Fact Recall, Heuristics or Pure Guesswork? {P}recise Interpretations of Language Models for Fact Completion},
   url = {https://arxiv.org/abs/2410.14405},
@@ -22,16 +32,6 @@
   year = {2025},
   pdf = {https://arxiv.org/abs/2412.17031},
   abstract = {Retrieval-augmented generation (RAG) helps address the limitations of the parametric knowledge embedded within a language model (LM). However, investigations of how LMs utilise retrieved information of varying complexity in real-world scenarios have been limited to synthetic contexts. We introduce DRUID (Dataset of Retrieved Unreliable, Insufficient and Difficult-to-understand contexts) with real-world queries and contexts manually annotated for stance. The dataset is based on the prototypical task of automated claim verification, for which automated retrieval of real-world evidence is crucial. We compare DRUID to synthetic datasets (CounterFact, ConflictQA) and find that artificial datasets often fail to represent the complex and diverse real-world context settings. We show that synthetic datasets exaggerate context characteristics rare in real retrieved data, which leads to inflated context utilisation results, as measured by our novel ACU score. Moreover, while previous work has mainly focused on singleton context characteristics to explain context utilisation, correlations between singleton context properties and ACU on DRUID are surprisingly small compared to other properties related to context source. Overall, our work underscores the need for real-world aligned context utilisation studies to represent and improve performance in real-world RAG settings.}
-}
-
-@article{hagstrom2025rerankers,
-  title = {Language Model Re-rankers are Steered by Lexical Similarities},
-  url = {https://arxiv.org/abs/2502.17036},
-  journal = {arXiv preprint arXiv:2502.17036},
-  author = {Hagstr\"{o}m, Lovisa and Ercong Nie and Ruben Halifa and Helmut Schmid and Richard Johansson and Alexander Junge},
-  year = {2025},
-  pdf = {https://arxiv.org/pdf/2502.17036},
-  abstract = {Language model (LM) re-rankers are used to refine retrieval results for retrieval-augmented generation (RAG). They are more expensive than lexical matching methods like BM25 but assumed to better process semantic information. To understand whether LM re-rankers always live up to this assumption, we evaluate 6 different LM re-rankers on the NQ, LitQA2 and DRUID datasets. Our results show that LM re-rankers struggle to outperform a simple BM25 re-ranker on DRUID. Leveraging a novel separation metric based on BM25 scores, we explain and identify re-ranker errors stemming from lexical dissimilarities. We also investigate different methods to improve LM re-ranker performance and find these methods mainly useful for NQ. Taken together, our work identifies and explains weaknesses of LM re-rankers and points to the need for more adversarial and realistic datasets for their evaluation.}
 }
 
 @article{saynova2025identifying,
