@@ -15,5 +15,7 @@ linkedin_username: m3hrdadfi
 twitter_username: m3hrdadfi
 medium_username: m3hrdadfi
 blogger_url: "https://www.m3hrdadfi.me"
-description: I focus my research on controlling and interpreting language models within Conversational AI.
+description: > Hi There 👋 , I'm Mehrdad Farahani
+PhD candidate @Chalmers, researching mechanistic interpretability in LLMs. Focused on tracing, editing, and understanding internal representations and causal pathways in LLMs.
+
 ---
