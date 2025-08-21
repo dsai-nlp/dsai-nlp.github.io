@@ -122,6 +122,47 @@
       <div class="row">
 <div class="col-sm-2 abbr"></div>
 <!-- Entry bib key -->
+        <div id="audinet2025benchmarking" class="col-sm-8">
+        <!-- Title -->
+        <div class="title">Benchmarking Debiasing Methods for LLM-based Parameter Estimates</div>
+        <!-- Author -->
+        <div class="author">
+        
+
+        Nicolas Audinet de Pieuchon, Adel Daoud, Connor T. Jerzak, Moa Johansson, and Richard Johansson</div>
+
+        <!-- Journal/Book title and date -->
+        
+        
+        <div class="periodical">
+          <em>In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing</em>, Nov 2025
+        </div>
+        <div class="periodical">
+          to appear
+        </div>
+
+          <!-- Links/Buttons -->
+          <div class="links">
+            <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
+            <a href="https://arxiv.org/pdf/2506.09627" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">PDF</a>
+          </div>
+          
+          
+          
+          
+
+          <!-- Hidden abstract block -->
+          <div class="abstract hidden">
+            <p>Large language models (LLMs) offer an inexpensive yet powerful way to annotate text, but are often inconsistent when compared with experts. These errors can bias downstream estimates of population parameters such as regression coefficients and causal effects. To mitigate this bias, researchers have developed debiasing methods such as Design-based Supervised Learning (DSL) and Prediction-Powered Inference (PPI), which promise valid estimation by combining LLM annotations with a limited number of expensive expert annotations. Although these methods produce consistent estimates under theoretical assumptions, it is unknown how they compare in finite samples of sizes encountered in applied research. We make two contributions: First, we study how each method’s performance scales with the number of expert annotations, highlighting regimes where LLM bias or limited expert labels significantly affect results. Second, we compare DSL and PPI across a range of tasks, finding that although both achieve low bias with large datasets, DSL often outperforms PPI on bias reduction and empirical efficiency, but its performance is less consistent across datasets. Our findings indicate that there is a bias-variance tradeoff at the level of debiasing methods, calling for more research on developing metrics for quantifying their efficiency in finite samples.</p>
+          </div>
+        </div>
+      </div>
+</li>
+<li>
+<!-- _layouts/bib.html -->
+      <div class="row">
+<div class="col-sm-2 abbr"></div>
+<!-- Entry bib key -->
         <div id="saynova2025fact" class="col-sm-8">
         <!-- Title -->
         <div class="title">Fact Recall, Heuristics or Pure Guesswork? Precise Interpretations of Language Models for Fact Completion</div>
@@ -154,47 +195,6 @@
           <!-- Hidden abstract block -->
           <div class="abstract hidden">
             <p>Language models (LMs) can make a correct prediction based on many possible signals in a prompt, not all corresponding to recall of factual associations. However, current interpretations of LMs fail to take this into account. For example, given the query "Astrid Lindgren was born in" with the corresponding completion "Sweden", no difference is made between whether the prediction was based on knowing where the author was born or assuming that a person with a Swedish-sounding name was born in Sweden. In this paper, we present a model-specific recipe - PrISM - for constructing datasets with examples of four different prediction scenarios: generic language modeling, guesswork, heuristics recall and exact fact recall. We apply two popular interpretability methods to the scenarios: causal tracing (CT) and information flow analysis. We find that both yield distinct results for each scenario. Results for exact fact recall and generic language modeling scenarios confirm previous conclusions about the importance of mid-range MLP sublayers for fact recall, while results for guesswork and heuristics indicate a critical role of late last token position MLP sublayers. In summary, we contribute resources for a more extensive and granular study of fact completion in LMs, together with analyses that provide a more nuanced understanding of how LMs process fact-related queries.</p>
-          </div>
-        </div>
-      </div>
-</li>
-<li>
-<!-- _layouts/bib.html -->
-      <div class="row">
-<div class="col-sm-2 abbr"></div>
-<!-- Entry bib key -->
-        <div id="audinet2025benchmarking" class="col-sm-8">
-        <!-- Title -->
-        <div class="title">Benchmarking Debiasing Methods for LLM-based Parameter Estimates</div>
-        <!-- Author -->
-        <div class="author">
-        
-
-        Nicolas Audinet de Pieuchon, Adel Daoud, Connor T. Jerzak, Moa Johansson, and Richard Johansson</div>
-
-        <!-- Journal/Book title and date -->
-        
-        
-        <div class="periodical">
-          <em>In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing</em>, Jul 2025
-        </div>
-        <div class="periodical">
-          to appear
-        </div>
-
-          <!-- Links/Buttons -->
-          <div class="links">
-            <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
-            <a href="https://arxiv.org/pdf/2506.09627" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">PDF</a>
-          </div>
-          
-          
-          
-          
-
-          <!-- Hidden abstract block -->
-          <div class="abstract hidden">
-            <p>Large language models (LLMs) offer an inexpensive yet powerful way to annotate text, but are often inconsistent when compared with experts. These errors can bias downstream estimates of population parameters such as regression coefficients and causal effects. To mitigate this bias, researchers have developed debiasing methods such as Design-based Supervised Learning (DSL) and Prediction-Powered Inference (PPI), which promise valid estimation by combining LLM annotations with a limited number of expensive expert annotations. Although these methods produce consistent estimates under theoretical assumptions, it is unknown how they compare in finite samples of sizes encountered in applied research. We make two contributions: First, we study how each method’s performance scales with the number of expert annotations, highlighting regimes where LLM bias or limited expert labels significantly affect results. Second, we compare DSL and PPI across a range of tasks, finding that although both achieve low bias with large datasets, DSL often outperforms PPI on bias reduction and empirical efficiency, but its performance is less consistent across datasets. Our findings indicate that there is a bias-variance tradeoff at the level of debiasing methods, calling for more research on developing metrics for quantifying their efficiency in finite samples.</p>
           </div>
         </div>
       </div>
