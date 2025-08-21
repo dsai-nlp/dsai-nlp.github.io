@@ -1,13 +1,15 @@
 ---
 ---
 
-@article{audinet2025benchmarking,
+@inproceedings{audinet2025benchmarking,
   title = {Benchmarking Debiasing Methods for {LLM}-based Parameter Estimates},
   author = {{Audinet de Pieuchon}, Nicolas and Daoud, Adel and Jerzak, Connor T. and Johansson, Moa and Johansson, Richard},
   year = {2025},
-  journal={arXiv preprint arXiv:2506.09627},
+  address = {Suzhou, China},
+  booktitle = {Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing},
   url = {https://arxiv.org/abs/2506.09627},
   pdf = {https://arxiv.org/pdf/2506.09627},
+  note = {to appear},
   abstract = {Large language models (LLMs) offer an inexpensive yet powerful way to annotate text, but are often inconsistent when compared with experts. These errors can bias downstream estimates of population parameters such as regression coefficients and causal effects. To mitigate this bias, researchers have developed debiasing methods such as Design-based Supervised Learning (DSL) and Prediction-Powered Inference (PPI), which promise valid estimation by combining LLM annotations with a limited number of expensive expert annotations. Although these methods produce consistent estimates under theoretical assumptions, it is unknown how they compare in finite samples of sizes encountered in applied research. We make two contributions: First, we study how each method's performance scales with the number of expert annotations, highlighting regimes where LLM bias or limited expert labels significantly affect results. Second, we compare DSL and PPI across a range of tasks, finding that although both achieve low bias with large datasets, DSL often outperforms PPI on bias reduction and empirical efficiency, but its performance is less consistent across datasets. Our findings indicate that there is a bias-variance tradeoff at the level of debiasing methods, calling for more research on developing metrics for quantifying their efficiency in finite samples.}
 }
 
