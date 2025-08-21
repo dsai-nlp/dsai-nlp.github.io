@@ -5,12 +5,26 @@
   title = {Benchmarking Debiasing Methods for {LLM}-based Parameter Estimates},
   author = {{Audinet de Pieuchon}, Nicolas and Daoud, Adel and Jerzak, Connor T. and Johansson, Moa and Johansson, Richard},
   year = {2025},
+  month = {nov},
   address = {Suzhou, China},
   booktitle = {Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing},
   url = {https://arxiv.org/abs/2506.09627},
   pdf = {https://arxiv.org/pdf/2506.09627},
   note = {to appear},
   abstract = {Large language models (LLMs) offer an inexpensive yet powerful way to annotate text, but are often inconsistent when compared with experts. These errors can bias downstream estimates of population parameters such as regression coefficients and causal effects. To mitigate this bias, researchers have developed debiasing methods such as Design-based Supervised Learning (DSL) and Prediction-Powered Inference (PPI), which promise valid estimation by combining LLM annotations with a limited number of expensive expert annotations. Although these methods produce consistent estimates under theoretical assumptions, it is unknown how they compare in finite samples of sizes encountered in applied research. We make two contributions: First, we study how each method's performance scales with the number of expert annotations, highlighting regimes where LLM bias or limited expert labels significantly affect results. Second, we compare DSL and PPI across a range of tasks, finding that although both achieve low bias with large datasets, DSL often outperforms PPI on bias reduction and empirical efficiency, but its performance is less consistent across datasets. Our findings indicate that there is a bias-variance tradeoff at the level of debiasing methods, calling for more research on developing metrics for quantifying their efficiency in finite samples.}
+}
+
+@inproceedings{saynova2025fact,
+  title = {Fact Recall, Heuristics or Pure Guesswork? {P}recise Interpretations of Language Models for Fact Completion},
+  url = {https://aclanthology.org/2025.findings-acl.942/},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2025},
+  author = {Saynova, Denitsa and Hagstr\"{o}m, Lovisa and Johansson, Moa and Johansson, Richard and Kuhlmann, Marco},
+  year = {2025},
+  month = {jul},
+  pages = {18322–18349},
+  address = {Vienna, Austria},
+  pdf = {https://aclanthology.org/2025.findings-acl.942.pdf},
+  abstract = {Language models (LMs) can make a correct prediction based on many possible signals in a prompt, not all corresponding to recall of factual associations. However, current interpretations of LMs fail to take this into account. For example, given the query "Astrid Lindgren was born in" with the corresponding completion "Sweden", no difference is made between whether the prediction was based on knowing where the author was born or assuming that a person with a Swedish-sounding name was born in Sweden. In this paper, we present a model-specific recipe - PrISM - for constructing datasets with examples of four different prediction scenarios: generic language modeling, guesswork, heuristics recall and exact fact recall. We apply two popular interpretability methods to the scenarios: causal tracing (CT) and information flow analysis. We find that both yield distinct results for each scenario. Results for exact fact recall and generic language modeling scenarios confirm previous conclusions about the importance of mid-range MLP sublayers for fact recall, while results for guesswork and heuristics indicate a critical role of late last token position MLP sublayers. In summary, we contribute resources for a more extensive and granular study of fact completion in LMs, together with analyses that provide a more nuanced understanding of how LMs process fact-related queries.}
 }
 
 @article{hagstrom2025cub,
@@ -21,19 +35,6 @@
   url = {https://arxiv.org/abs/2505.16518},
   pdf = {https://arxiv.org/pdf/2505.16518},
   abstract = {Incorporating external knowledge is crucial for knowledge-intensive tasks, such as question answering and fact checking. However, language models (LMs) may ignore relevant information that contradicts outdated parametric memory or be distracted by irrelevant contexts. While many context utilisation manipulation techniques (CMTs) that encourage or suppress context utilisation have recently been proposed to alleviate these issues, few have seen systematic comparison. In this paper, we develop CUB (Context Utilisation Benchmark) to help practitioners within retrieval-augmented generation (RAG) identify the best CMT for their needs. CUB allows for rigorous testing on three distinct context types, observed to capture key challenges in realistic context utilisation scenarios. With this benchmark, we evaluate seven state-of-the-art methods, representative of the main categories of CMTs, across three diverse datasets and tasks, applied to nine LMs. Our results show that most of the existing CMTs struggle to handle the full set of types of contexts that may be encountered in real-world retrieval-augmented scenarios. Moreover, we find that many CMTs display an inflated performance on simple synthesised datasets, compared to more realistic datasets with naturally occurring samples. Altogether, our results show the need for holistic tests of CMTs and the development of CMTs that can handle multiple context types.}
-}
-
-@inproceedings{saynova2025fact,
-  title = {Fact Recall, Heuristics or Pure Guesswork? {P}recise Interpretations of Language Models for Fact Completion},
-  url = {https://aclanthology.org/2025.findings-acl.942/},
-  booktitle = {Findings of the Association for Computational Linguistics: ACL 2025},
-  author = {Saynova, Denitsa and Hagstr\"{o}m, Lovisa and Johansson, Moa and Johansson, Richard and Kuhlmann, Marco},
-  year = {2025},
-  month = jul,
-  pages = {18322–18349},
-  address = {Vienna, Austria},
-  pdf = {https://aclanthology.org/2025.findings-acl.942.pdf},
-  abstract = {Language models (LMs) can make a correct prediction based on many possible signals in a prompt, not all corresponding to recall of factual associations. However, current interpretations of LMs fail to take this into account. For example, given the query "Astrid Lindgren was born in" with the corresponding completion "Sweden", no difference is made between whether the prediction was based on knowing where the author was born or assuming that a person with a Swedish-sounding name was born in Sweden. In this paper, we present a model-specific recipe - PrISM - for constructing datasets with examples of four different prediction scenarios: generic language modeling, guesswork, heuristics recall and exact fact recall. We apply two popular interpretability methods to the scenarios: causal tracing (CT) and information flow analysis. We find that both yield distinct results for each scenario. Results for exact fact recall and generic language modeling scenarios confirm previous conclusions about the importance of mid-range MLP sublayers for fact recall, while results for guesswork and heuristics indicate a critical role of late last token position MLP sublayers. In summary, we contribute resources for a more extensive and granular study of fact completion in LMs, together with analyses that provide a more nuanced understanding of how LMs process fact-related queries.}
 }
 
 @inproceedings{hagstrom2025reality,
