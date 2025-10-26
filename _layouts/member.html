@@ -1,0 +1,275 @@
+---
+layout: default
+---
+
+<div class="member-profile">
+  <style>
+    .member-profile {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .member-profile .profile-hero {
+      position: relative;
+      background: linear-gradient(135deg, rgba(10, 95, 166, 0.1), rgba(95, 28, 160, 0.1));
+      border-radius: 2rem;
+      padding: 3rem 2.5rem;
+      margin-bottom: 3rem;
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .member-profile .profile-avatar {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
+      border: 8px solid rgba(255, 255, 255, 0.75);
+      background-color: rgba(0, 0, 0, 0.06);
+    }
+
+    .member-profile .profile-meta {
+      flex: 1 1 320px;
+    }
+
+    .member-profile .profile-meta h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .member-profile .profile-meta .role {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .member-profile .profile-meta .pronouns {
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .member-profile .profile-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .member-profile .badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background-color: rgba(10, 95, 166, 0.08);
+      color: var(--global-text-color);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .member-profile .profile-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .member-profile .profile-actions a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.6rem 1rem;
+      border-radius: 0.75rem;
+      background-color: var(--global-card-bg-color);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .member-profile .profile-actions a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .member-profile .profile-content {
+      background-color: rgba(0, 0, 0, 0.02);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .member-profile .profile-content h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .member-profile .timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .member-profile .timeline-card {
+      background-color: var(--global-card-bg-color);
+      border-radius: 1.25rem;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 1.4rem;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .member-profile .timeline-card h3 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .member-profile .timeline-card p {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .member-profile .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      text-decoration: none;
+      color: var(--global-theme-color);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .member-profile .profile-hero {
+        padding: 2.4rem 1.8rem;
+      }
+
+      .member-profile .profile-avatar {
+        width: 180px;
+        height: 180px;
+      }
+    }
+  </style>
+
+  <section class="profile-hero">
+    {% assign avatar = page.image | default: 'assets/members/placeholder.png' %}
+    {% if avatar contains 'http://' or avatar contains 'https://' %}
+      {% assign avatar_url = avatar %}
+    {% else %}
+      {% assign avatar_url = avatar | relative_url %}
+    {% endif %}
+    <img class="profile-avatar" src="{{ avatar_url }}" alt="{{ page.name }}">
+
+    <div class="profile-meta">
+      <h1>{{ page.name }}</h1>
+      {% if page.position %}
+        <div class="role">{{ page.position }}</div>
+      {% endif %}
+      {% if page.pronouns %}
+        <div class="pronouns">{{ page.pronouns }}</div>
+      {% endif %}
+
+      <div class="profile-badges">
+        {% if page.email %}
+          <span class="badge-chip">📧 {{ page.email }}</span>
+        {% endif %}
+        {% if page.start-date %}
+          <span class="badge-chip">🔰 Since {{ page.start-date }}</span>
+        {% endif %}
+        {% if page.state %}
+          <span class="badge-chip">🌟 {{ page.state | capitalize }}</span>
+        {% endif %}
+      </div>
+
+      {% assign has_links = false %}
+      {% if page.github_username or page.linkedin_username or page.scholar_userid or page.research_gate_profile or page.medium_username or page.twitter_username or page.blogger_url %}
+        {% assign has_links = true %}
+      {% endif %}
+
+      {% if has_links %}
+      <div class="profile-actions">
+        {% if page.github_username %}
+          <a href="https://github.com/{{ page.github_username }}" target="_blank" rel="noopener">
+            <span>GitHub</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        {% endif %}
+        {% if page.linkedin_username %}
+          <a href="https://www.linkedin.com/in/{{ page.linkedin_username }}" target="_blank" rel="noopener">
+            <span>LinkedIn</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        {% endif %}
+        {% if page.scholar_userid %}
+          <a href="https://scholar.google.com/citations?user={{ page.scholar_userid }}" target="_blank" rel="noopener">
+            <span>Google Scholar</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        {% endif %}
+        {% if page.research_gate_profile %}
+          <a href="https://www.researchgate.net/profile/{{ page.research_gate_profile }}" target="_blank" rel="noopener">
+            <span>ResearchGate</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        {% endif %}
+        {% if page.medium_username %}
+          <a href="https://medium.com/@{{ page.medium_username }}" target="_blank" rel="noopener">
+            <span>Medium</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        {% endif %}
+        {% if page.twitter_username %}
+          <a href="https://x.com/{{ page.twitter_username }}" target="_blank" rel="noopener">
+            <span>X (Twitter)</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        {% endif %}
+        {% if page.blogger_url %}
+          <a href="{{ page.blogger_url }}" target="_blank" rel="noopener">
+            <span>Website</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="profile-content">
+    <h2>About {{ page.name }}</h2>
+    {% if page.description %}
+      <p>{{ page.description | markdownify }}</p>
+    {% else %}
+      <p>We&apos;re gathering more information about {{ page.name }}. Check back soon to learn more about their work with NLP@DSAI.</p>
+    {% endif %}
+
+    <!-- <div class="timeline">
+      {% if page.start-date %}
+      <div class="timeline-card">
+        <h3>Started</h3>
+        <p>{{ page.start-date }}</p>
+      </div>
+      {% endif %}
+
+      {% if page.end-date and page.end-date != "" and page.end-date != "YY-MM-DD" %}
+      <div class="timeline-card">
+        <h3>Completed</h3>
+        <p>{{ page.end-date }}</p>
+      </div>
+      {% endif %}
+    </div> -->
+
+    <a class="back-link" href="{{ '/members' | relative_url }}">
+      <i class="fa-solid fa-arrow-left"></i>
+      Back to members overview
+    </a>
+  </section>
+</div>

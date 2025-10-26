@@ -21,77 +21,128 @@ Before you begin, ensure you have Docker installed on your system. If you haven'
 
 After installing Docker and Docker Compose, follow these steps to run the website on your local machine:
 
-1. Open a terminal and navigate to the root directory of your forked version of the `dsai-nlp/dsai-nlp.github.io` repository.
+1. Open a terminal and navigate to the root directory of your cloned version of the `dsai-nlp/dsai-nlp.github.io` repository.
 
 2. Run the following command to pull the latest pre-built Jekyll image from DockerHub:
 
    ```bash
-   docker compose pull
-   ```
-
-3. Once the image is pulled, start the Docker container with:
-
-   ```bash
-   docker compose up
+   docker compose up --build
    ```
 
 This command will start a local web server running the website.
 
 4. Open your web browser and go to `http://localhost:8080`. You should see the local version of the website running.
 
-Now that you have the site running locally, you can begin customizing the theme to suit your needs. 
+Now that you have the site running locally, you can begin customizing the theme to suit your needs.
 
+## Development Workflow
 
+We follow [**GitHub Flow**](https://docs.github.com/en/get-started/using-github/github-flow) for continuous integration and deployment.
 
-## Getting Started
+### 1. `master` is always stable
 
-To start contributing, please follow these steps:
-
-### 1. Fork the Repository
-
-Before making any changes, you'll need your own copy of the repository. Fork the repo by clicking on the 'Fork' button at the top right corner of this page. This will create a copy of the repository in your own GitHub account.
-
-### 2. Create a New Branch
-
-Once you have your forked copy, create a new branch on your repository. This branch should be named appropriately based on the edits you intend to make. For example, if you're adding a new event, you might name your branch `add-new-event`.
+Never commit directly to `master`. All updates go through **Pull Requests (PRs)**.
 
 ```bash
-git checkout -b your-branch-name
+git checkout master
+git pull origin master
 ```
 
-### 3. Make Your Changes
+### 2. Create a feature branch
 
-With your new branch checked out, you're ready to make the changes or additions you have in mind. Feel free to update existing content, add new files, or make any other necessary modifications.
-
-### 4. Commit and Push Your Changes
-
-After you've made your changes, commit them with a clear and concise commit message. Then, push your changes to your forked repository.
+Each task or feature gets its own branch.
 
 ```bash
+git checkout -b feature/add-content
+# Make and commit changes
 git add .
-git commit -m "A brief description of your changes"
-git push origin your-branch-name
+git commit -m "Add new content"
+git push origin feature/add-content
 ```
 
-### 5. Create a Pull Request
+### 3. Open a Pull Request
 
-Navigate to your forked repository on GitHub, switch to your branch, and click on the 'Pull Request' button. Ensure that the base repository is set to `dsai-nlp/dsai-nlp.github.io` and the base branch is `master`. Fill in some details about your changes in the pull request message and submit it.
+Use GitHub's web interface:
+
+1. Go to the repository page.
+2. Click **"Compare & pull request"**.
+3. Add a title and short description.
+4. Assign reviewers or labels if needed.
+5. Click **"Create pull request."**
+
+---
+
+### 4. Review, test, and merge
+
+Wait for automated checks (if configured) to pass, then request reviews.
+
+- Reviewers may comment or approve.
+- Once approved, click **"Merge pull request."**
+- Use **Squash and merge** to keep a clean commit history.
+
+### 5. Clean up merged branches
+
+After merging, delete the feature branch:
+
+```bash
+# In GitHub UI
+Click "Delete branch"
+
+# Locally
+git branch -d feature/add-content
+git fetch -p
+```
+
+### 6. Deploy from `master`
+
+The `master` branch always represents what is live in production.
+
+
+## Quick Start
+
+1. **Clone or fork the repo**
+   ```bash
+   git clone git@github.com:dsai-nlp/dsai-nlp.github.io.git
+   cd dsai-nlp.github.io
+   ```
+   Fork first if you do not have push access.
+
+2. **Create a feature branch**
+   ```bash
+   git checkout master
+   git pull origin master
+   git checkout -b feature/add-content
+   ```
+
+3. **Run locally (optional but recommended)**
+   ```bash
+   docker compose pull
+   docker compose up
+   ```
+   Visit `http://localhost:8080`.
+
+4. **Make changes, commit, and push**
+   ```bash
+   git add .
+   git commit -m "Describe your change"
+   git push origin feature/add-content
+   ```
+
+5. **Open a pull request** targeting `master`, add a short summary, and request a review.
 
 ## Pull Request Review
 
-Once your pull request is submitted, it will be reviewed by the maintainers of the original repository. If everything looks good, your changes will be merged into the master branch. If there are any additional changes needed, maintainers will provide feedback on your pull request.
+Once your pull request is submitted, it will be reviewed by the maintainers. If everything looks good, your changes will be merged into the `master` branch. If there are additional changes needed, feedback will be provided directly on the PR.
 
 ## Additional Guidelines
 
-- Ensure that your contributions are in line with the project's standards and code of conduct.
-- Test your changes locally before pushing to ensure they work as expected.
-- Do not push directly to the master branch; always create a new branch for your changes.
+- Keep changes focused and follow the repository coding/content conventions.
+- Test locally before opening a PR.
+- Never push directly to `master`; always work on a branch.
 
-Thank you for your contributions to the DSAI-NLP GitHub Page. Together, we're building a comprehensive and valuable resource for the NLP community!
+## Extended Contribution Guides
 
-_Replace the placeholders such as `your-branch-name` and the commit message with the relevant information for your specific changes._
-
-## Adding New Content to the Repository
+The following sections provide more detailed instructions for specific content types. Refer to these when you need to add or update structured data on the site.
 
 ### Adding Your Profile
 
@@ -133,29 +184,8 @@ description: "A short personal bio or description."
 
 ### Adding an Event
 
-To add an event:
+The events will be fetched from our public Github Discussion, so there's no need to set each event anymore.
 
-1. Navigate to the `_events` directory.
-2. Create a new YAML file (`.yaml`) with a suitable name, e.g., `nlp_fika_event.yaml`.
-3. Use the following template as a guide for your event:
-
-```yaml
----
-layout: event_layout_type # Options: reading-group, fika, seminar, talk
-speaker: Speaker's Name
-title: "Event Title"
-bio: "Speaker's bio."
-abstract: "Short description of the event."
-image: assets/events/event_image.png
-start: YYYY-MM-DDTHH:MM:SS+HH:MM # Start time and timezone offset
-end: YYYY-MM-DDTHH:MM:SS+HH:MM # End time and timezone offset
-# Add any of the following that apply to your event:
-youtube:
-slides:
-zoomroom:
-zoompassword:
----
-```
 
 ### Adding an Announcement
 
@@ -171,7 +201,7 @@ To add or update information about a course:
 
 1. Navigate to the `_pages` directory.
 2. Locate the `courses.md` file.
-3. Update the file with the new course information or make changes to the existing content.
+3. Update the file with the new course information or make changes to the existing content. You can find those files inside the directories in `_pages`.
 
 ### Updating Publications
 
@@ -186,7 +216,7 @@ To add or update publications:
 After making any of the above changes, follow the standard contribution workflow:
 
 1. Commit your changes with a clear message.
-2. Push the changes to your forked repository branch.
-3. Create a pull request to the main repository: `dsai-nlp/dsai-nlp.github.io`.
+2. Push the changes to your feature branch.
+3. Create a pull request to the main repository: `dsai-nlp/dsai-nlp.github.io` targeting `master`.
 
 The repository maintainers will review your pull request and merge it upon approval. Make sure to provide detailed information in your pull request to expedite the review process.

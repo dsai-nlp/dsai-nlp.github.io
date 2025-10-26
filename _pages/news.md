@@ -1,0 +1,162 @@
+---
+layout: default
+title: News
+permalink: /news/
+nav: true
+nav_order: 4
+---
+
+<!-- <section class="news-hero">
+  <h1>News & Announcements</h1>
+  <p>Catch up on open positions, meeting notes, and other updates from the NLP@DSAI group.</p>
+</section> -->
+
+<div class="news">
+  {% if site.news != blank -%}
+  {%- assign all_news = site.news | sort: 'date' | reverse -%}
+  {% if include.limit and site.announcements.limit %}
+    {% assign news_limit = site.announcements.limit %}
+  {% else %}
+    {% assign news_limit = all_news | size %}
+  {% endif %}
+  {% assign news_items = all_news | slice: 0, news_limit %}
+
+  <style>
+    .news-hero {
+      background: linear-gradient(135deg, rgba(10, 95, 166, 0.08), rgba(95, 28, 160, 0.08));
+      border-radius: 2rem;
+      padding: 2.6rem 2.3rem;
+      margin-bottom: 2.4rem;
+    }
+
+    .news-hero h2 {
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .news-hero p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .news-card {
+      background-color: rgba(0, 0, 0, 0.02);
+      border-radius: 1.3rem;
+      padding: 1.9rem 1.6rem;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .news-card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .news-card p {
+      margin: 0;
+    }
+
+    .news-card a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    .news-mini-list {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .news-mini-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      text-decoration: none;
+      color: inherit;
+      font-size: 0.95rem;
+    }
+
+    .news-mini-date {
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 7.5rem;
+    }
+
+    .news-mini-title {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 576px) {
+      .news-hero {
+        padding: 2.2rem 1.8rem;
+      }
+
+      .news-card {
+        padding: 1.6rem 1.4rem;
+      }
+
+      .news-mini-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+      }
+
+      .news-mini-date {
+        min-width: 0;
+      }
+    }
+  </style>
+
+  {% if include.limit %}
+    <div class="news-mini-list">
+      {% for item in news_items %}
+        <a class="news-mini-item" href="{{ item.url | relative_url }}">
+          <span class="news-mini-date">{{ item.date | date: "%b %-d, %Y" }}</span>
+          <span class="news-mini-title">{{ item.title }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <section class="news-hero">
+      <h2>Latest announcements</h2>
+      <p>Group updates, opportunities, and meeting notes.</p>
+    </section>
+    <div class="news-grid">
+      {% for item in news_items %}
+        {% capture summary %}
+          {% if item.summary %}
+            {{ item.summary }}
+          {% elsif item.excerpt %}
+            {{ item.excerpt | strip_html }}
+          {% else %}
+            {{ item.content | strip_html | truncate: 160 }}
+          {% endif %}
+        {% endcapture %}
+        <article class="news-card">
+          <span class="news-mini-date">{{ item.date | date: "%B %-d, %Y" }}</span>
+          <h3><a href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
+          {% if summary %}
+            <p>{{ summary | strip | truncate: 160 }}</p>
+          {% endif %}
+          <p><a href="{{ item.url | relative_url }}">Read announcement →</a></p>
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+{%- else -%}
+  <div class="callout callout-default">We don't have any new announcements to share at the moment. Stay tuned for future updates and important news.</div>
+{%- endif %}
+</div>
+

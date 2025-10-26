@@ -2,9 +2,9 @@
 name: Denitsa Saynova
 image: "https://avatars.githubusercontent.com/u/45001109?v=4"
 position: PhD Student
-state: current
+state: alumni
 start-date: 2020-09-01
-end-date:
+end-date: 2025-09-01
 pronouns: she/her/hers
 email: saynova@chalmers.se
 scholar_userid: P4CgnqkAAAAJ

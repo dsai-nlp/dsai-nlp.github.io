@@ -45,5 +45,34 @@ $(document).ready(function() {
       });
     }
   });
-});
 
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    let isAnimating = false;
+
+    const handleNavbarScroll = () => {
+      if (window.scrollY > 80) {
+        if (!navbar.classList.contains('navbar-scrolled') && !isAnimating) {
+          navbar.classList.add('navbar-animate');
+          navbar.getBoundingClientRect(); // force reflow before expanding
+          navbar.classList.add('navbar-scrolled');
+          isAnimating = true;
+        }
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+        navbar.classList.remove('navbar-animate');
+        isAnimating = false;
+      }
+    };
+
+    navbar.addEventListener('transitionend', (event) => {
+      if (event.propertyName === 'width' && navbar.classList.contains('navbar-scrolled')) {
+        navbar.classList.remove('navbar-animate');
+        isAnimating = false;
+      }
+    });
+
+    handleNavbarScroll();
+    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+  }
+});

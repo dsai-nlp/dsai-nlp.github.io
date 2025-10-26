@@ -2,9 +2,9 @@
 name: Lovisa Hagström
 image: "https://avatars.githubusercontent.com/u/43747259?v=4"
 position: PhD Student
-state: current
+state: alumni
 start-date: 2020-09-01
-end-date:
+end-date: 2025-09-01
 pronouns: she/her/hers
 email: lovhag@chalmers.se
 scholar_userid: iRYBEYsAAAAJ
