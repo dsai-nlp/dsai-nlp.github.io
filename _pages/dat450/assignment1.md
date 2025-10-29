@@ -9,6 +9,8 @@ nav_order: 4
 
 # DAT450/DIT247: Programming Assignment 1: Introduction to language modeling
 
+## <span style="color:red">[Still under construction as of Oct. 29]</span>
+
 *Language modeling* is the foundation that recent advances in NLP technlogies build on. In essence, language modeling means that we learn how to imitate the language that we observe in the wild. More formally, we want to train a system that models the statistical distribution of natural language. Solving this task is exactly what the famous commercial large language models do (with some additional post-hoc tweaking to make the systems more interactive and avoid generating provocative outputs).
 
 In the course, we will cover a variety of technical solutions to this fundamental task (in most cases, various types of Transformers). In this first assignment of the course, we are going to build a neural network-based language model that uses *recurrent* neural networks (RNNs) to model the interaction between words.
@@ -28,9 +30,7 @@ We expect that you can program in Python and that you have some knowledge of bas
 
 On the theoretical side, you will need to remember fundamental concepts related to neural networks such as forward and backward passes, batches, initialization, optimization. 
 
-On the practical side, you will need to understand the basics of PyTorch such as tensors, models, optimizers, loss functions and how to write the training loop. (If you need a refresher, there are plenty of tutorials available, for instance on the [PyTorch website](https://pytorch.org/tutorials/).)
-
-https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html
+On the practical side, you will need to understand the basics of PyTorch such as tensors, models, optimizers, loss functions and how to write the training loop. (If you need a refresher, there are plenty of tutorials available, for instance on the [PyTorch website](https://pytorch.org/tutorials/).) In particular, the [Optimizing Model Parameters tutorial](https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html) contains more or less everything you need to know for this assignment about PyTorch training loops.
 
 ### Submission requirements
 
@@ -263,7 +263,7 @@ Starting from the skeleton Python code, your task now is to complete the missing
 The missing parts you need to provide are
 - Setting up the optimizer, which is the PyTorch utility that updates model parameters during the training loop. The optimizer typically implements some variant of [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). We recommend [`AdamW`](https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html), which is used to train most LLMs.
 - Setting up the `DataLoader`s for the training and validation sets. The datasets are provided as inputs, and you can simply create the `DataLoader`s as in Part 2.
-- The training loop itself, which is where most of your work will be done. Recall how you iterated through the batches in Part 2.
+- The training loop itself, which is where most of your work will be done.
 
 Hyperparameters that control the training should be stored in a [TrainingArguments](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments) object. HuggingFace defines a large number of such hyperparameters but you only need to consider a few of them. The skeleton code includes a hint that lists the relevant hyperparameters.
 
