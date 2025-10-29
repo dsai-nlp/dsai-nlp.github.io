@@ -11,38 +11,64 @@ nav_order: 4
 
 *Language modeling* is the foundation that recent advances in NLP technlogies build on. In essence, language modeling means that we learn how to imitate the language that we observe in the wild. More formally, we want to train a system that models the statistical distribution of natural language. Solving this task is exactly what the famous commercial large language models do (with some additional post-hoc tweaking to make the systems more interactive and avoid generating provocative outputs).
 
-In the course, we will cover a variety of technical solutions to this fundamental task (e.g. recurrent models and Transformers). In this first assignment of the course, we are going to build a neural network-based language model using simple techniques that should be familiar to anyone with an experience of neural networks. In essence, our solution is going to be similar to the one described by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf).
+In the course, we will cover a variety of technical solutions to this fundamental task (in most cases, various types of Transformers). In this first assignment of the course, we are going to build a neural network-based language model that uses *recurrent* neural networks (RNNs) to model the interaction between words.
+
+However, setting up the neural network itself is a small part of this assignment, and the main focus is on all the other steps we have to carry out in order to train a language model. That is: we need to process the text files, manage the vocabulary, run the training loop, and evaluate the trained models.
 
 ### Pedagogical purposes of this assignment
-- Introducing the task of language modeling
-- Getting experience of preprocessing text
-- Understanding the concept of word embeddings
-- Refreshing basic skills in how to set up and train a neural network
+- Introducing the task of language modeling,
+- Getting experience of preprocessing text,
+- Understanding the concept of word embeddings,
+- Refreshing basic skills in how to set up and train a neural network,
+- Introducing some parts of the HuggingFace ecosystem.
 
-### Requirements
+### Prerequisites
 
-Please submit your solution in [Canvas](https://chalmers.instructure.com/courses/31739/assignments/98342). **Submission deadline**: November 11.
+We expect that you can program in Python and that you have some knowledge of basic object-oriented programming. We will use terms such as "classes", "methods", "attributes", "functions" and so on.
 
-Submit a notebook containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the notebook: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
+On the theoretical side, you will need to remember fundamental concepts related to neural networks such as forward and backward passes, batches, initialization, optimization. 
 
-## Step 0: Preliminaries
+On the practical side, you will need to understand the basics of PyTorch such as tensors, models, optimizers, loss functions and how to write the training loop. (If you need a refresher, there are plenty of tutorials available, for instance on the [PyTorch website](https://pytorch.org/tutorials/).)
 
+https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html
+
+### Submission requirements
+
+Please submit your solution in [Canvas](https://chalmers.instructure.com/courses/YYYYY/assignments/XXXXX). **Submission deadline**: November XX.
+
+Submit a XXXX containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the XXX: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
+
+## Part 0: Preliminaries
+
+### Installing libraries
 If you are working on your own machine, make sure that the following libraries are installed:
 - [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage) for tokenization,
 - [PyTorch](https://pytorch.org/get-started/locally/) for building and training the models,
+- [Transformers](https://pytorch.org/get-started/locally/) and Datasets from HuggingFace,
 - Optional: [Matplotlib](https://matplotlib.org/stable/users/getting_started/) and [scikit-learn](https://scikit-learn.org/stable/install.html) for the embedding visualization in the last step.
 If you are using a Colab notebook, these libraries are already installed.
 
-For the third part of the assignment, you will need to understand some basic concepts of PyTorch such as tensors, models, optimizers, loss functions and how to write the training loop. There are plenty of tutorials available, for instance on the [PyTorch website](https://pytorch.org/tutorials/). From the Applied Machine Learning course, there is also an [example notebook](https://www.cse.chalmers.se/~richajo/dit866/lectures/l7/Implementing%20classifiers%20with%20PyTorch.html) that shows how to train a basic classifier in PyTorch. (But note that if you take code from this notebook, several technical details have to change since our input data and prediction task are different!)
+### Downloading the files
 
-## Step 1: Preprocessing the text
+TODO DESCRIBE HOW TO DOWNLOAD SKELETON
 
 Download and extract [this archive](https://www.cse.chalmers.se/~richajo/diverse/lmdemo.zip), which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed. (We'll actually just use the training and validation sets, and you can ignore the test file.)
 
-You will need a *tokenizer* that splits English text into separate words (tokens). In this assignment, you will just use an existing tokenizer. Popular NLP libraries such as SpaCy and NLTK come with built-in tokenizers. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
+### Accessing the compute cluster
+
+TODO DESCRIBE HOW TO ACCESS MINERVA VENV
+
+
+## Part 1: Tokenization
+
+**Terminological note**: It can be useful to keep in mind that people in NLP use the word ***tokenization*** in a couple of different ways. Traditionally, ***tokenization*** referred to the process of splitting texts into separate words. More recently, ***tokenization*** typically tends to mean all preprocessing steps we carry out to convert text into a numerical format suitable for neural networks. To avoid confusion, in this assignment we will use the term ***tokenization*** in the modern sense, and use the term ***word splitting*** otherwise.
+
+### Using NLTK or SpaCy for word splitting
+
+In this assignment, you will just use an existing library to split texts into words. Popular NLP libraries such as SpaCy and NLTK come with built-in functions for this purpose. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
 
 <details>
-<summary><b>Hint</b>: How to use NLTK's English tokenizer.</summary>
+<summary><b>Hint</b>: How to use NLTK's English word splitter.</summary>
 
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
 
@@ -50,182 +76,244 @@ For instance, <code>word_tokenize("Let's test!!")</code> should give the result 
 </div>
 </details>
 
-Each nonempty line in the text files correspond to one paragraph in Wikipedia. Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
-
-**Sanity check**: after this step, your training set should consist of around 147,000 paragraphs and the validation set around 18,000 paragraphs. (The exact number depends on what tokenizer you selected.)
-
-## Step 2: Encoding the text as integers
-
 ### Building the vocabulary
 
-Create a utility (a function or a class) that goes through the training text and creates a *vocabulary*: a mapping from token strings to integers.
+Each nonempty line in the text files correspond to one paragraph in Wikipedia. Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
 
-In addition, the vocabulary should contain 3 special symbols:
+Create a function that goes through the training text and creates a *vocabulary*: a mapping from token strings to integers.
+
+In addition, the vocabulary should contain 4 special symbols:
 - a symbol for previously unseen or low-frequency tokens,
 - a symbol we will put at the beginning of each paragraph,
 - a symbol we will put at the end of each paragraph.
+- a symbol we will use for *padding* so that we can make input tensors rectangular.
 
-The total size of the vocabulary (including the 3 symbols) should be at most `max_voc_size`, which is is a user-specified hyperparameter. If the number of unique tokens in the text is greater than `max_voc_size`, then use the most frequent ones.
+The total size of the vocabulary (including the 4 symbols) should be at most `max_voc_size`, which is is a user-specified hyperparameter. If the number of unique tokens in the text is greater than `max_voc_size`, then use the most frequent ones.
 
 <details>
 <summary><b>Hint</b>: A <a href="https://docs.python.org/3/library/collections.html#collections.Counter"><code>Counter</code></a> can be convenient when computing the frequencies.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">A <code>Counter</code> is like a regular Python dictionary, with some additional functionality for computing frequencies. For instance, you can go through each paragraph and call <a href="https://docs.python.org/3/library/collections.html#collections.Counter.update"><code>update</code></a>. After building the <code>Counter</code> on your dataset, <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items.</div>
 </details>
+&nbsp;
 
-Also create some tool that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we look at model outputs and word embedding neighbors.
+Also create some utility that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we look at model outputs and word embedding neighbors.
 
 **Example**: you might end up with something like this:
 <pre>
-str_to_int = { 'BEGINNING':0, 'END':1, 'UNKNOWN':2, 'the':3, 'and':4, ... }
+str_to_int = { 'BEGINNING':0, 'END':1, 'UNKNOWN':2, 'PAD': 3, 'the':4, 'and':5, ... }
 
-int_to_str = { 0:'BEGINNING', 1:'END', 2:'UNKNOWN', 3:'the', 4:'and', ... }
+int_to_str = { 0:'BEGINNING', 1:'END', 2:'UNKNOWN', 3:'PAD', 4:'the', 5:'and', ... }
 </pre>
 
 **Sanity check**: after creating the vocabulary, make sure that
 - the size of your vocabulary is not greater than the max vocabulary size you specified,
-- the 3 special symbols exist in the vocabulary and that they don't coincide with any real words,
+- the 4 special symbols exist in the vocabulary and that they don't coincide with any real words,
 - some highly frequent example words (e.g. "the", "and") are included in the vocabulary but that some rare words (e.g. "cuboidal", "epiglottis") are not.
 - if you take some test word, you can map it to an integer and then back to the original test word using the inverse mapping.
 
-### Encoding the texts and creating training instances
+### Implementing a HuggingFace-like Tokenizer
 
-The model we are going to train will predict the next token given the previous *N* tokens. We will now create the examples we will use for training and evaluation by extracting word sequences from the provided texts.
+Now, we turn to the task of implementing the utility that will turn a text into a numerical format that can be provided to neural networks as an input.
+Our implementation will be functionally similar to the tokenizers provided by the **HuggingFace** library.
 
-First, make an educated guess about the size of the context window *N* you are going to use. (You can go back later on and try out other values.) Any value of *N* greater than 0 should work for the purposes of this assignment. Intuitively, small context windows (e.g. *N*=1) makes the model more stupid but a bit more efficient in terms of time and memory.
+Write code for the missing parts in the `A1Tokenizer` in the skeleton Python file. You will need to implement the three methods `__init__`, `__call__`, and `__len__`. Most of the work will be done in `__call__`:  `__init__` is simply where you pass the information you need to set up the tokenize, and `__len__` should just return the size of the vocabulary.
 
-Go through the training and validation data and extract all sequences of *N*+1 tokens and map them to the corresponding integer values. Remember to use the special symbols when necessary:
-- the "unseen" symbol for tokens not in your vocabulary,
-- *N* "beginning" symbols before each paragraph,
-- an "end" symbol after each paragraph.
+<details>
+<summary><b>Hint</b>: The weird-looking method <a href="https://docs.python.org/3/reference/datamodel.html#object"><code>__call__</code></a> is a special method that allows an object to be called like a function.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">That is: the following two lines are equivalent
+<pre>tokenizer(some_texts)</pre>
+and
+<pre>tokenizer.__call__(some_texts)</pre>
+</div>
+</details>
+&nbsp;
 
-Store all these sequences in lists.
+**Sanity check**: Apply your tokenizer to an input consisting of few texts and make sure that it seems to work. In particular, verify that the tokenizer can create a tensor output in a situation where the input texts do not contain the same number of words: in these cases, the shorter texts should be "padded" on the right side. For instance
+```
+tokenizer = (... create your tokenizer...)
+test_texts = [['This is a test.', 'Another test.']]
 
-**Example**: If our training text consists of the three tokens *Wonderful news !*, and we use a context window size of 1, we would extract the training instances `[['BEGINNING', 'wonderful'], ['wonderful', 'news'], ['news', '!'], ['!', 'END']]`. After integer encoding, we might have something like `[[0, 2], [2, 3], [3, 4], [4, 1]]`, depending on how our encoding works.
+tokenizer(test_texts, return_tensors='pt', padding=True,
+          truncation=True)
+```
+The result should be something similar to the following example output (assuming that the integer 0 corresponds to the padding dummy token):
+```
+{'attention_mask': tensor([[1, 1, 1, 1, 1, 1, 1],
+                           [1, 1, 1, 1, 1, 0, 0]]),
+ 'input_ids': tensor([[2, 35,  14,  11, 965,   6,  3],
+                      [2, 153, 965,  6,   3,   0,  0]])}
+```
+Verify that at least the `input_ids` tensor corresponds to what you expect. (As mentioned in the skeleton code, the `attention_mask`</code>` is optional for this assignment.)
 
-**Sanity check**: after these steps, you should have around 12 million training instances and 1.5 million validation instances.
+## Part 2: Loading the text files and creating batches
 
-## Step 3: Developing a language model
+**Loading the texts.** We will use the [HuggingFace Datasets](https://huggingface.co/docs/datasets/index) library to load the texts from the training and validation text files. (You may feel that we are overdoing it, since these are simple text files, but once again we want to introduce you to the standard ecosystem used in NLP.)
 
-### Creating training batches
+```
+from datasets import load_dataset
+dataset = load_dataset('text', data_files={'train': TRAIN_FILE, 'val': VAL_FILE})
+```
 
-When using neural networks, we typically process several instances at the time when training the model and when running the trained model.
-Make sure that you have a way to put your training instances in batches of a fixed size. It is enough to go through the training instances with a `for` loop, taking steps of length `batch_size`,  but most solutions would probably use a `DataLoader` here.
-Put each batch in a PyTorch tensor (e.g. by calling `torch.as_tensor`).
+The training and validation sections can now be accessed as `dataset['train']` and `dataset['val']` respectively. The datasets internally use the [Arrow](https://arrow.apache.org/docs/index.html) format for efficiency; in practice, they can be accessed as if they were regular Python lists. That is: you can write `dataset['train'][8]` to access the 8th text in the training set.
+
+Each instance in the training and validation sets correspond to Wikipedia paragraphs. 
+Now, remove empty lines from the data:
+
+```
+dataset = dataset.filter(lambda x: x['text'].strip() != ''
+```
+
+**Sanity check**: after loading the datasets and removing empty lines, you should have around 147,000 training and 18,000 validation instances.
+
+Optionally, it can be useful in the development phase to work with smaller datasets. The following is one way of achieving that:
+
+```
+from torch.utils.data import Subset
+for sec in ['train', 'val']:
+    dataset[sec] = Subset(dataset[sec], range(1000))
+```
+
+**Iterating through the datasets.**
+When training and running neural networks, we typically use *batching*: that is, to improve computational efficiency, we process several instances in parallel.
+We will use the `DataLoader` utility from PyTorch. Data loaders help users iterate through a dataset and create batches.
 
 <details>
 <summary><b>Hint</b>: More information about <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a>.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-PyTorch provides a utility called <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a> to help us create batches. It can work on a variety of underlying data structures, but in this assignment, we'll just apply it to the list you prepared previously.
+PyTorch provides a utility called <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a> to help us create batches. It can work on a variety of underlying data structures, but in this assignment, we'll just apply it to the datasets you prepared previously.
 <pre>
-dl = DataLoader(your_list, batch_size=..., shuffle=..., collate_fn=torch.as_tensor)
+dl = DataLoader(your_dataset, batch_size=..., shuffle=...)
 </pre>
 The arguments here are as follows:
 <ul>
 <li><code>batch_size</code>: the number of instances in each batch.</li>
 <li><code>shuffle</code>: whether or not we rearrange the instances randomly. It is common to shuffle instances while training.</li>
-<li><code>collate_fn</code>: a function that defines how each batch is created. In our case, we just want to put each batch in a tensor.</li>
 </ul>
 When you have created a <code>DataLoader</code>, you can iterate through the dataset batch by batch:
 <pre>for batch in dl:
    ... do something with each batch ...</pre>
 </div>
 </details>
+&nbsp;
 
-**Sanity check**: Make sure that your batches are PyTorch tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* the number of context tokens. (Depending on your batch size, the last batch in the training set might be smaller than *B*.) Each batch should contain integers, not floating-point numbers.
+**Sanity check**: create a DataLoader, look at the first batch, and confirm that it corresponds to your expectations.
+```
+for batch in dl:
+    print(batch)
+    break
+```
 
-### Setting up the neural network structure
+## Part 3: Defining the language model neural network
 
-Set up a neural network inspired by the neural language model proposed by [Bengio et al. (2003)](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf). The main components are:
+Define a neural network that implements an RNN-based language model. Use the skeleton provided in the class `A1RNNModel`. It should include the following layers:
+
 - an *embedding layer* that maps token integers to floating-point vectors,
-- *intermediate layers* that map between input and output representations,
+- an *recurrent layer* implementing some RNN variant (we suggest [`nn.LSTM`](https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html) or [`nn.GRU`](https://pytorch.org/docs/stable/generated/torch.nn.GRU.html), and it is best to avoid the "basic" `nn.RNN`),
 - an *output layer* that computes (the logits of) a probability distribution over the vocabulary.
 
-You are free to experiment with the design of the intermediate layers and you don't have to follow the exact structure used in the paper.
+Once again, we base our implementation on the HuggingFace Transformers library, to exemplify how models are defined when we use this library. Specifically, note that
+- The model hyperparameters are stored in a configuration object `A1RNNModelConfig` that inherits from HuggingFace's `PretrainedConfig`;
+- The neural network class inherits from HuggingFace's `PreTrainedModel` rather than PyTorch's `nn.Module`.
+
+When you set up your model, you should use the hyperparameters stored in the `A1RNNModelConfig`.
 
 <details>
-<summary><b>Hint</b>: Setting up a neural network in PyTorch.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">There are a few different ways that we can write code to set up a neural network in PyTorch.
+<summary><b>Hint</b>: If you are doing the batching as recommended above, you should set <code>batch_first=True</code> when declaring the RNN.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+The input to an RNN is a 3-dimensional tensor. If we set <code>batch_first=True</code>, then we assume that the input tensor is arranged as (<em>B</em>, <em>N</em>, <em>E</em>) where <em>B</em> is the batch size, <em>N</em> is the sequence length, and <em>E</em> the embedding dimensionality. In this case, the RNN "walks" along the second dimension: that is, over the sequence of tokens.
 
-If your model has the traditional structure of stacked layers, then the most concise way to declare the model is to use <code>nn.Sequential</code>:
-<pre>
-model = nn.Sequential(
-  layer1,
-  layer2,
-  ...
-  layerN)
-</pre>
-You can use any type of layers here. In our case, you'll typically start with a <code>nn.Embedding</code> layer, followed by some intermediate layers (e.g. <code>nn.Linear</code> followed by some activation such as <code>nn.ReLU</code>), and then a linear output layer.
+If on the other hand you set <code>batch_first=False</code>, then the RNN walks along the first dimension of the input tensor and it is assumed to be arranged as (<em>N</em>, <em>B</em>, <em>E</em>).
+</div>
+</details>
 
-A more general solution is to declare your network as a class that inherits from <code>nn.Module</code>. You will then have to declare your model components in <code>__init__</code> and define the forward computation in `forward`:
+<details>
+<summary><b>Hint</b>: How to apply RNNs in PyTorch.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<p>
+Take a look at the documentation of one of the RNN types in PyTorch. For instance, here is the documentation of <a href="https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html"><code>nn.LSTM</code></a>. In particular, look at the section called <b>Outputs</b>. It is important to note here that all types of RNNs return <b>two</b> outputs when you call them in the forward pass. In this assignment, you will need the <b>first</b> of these outputs, which correspond to the RNN's output for each <em>token</em>. (The other outputs are the <em>layer-wise</em> outputs.)
+</p>
 <pre>
-class MyNetwork(nn.Module):
-  def __init__(self, hyperparameters):
+class MyRNNBasedLanguageModel(nn.Module):
+  def __init__(self, ... ):
     super().__init__()
-    self.layer1 = ... some layer ...
-    self.layer2 = ... some layer ...
-    ...
-
-  def forward(self, inputs):
-    step1 = self.layer1(inputs)
-    step2 = self.layer2(step1)
-    ...
-    return something
-</pre>
-
-The second coding style, while more verbose, has the advantage that it is easier to debug: for instance, it is easy to check the shapes of intermediate computations. It is also more flexible and allows you to go beyond the constraints of a traditional layered setup.</div>
+    ... initialize model components here ...
+    
+  def forward(self, batch):
+    embedded = ... apply the embedding layer ...
+    rnn_out, _ = self.rnn(embedded)
+    ... do the rest ...
+</pre></div>
 </details>
-
-<details>
-<summary><b>Hint</b>: It can be useful to put a <a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> after the embedding layer.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;"><a href="https://pytorch.org/docs/stable/generated/torch.nn.Flatten.html"><code>nn.Flatten</code></a> is a convenient tool that you can put after the embedding layer to get the right tensor shapes. Let's say we have a batch of <em>B</em> inputs, each of which is a context window of size <em>N</em>, so our input tensor has the shape (<em>B</em>, <em>N</em>). The output from the embedding layer will then have the shape (<em>B</em>, <em>N</em>, <em>D</em>) where <em>D</em> is the embedding dimensionality. If you use a <code>nn.Flatten</code>, we go back to a two-dimensional tensor of shape (<em>B</em>, <em>N</em>*<em>D</em>). That is, we can see this as a step that concatenates the embeddings of the tokens in the context window.</div>
-</details>
+&nbsp;
 
 **Sanity check**: carry out the following steps:
-- Create an integer tensor of shape 1x*N* where *N* is the size of the context window. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
+- Create an integer tensor of shape 1x*N* where *N* is the length of the sequence. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
 - Apply the model to this input tensor. It shouldn't crash here.
-- Make sure that the shape of the returned output tensor is 1x*V* where *V* is the size of the vocabulary. This output corresponds to the logits of the next-token probability distribution, but it is useless at this point because we haven't yet trained the model.
+- Make sure that the shape of the returned output tensor is 1x*N*x*V* where *V* is the size of the vocabulary. This output corresponds to the logits of the next-token probability distribution, but it is useless at this point because we haven't yet trained the model.
 
-### Training the model
 
-Before training, we need two final pieces:
+## Part 4: Training the model
 
-- A *loss* that we want to minimize. In our case, this is going to be the cross-entropy loss, implemented in PyTorch as <a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>nn.CrossEntropyLoss</code></a>. Minimizing this loss corresponds to minimizing the negative log probability of the observed tokens.
-- An *optimizer* that updates model parameters, based on the gradients with respect to the model parameters. The optimizer typically implements some variant of [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). An example of a popular optimizer is <a href="https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html"><code>AdamW</code></a>.
+We will now put all the pieces together and implement the code to train the language model.
 
-Now, we are ready to train the neural network on the training set. Using the loss, the optimizer, and the training batches, write a *training loop* that iterates through the batches and updates the model incrementally to minimize the loss.
+Similarly to Part 1, we will mimic the functionality of the HuggingFace Transformers library. The [`Trainer`](https://huggingface.co/docs/transformers/main_classes/trainer) is the main utility the Transformers library provides to handle model training, and it provides a variety of complex functionality including multi-GPU training and many other bells and whistles. In our case, we will just implement a basic training loop.
 
-If you followed our previous implementation advice, your training batches will
-be integer tensors of shape (*B*, *N*+1) where *B* is the batch size and *N* is the context window size; the first *N* columns correspond to the context windows and the last column the tokens we are predicting.
-So while you are training, you will apply the model to the first *N* columns of the batch and compute the loss with respect to the last column.
+Starting from the skeleton Python code, your task now is to complete the missing parts in the method `train` in the class `A1Trainer`. 
+
+The missing parts you need to provide are
+- Setting up the optimizer, which is the PyTorch utility that updates model parameters during the training loop. The optimizer typically implements some variant of [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). We recommend [`AdamW`](https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html), which is used to train most LLMs.
+- Setting up the `DataLoader`s for the training and validation sets. The datasets are provided as inputs, and you can simply create the `DataLoader`s as in Part 2.
+- The training loop itself, which is where most of your work will be done. Recall how you iterated through the batches in Part 2.
+
+Hyperparameters that control the training should be stored in a [TrainingArguments](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments) object. HuggingFace defines a large number of such hyperparameters but you only need to consider a few of them. The skeleton code includes a hint that lists the relevant hyperparameters.
+
+The training loop should look more or less like a regular PyTorch training loop (see the hint in the code). There are a few non-trivial things to keep in mind when training an autoregressive language model (as opposed to training e.g. classifiers or regression models). We will discuss these points in the following three hints:
+<details>
+<summary><b>Hint</b>: the output tensor is the input tensor, shifted one step to the right.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+For instance, let's say our training text is <em>This is great !</em> (in practice, the words will be integer-coded).
+That means that at the first word (<em>This</em>), we want the model to predict the second word (<em>is</em>). At the second word, the goal is to predict <em>great</em>, and so on.
+
+So when you process a batch in the training loop, you should probably split it into an input and an output part:
+<pre>
+input_tokens = input_ids[:, :-1]
+output_tokens = input_ids[:, 1:]
+</pre>
+</div>
+This means that the input consists of all the columns in the batch except the last one, and the output of all the columns except the first one.
+</details>
 
 <details>
-<summary><b>Hint</b>: A typical PyTorch training loop.</summary>
+<summary><b>Hint</b>: how to apply the loss function when training a language model.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+The loss function (<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a>) expects two input tensors:
+<ul>
+<li>the <em>logits</em> (that is: the unnormalized log probabilities) of the predictions,</li>
+<li>the <em>targets</em>, that is the true output values we want the model to predict.</li>
+</ul>
+
+Here, the tensor is expected to be one-dimensional (of length <em>B</em>, where <em>B</em> is the batch size) and the logits tensor to be two-dimensional (of shape (<em>B</em>, <em>V</em>) where <em>V</em> is the number of choices).
+
+In our case, the loss function's expected input format requires a small trick, since our targets tensor is two-dimensional (<em>B</em>, <em>N</em>) where <em>N</em> is the maximal text length in the batch. Analogously, the logits tensor is three-dimensional (<em>B</em>, <em>N</em>, <em>V</em>). To deal with this, you need to reshape the tensors before applying the loss function.
 <pre>
-for each training epoch:
-    for each batch B in the training set:
-        FORWARD PASS:
-	X = first N columns in B
-	Y = last column in B
-	put X and Y on the GPU
-        apply the model to X
-	compute the loss for the model output and Y
-        BACKWARD PASS (updating the model parameters):
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()	
+targets = targets.view(-1)                  # 2-dimensional -> 1-dimensional
+logits = logits.view(-1, logits.shape[-1])  # 3-dimensional -> 2-dimensional
 </pre>
 </div>
 </details>
 
 <details>
-<summary><b>Hint</b>: Some advice on development.</summary>
+<summary><b>Hint</b>: take padding into account when defining the loss.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-While developing the code, work with very small datasets until you know it doesn't crash, and then use the full training set. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error. For instance, if the learning rate is set to a value that is too large, the loss values may be unstable or increase.
+When the loss is computed, we don't want to include the positions where we have inserted the dummy padding tokens.
+<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a> has a parameter <code>ignore_index</code> that you can set to the integer you use to represent the padding tokens.
 </div>
 </details>
+&nbsp;
 
-## Step 4: Evaluation and analysis
+While developing the code, we advise you to work with very small datasets until you know it doesn't crash, and then use the full training set. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error. For instance, if the learning rate is set to a value that is too large, the loss values may be unstable or increase.
+
+## Step 5: Evaluation and analysis
 
 ### Predicting the next word
 
