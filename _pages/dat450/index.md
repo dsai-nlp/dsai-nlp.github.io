@@ -75,27 +75,22 @@ nav: false
 <div class="dat450-grid">
   <article class="dat450-card">
     <h2>Programming Assignment 1</h2>
-    <p>Introduction to language modeling: build a neural language model, handle preprocessing, and explore embeddings.</p>
     <a href="{{ '/courses/dat450/assignment1/' | relative_url }}">Open assignment 1</a>
   </article>
-  <article class="dat450-card">
+  <!-- <article class="dat450-card">
     <h2>Programming Assignment 2</h2>
-    <p>Sequence labelling with neural networks, focusing on tagging architectures and training routines.</p>
     <a href="{{ '/courses/dat450/assignment2/' | relative_url }}">Open assignment 2</a>
   </article>
   <article class="dat450-card">
     <h2>Programming Assignment 4</h2>
-    <p>Neural machine translation with encoder-decoder models and attention mechanisms.</p>
     <a href="{{ '/courses/dat450/assignment4/' | relative_url }}">Open assignment 4</a>
   </article>
   <article class="dat450-card">
     <h2>Programming Assignment 5</h2>
-    <p>Abstractive summarisation using encoder-decoder architectures and evaluation techniques.</p>
     <a href="{{ '/courses/dat450/assignment5/' | relative_url }}">Open assignment 5</a>
   </article>
   <article class="dat450-card">
     <h2>Course project</h2>
-    <p>Guidelines for the independent project, including deliverables, milestones, and reporting format.</p>
     <a href="{{ '/courses/dat450/project/' | relative_url }}">View project brief</a>
-  </article>
+  </article> -->
 </div>
