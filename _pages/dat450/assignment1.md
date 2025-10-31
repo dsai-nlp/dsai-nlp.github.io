@@ -9,13 +9,17 @@ nav_order: 4
 
 # DAT450/DIT247: Programming Assignment 1: Introduction to language modeling
 
-## <span style="color:red">[Still under construction as of Oct. 29]</span>
-
 *Language modeling* is the foundation that recent advances in NLP technlogies build on. In essence, language modeling means that we learn how to imitate the language that we observe in the wild. More formally, we want to train a system that models the statistical distribution of natural language. Solving this task is exactly what the famous commercial large language models do (with some additional post-hoc tweaking to make the systems more interactive and avoid generating provocative outputs).
 
 In the course, we will cover a variety of technical solutions to this fundamental task (in most cases, various types of Transformers). In this first assignment of the course, we are going to build a neural network-based language model that uses *recurrent* neural networks (RNNs) to model the interaction between words.
 
 However, setting up the neural network itself is a small part of this assignment, and the main focus is on all the other steps we have to carry out in order to train a language model. That is: we need to process the text files, manage the vocabulary, run the training loop, and evaluate the trained models.
+
+### About this document
+
+The work for your submission is described in **Part 1&ndash;Part 4** below.
+
+There are **Hints** at various places in the instructions. You can click on these **Hints** to expand them to get some additional advice.
 
 ### Pedagogical purposes of this assignment
 - Introducing the task of language modeling,
@@ -34,30 +38,77 @@ On the practical side, you will need to understand the basics of PyTorch such as
 
 ### Submission requirements
 
-Please submit your solution in [Canvas](https://chalmers.instructure.com/courses/YYYYY/assignments/XXXXX). **Submission deadline**: November XX.
+Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/36909/assignments/117614). 
 
-Submit a XXXX containing your solution to the programming tasks described below. This is a pure programming assignment and you do not have to write a technical report or explain details of your solution in the XXX: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
+**Submission deadline: November 10**.
+
+Submit Python files containing your solution to the programming tasks described below.
+In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. (Most importantly: the perplexity evaluated on the validation set, and the next-word predictions.)
+
+This is a pure programming assignment and you do not have to write a technical report or explain details of your solution: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 
 ## Part 0: Preliminaries
 
-### Installing libraries
+### Accessing the Minerva compute cluster
+
+You can in principle solve this assignment on a regular laptop but it will be boring to train the full language model on a machine that does not have a GPU available. For this reason, we recommend to use the CSE department's compute cluster for education, called [Minerva](https://git.chalmers.se/karppa/minerva/-/blob/main/README.md). If you haven't used Minerva in previous courses, please read the instructions on the linked page.
+
+In particular, read carefully the section called [**Python environments**](https://git.chalmers.se/karppa/minerva/-/blob/main/README.md#python-environments). For the assignments in the course, you can use an environment we have prepared for this course: `/data/courses/2025_dat450_dit247/venvs/dat450_venv`. (So to activate this environment, you type `source /data/courses/2025_dat450_dit247/venvs/dat450_venv/bin/activate`.)
+
+The directory `/data/courses/2025_dat450_dit247/assignments/a1` on Minerva contains two text files (`train.txt` and `val.txt`), which have been created from Wikipedia articles converted into raw text, with Wiki markup removed. In addition, there is a code skeleton (`A1_skeleton.py`) that contains stub implementations of the main pieces you need for your solution; for your own solution, you can copy this skeleton to your own directory.
+
+### Suggested working approach with the cluster
+
+Note that GPUs cannot be accessed from the JupyterHub notebooks, so you must submit SLURM jobs for your final deliverable.
+
+<details>
+<summary><b>Hint</b>: If you like to use VS Code, you have the option of connecting it to the cluster.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<ul>
+<li>Install the <a href="https://code.visualstudio.com/docs/remote/ssh">Remote SSH extension</a>.</li>
+<li>In the bottom left corner, you should have a small green button. Press this button. Alternatively, press Ctrl+Shift+P (Cmd+Shift+P on Mac) to open the command palette.</li>
+<li>Select <tt>Connect to Host...</tt> or <tt>Remote SSH: Connect to Host...</tt></li>
+<li>Type <code>YOUR_CID@minerva.cse.chalmers.se</code> and press enter. Enter your password if prompted.</li>
+<li>Open your home folder from the menu File > Open folder. The home folder should be called <code>/data/users/YOUR_CID</code>.</li>
+<li>If you want to use any extensions, they need to be installed separately on the VS Code server that is running on the cluster. Open the extension tab to install the extensions you need, e.g. the Python extension.</li>
+</ul>
+</div>
+</details>
+
+<details>
+<summary><b>Hint</b>: While developing, you may optionally want to use interactive notebooks for a faster workflow. (But see the comment above about GPUs!)</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+<ul>
+<li>Read about <a href="https://git.chalmers.se/karppa/minerva/-/blob/main/README.md?ref_type=heads#jupyterhub">Minerva's JupyterHub</a></li>
+<li>To make the course's Python environment available in notebooks, take the following steps:</li>
+<ol>
+<li>Log in on Minerva and activate the course environment.</li>
+<li>Enter <code>python -m ipykernel install --user --name DAT450_venv --display-name "Python (DAT450_venv)"</code></li>
+<li>If JupyterHub is running, restart it. Otherwise, start it now.</li>
+<li>In the Launcher, you should now see an option called <code>Python (DAT450_venv)</code>.</li>
+<li>If you create a notebook, you should be able to import libraries needed for the assignment, e.g. <code>import transformers</code></li>
+</ol></li>
+<li>If you keep your code in a Python file copied from <tt>A1_skeleton.py</tt>, then add the following somewhere in your notebook:
+<pre>%load_ext autoreload
+%autoreload 2
+import your_a1_solution</pre>
+By enabling auto-reloading, you won't have to restart the notebook every time you update the code in the Python file. Note that auto-reloading in notebooks does not work if you do <code>from your_a1_solution import ...</code>.
+</li>
+</div>
+</details>
+
+
+If you have questions about how to work with the cluster, please ask in the related [discussion thread](https://canvas.chalmers.se/courses/36909/discussion_topics/221739).
+
+### Optional: Working on some other machine
 If you are working on your own machine, make sure that the following libraries are installed:
-- [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage) for tokenization,
+- [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage) for word splitting,
 - [PyTorch](https://pytorch.org/get-started/locally/) for building and training the models,
 - [Transformers](https://pytorch.org/get-started/locally/) and Datasets from HuggingFace,
 - Optional: [Matplotlib](https://matplotlib.org/stable/users/getting_started/) and [scikit-learn](https://scikit-learn.org/stable/install.html) for the embedding visualization in the last step.
 If you are using a Colab notebook, these libraries are already installed.
 
-### Downloading the files
-
-TODO DESCRIBE HOW TO DOWNLOAD SKELETON
-
-Download and extract [this archive](https://www.cse.chalmers.se/~richajo/diverse/lmdemo.zip), which contains three text files. The files have been created from Wikipedia articles converted into raw text, with all Wiki markup removed. (We'll actually just use the training and validation sets, and you can ignore the test file.)
-
-### Accessing the compute cluster
-
-TODO DESCRIBE HOW TO ACCESS MINERVA VENV
-
+Then download and extract [this archive](https://www.cse.chalmers.se/~richajo/dat450/assignments/a1/a1.zip). It contains the text files and the code skeleton mentioned above.
 
 ## Part 1: Tokenization
 
@@ -94,7 +145,6 @@ The total size of the vocabulary (including the 4 symbols) should be at most `ma
 <summary><b>Hint</b>: A <a href="https://docs.python.org/3/library/collections.html#collections.Counter"><code>Counter</code></a> can be convenient when computing the frequencies.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">A <code>Counter</code> is like a regular Python dictionary, with some additional functionality for computing frequencies. For instance, you can go through each paragraph and call <a href="https://docs.python.org/3/library/collections.html#collections.Counter.update"><code>update</code></a>. After building the <code>Counter</code> on your dataset, <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items.</div>
 </details>
-&nbsp;
 
 Also create some utility that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we look at model outputs and word embedding neighbors.
 
@@ -146,6 +196,8 @@ The result should be something similar to the following example output (assuming
 Verify that at least the `input_ids` tensor corresponds to what you expect. (As mentioned in the skeleton code, the `attention_mask`</code>` is optional for this assignment.)
 
 ## Part 2: Loading the text files and creating batches
+
+(This part just introduces some functionalities you may find useful when processing the data: it functions as a stepping stone for what you will do in Part 4. You do not have to include solutions to this part in your submission.)
 
 **Loading the texts.** We will use the [HuggingFace Datasets](https://huggingface.co/docs/datasets/index) library to load the texts from the training and validation text files. (You may feel that we are overdoing it, since these are simple text files, but once again we want to introduce you to the standard ecosystem used in NLP.)
 
@@ -209,7 +261,7 @@ Define a neural network that implements an RNN-based language model. Use the ske
 
 - an *embedding layer* that maps token integers to floating-point vectors,
 - an *recurrent layer* implementing some RNN variant (we suggest [`nn.LSTM`](https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html) or [`nn.GRU`](https://pytorch.org/docs/stable/generated/torch.nn.GRU.html), and it is best to avoid the "basic" `nn.RNN`),
-- an *output layer* that computes (the logits of) a probability distribution over the vocabulary.
+- an *output layer* (or *unembedding layer*) that computes (the logits of) a probability distribution over the vocabulary.
 
 Once again, we base our implementation on the HuggingFace Transformers library, to exemplify how models are defined when we use this library. Specifically, note that
 - The model hyperparameters are stored in a configuration object `A1RNNModelConfig` that inherits from HuggingFace's `PretrainedConfig`;
@@ -322,6 +374,8 @@ Take some example context window and use the model to predict the next word.
 - Use <a href="https://pytorch.org/docs/stable/generated/torch.argmax.html"><code>argmax</code></a> to find the index of the highest-scoring item, or <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> to find the indices and scores of the *k* highest-scoring items.
 - Apply the inverse vocabulary encoder (that you created in Step 2) so that you can understand what words the model thinks are the most likely in this context.
 
+**Make sure that one or more examples of next-word prediction is printed by your Python program and included in the submitted output file.**
+
 ### Quantitative evaluation
 
 The most common way to evaluate language models quantitatively is the [perplexity](https://huggingface.co/docs/transformers/perplexity) score on a test dataset. The better the model is at predicting the actually occurring words, the lower the perplexity. This quantity is formally defined as follows:
@@ -342,13 +396,15 @@ The perplexity is traditionally defined in terms of logarithms of base 2. Howeve
 </div>
 </details>
 
-If you have time for exploration, investigate the effect of the context window size *N* (and possibly other hyperparameters such as embedding dimensionality) on the model's perplexity.
+If you have time for exploration, investigate the effect of model hyperparameters and training settings on the model's perplexity.
 
-### Inspecting the word embeddings
+**Make sure that the perplexity computed on the validation set is printed by your Python program and included in the submitted output file.**
+
+### Optional task: Inspecting the learned word embeddings
 
 It is common to say that neural networks are "black boxes" and that we cannot fully understand their internal mechanics, especially as they grow larger and structurally more complex. The research area of model interpretability aims to develop methods to help us reason about the high-level functions the models implement.
 
-In this assignment, we will briefly investigate the [embeddings](https://en.wikipedia.org/wiki/Word_embedding) that your model learned while you trained it.
+We will briefly investigate the [embeddings](https://en.wikipedia.org/wiki/Word_embedding) that your model learned while you trained it.
 If we have successfully trained a word embedding model, an embedding vector stores a crude representation of "word meaning", so we can reason about the learned meaning representations by investigating the geometry of the vector space of word embeddings.
 The most common way to do this is to look at nearest neighbors in the vector space: intuitively, if we look at some example word, its neighbors should correspond to words that have a similar meaning.
 
@@ -381,7 +437,7 @@ def nearest_neighbors(emb, voc, inv_voc, word, n_neighbors=5):
 </div>
 </details>
 
-Optionally, you may visualize some word embeddings in a two-dimensional plot.
+Optionally, you may visualize some word embeddings in a two-dimensional plot (use a notebook while plotting or save the generated plot to a file via `plt.savefig`).
 <details>
 <summary><b>Hint</b>: Example code for PCA-based embedding scatterplot.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
