@@ -93,6 +93,7 @@ Note that GPUs cannot be accessed from the JupyterHub notebooks, so you must sub
 %autoreload 2
 import your_a1_solution</pre>
 By enabling auto-reloading, you won't have to restart the notebook every time you update the code in the Python file. Note that auto-reloading in notebooks does not work if you do <code>from your_a1_solution import ...</code>.
+
 </li>
 </div>
 </details>
