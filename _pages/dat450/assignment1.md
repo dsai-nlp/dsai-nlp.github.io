@@ -263,7 +263,7 @@ for batch in dl:
 
 ## Part 3: Defining the language model neural network
 
-Define a neural network that implements an RNN-based language model. Use the skeleton provided in the class `A1RNNModel`. It should include the following layers:
+Define a neural network that implements an RNN-based autoregressive language model. Use the skeleton provided in the class `A1RNNModel`. It should include the following layers:
 
 - an *embedding layer* that maps token integers to floating-point vectors,
 - an *recurrent layer* implementing some RNN variant (we suggest [`nn.LSTM`](https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html) or [`nn.GRU`](https://pytorch.org/docs/stable/generated/torch.nn.GRU.html), and it is best to avoid the "basic" `nn.RNN`),
@@ -382,7 +382,7 @@ If your solution is implemented correctly and you are using the full training se
 Take some example text and use the model to predict the next word. For instance, if we apply the model to the text *She lives in San*, what word do you think will come next?
 - Apply the model to the integer-encoded text. As usual, this gives you (the logits of) a probability distribution over your vocabulary. (Make sure that you consider the right position here: if your tokenized input includes an end-of-sentence dummy, you should take the logits at the second-to-last position.)
 - Use <a href="https://pytorch.org/docs/stable/generated/torch.argmax.html"><code>argmax</code></a> to find the index of the highest-scoring item, or <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> to find the indices and scores of the *k* highest-scoring items.
-- Apply the inverse vocabulary encoder (that you created in Step 1) so that you can understand what words the model thinks are the most likely in this context.
+- Apply the inverse vocabulary encoder (that you created in Part 1) so that you can understand what words the model thinks are the most likely in this context.
 
 **Make sure that one or more examples of next-word prediction is printed by your Python program and included in the submitted output file.**
 
