@@ -80,20 +80,20 @@ Note that GPUs cannot be accessed from the JupyterHub notebooks, so you must sub
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 <ul>
 <li>Read about <a href="https://git.chalmers.se/karppa/minerva/-/blob/main/README.md?ref_type=heads#jupyterhub">Minerva's JupyterHub</a></li>
-<li>To make the course's Python environment available in notebooks, take the following steps:</li>
+<li>To make the course's Python environment available in notebooks, take the following steps:
 <ol>
 <li>Log in on Minerva and activate the course environment.</li>
 <li>Enter <code>python -m ipykernel install --user --name DAT450_venv --display-name "Python (DAT450_venv)"</code></li>
 <li>If JupyterHub is running, restart it. Otherwise, start it now.</li>
 <li>In the Launcher, you should now see an option called <code>Python (DAT450_venv)</code>.</li>
 <li>If you create a notebook, you should be able to import libraries needed for the assignment, e.g. <code>import transformers</code></li>
-</ol></li>
+</ol>
+</li>
 <li>If you keep your code in a Python file copied from <tt>A1_skeleton.py</tt>, then add the following somewhere in your notebook:
 <pre>%load_ext autoreload
 %autoreload 2
 import your_a1_solution</pre>
 By enabling auto-reloading, you won't have to restart the notebook every time you update the code in the Python file. Note that auto-reloading in notebooks does not work if you do <code>from your_a1_solution import ...</code>.
-
 </li>
 </div>
 </details>
