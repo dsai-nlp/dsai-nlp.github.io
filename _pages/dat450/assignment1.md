@@ -17,7 +17,7 @@ However, setting up the neural network itself is a small part of this assignment
 
 ### About this document
 
-The work for your submission is described in **Part 1&ndash;Part 4** below.
+The work for your submission is described in **Part 1&ndash;Part 5** below.
 
 There are **Hints** at various places in the instructions. You can click on these **Hints** to expand them to get some additional advice.
 
@@ -180,6 +180,8 @@ and
 </details>
 &nbsp;
 
+It can be useful to create a function that first builds the vocabulary and then creates the tokenizer object, so that you can build the tokenizer in one step. The skeleton includes a function `build_tokenizer` exemplifying the interface of such a function. 
+
 **Sanity check**: Apply your tokenizer to an input consisting of few texts and make sure that it seems to work. In particular, verify that the tokenizer can create a tensor output in a situation where the input texts do not contain the same number of words: in these cases, the shorter texts should be "padded" on the right side. For instance
 ```
 tokenizer = (... create your tokenizer...)
@@ -196,6 +198,8 @@ The result should be something similar to the following example output (assuming
                       [2, 153, 965,  6,   3,   0,  0]])}
 ```
 Verify that at least the `input_ids` tensor corresponds to what you expect. (As mentioned in the skeleton code, the `attention_mask`</code>` is optional for this assignment.)
+
+When you are confident that your tokenizer works correctly, save it to a file (`your_tokenizer.save('some_file_name')`) so that you do not have to re-create it every time you run your program. You load the saved tokenizer by calling `A1Tokenizer.from_file('some_file_name')`.
 
 ## Part 2: Loading the text files and creating batches
 
@@ -367,14 +371,18 @@ When the loss is computed, we don't want to include the positions where we have 
 
 While developing the code, we advise you to work with very small datasets until you know it doesn't crash, and then use the full training set. Monitor the cross-entropy loss (and/or the perplexity) over the training: if the loss does not decrease while you are training, there is probably an error. For instance, if the learning rate is set to a value that is too large, the loss values may be unstable or increase.
 
+If your solution is implemented correctly and you are using the full training set, training the model for one epoch with GPUs on Minerva should take a few minutes.
+
 ## Step 5: Evaluation and analysis
+
+**Note:** the skeleton implementation of `train` ends with the call `self.model.save_pretrained`. If you did not modify `args.output_dir`, then your trained model will be stored in the directory `trainer_output`. If you want to reuse a trained model without having to run the whole training loop again, then you can load it by calling `A1RNNModel.from_pretrained('trainer_output')`. In addition, you will probably want to load your saved tokenizer (`A1Tokenizer.from_file('your_file_name')`).
 
 ### Predicting the next word
 
-Take some example context window and use the model to predict the next word.
-- Apply the model to the integer-encoded context window. As usual, this gives you (the logits of) a probability distribution over your vocabulary.
+Take some example text and use the model to predict the next word. For instance, if we apply the model to the text *She lives in San*, what word do you think will come next?
+- Apply the model to the integer-encoded text. As usual, this gives you (the logits of) a probability distribution over your vocabulary. (Make sure that you consider the right position here: if your tokenized input includes an end-of-sentence dummy, you should take the logits at the second-to-last position.)
 - Use <a href="https://pytorch.org/docs/stable/generated/torch.argmax.html"><code>argmax</code></a> to find the index of the highest-scoring item, or <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> to find the indices and scores of the *k* highest-scoring items.
-- Apply the inverse vocabulary encoder (that you created in Step 2) so that you can understand what words the model thinks are the most likely in this context.
+- Apply the inverse vocabulary encoder (that you created in Step 1) so that you can understand what words the model thinks are the most likely in this context.
 
 **Make sure that one or more examples of next-word prediction is printed by your Python program and included in the submitted output file.**
 
