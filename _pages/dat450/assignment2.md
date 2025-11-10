@@ -31,9 +31,10 @@ Copy the skeleton from SOMEWHERE.
 
 ## Step 1: Setting up a Transformer neural network
 
-To be fully compatible with the Olmo 2 implementation, note that `nn.Linear` inside of all layers are bias-free (`bias=False`).
 
-<img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/olmo2_overview.svg" alt="Olmo2 overview" style="width:30%; height:auto;">
+<img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/olmo2_overview.svg" alt="Olmo2 overview" style="width:10%; height:auto;">
+
+To be fully compatible with the Olmo 2 implementation, note that all the `nn.Linear` inside of all layers are bias-free (`bias=False`). This includes Q, K, V, and O projections inside attention layers, all parts of the MLP layers, and the unembedding layer.
 
 ### Configuration
 
