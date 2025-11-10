@@ -19,15 +19,17 @@ In this assignment, we extend the models we investigated in the previous assignm
 
 ### Requirements
 
-Please submit your solution in [Canvas](https://chalmers.instructure.com/courses/XX/assignments/YY). **Submission deadline**: November 17.
+Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/36909/assignments/117615). **Submission deadline**: November 17.
 
-Submit a XX
+Submit Python files containing your solution to the programming tasks described below. In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. (Most importantly: the perplexity evaluated on the validation set, and the generated texts you have created in the last section.)
 
+This is a pure programming assignment and you do not have to write a technical report or explain details of your solution: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 ## Step 0: Preliminaries
 
-Make sure you have access to your solution for Programming Assignment 1 since you will reuse the training loop. (Optionally, use HuggingFace's `Trainer` instead.)
+Make sure you have access to your solution for Programming Assignment 1 since you will reuse the tokenization and the training loop. (Optionally, use HuggingFace's `Trainer` instead.)
 
-Copy the skeleton from SOMEWHERE.
+On Minerva, copy the skeleton from `/data/courses/2025_dat450_dit247/assignments/a2/A2_skeleton.py`.
+This skeleton contains stub classes for all Transformer components, as well as a complete implementation of the RoPE positional representation (copied and somewhat simplified from the HuggingFace library).
 
 ## Step 1: Setting up a Transformer neural network
 
@@ -37,9 +39,11 @@ The figure below shows the design of the OLMo 2 Transformer. We will reimplement
 
 <img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/olmo2_overview.svg" alt="Olmo2 overview" style="width:10%; height:auto;">
 
-**Implementation note:** To be fully compatible with the OLMo 2 implementation, note that all the `nn.Linear` inside of all layers are bias-free (`bias=False`). This includes Q, K, V, and O projections inside attention layers, all parts of the MLP layers, and the unembedding layer. If you solve the optional task at the end where you copy the weights of a pre-trained model into your implementation, then it is important that all layers are identical in structure.
+**Implementation note:** To be 100% compatible with the OLMo 2 implementation, note that all the `nn.Linear` inside of all layers are without bias terms (`bias=False`). This includes query, key, value, and output projections inside attention layers, all parts of the MLP layers, and the unembedding layer. If you solve the optional task at the end where you copy the weights of a pre-trained model into your implementation, then it is important that all layers are identical in structure.
 
 ### Configuration
+
+Similarly to Assignment 1, the model hyperparameters you need for this assignment will be stored in a configuration object `A2ModelConfig`, which inherits from HuggingFace's `PretrainedConfig`. This configuration will be passed into `__init__` of all the Transformer's components.
 
 ### MLP layer
 
@@ -80,7 +84,7 @@ The figure below shows what we will have to implement.
 
 **Defining MHA components.** In `__init__`, define the `nn.Linear` components (square matrices) that compute query, key, and value representations, and the final outputs. (They correspond to what we called $W_Q$, $W_K$, $W_V$, and $W_O$ in [the lecture on Transformers](https://www.cse.chalmers.se/~richajo/dat450/lectures/l4/m4_2.pdf).) OLMo 2 also applies layer normalizers after the query and key representations.
 
-**MHA computation, step 1.** The `forward` method takes two inputs `hidden_states` and `position_embedding`.
+**MHA computation, step 1.** The `forward` method takes two inputs `hidden_states` and `rope_rotations`. The latter contains the precomputed rotations required for RoPE; the last step of the transformer explains how to compute them.
 
 Continuing to work in  `forward`, now compute query, key, and value representations; don't forget the normalizers after the query and key representations.
 
@@ -146,7 +150,7 @@ As shown in the figure, a Transformer layer should include an attention layer an
 <details>
 <summary><b>Hint</b>: Residual connections in PyTorch.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-Assuming your 
+Assuming your input is called <code>h_old</code>, then a residual connection is implemented via a straightforward addition.
 <pre>
 h_new = do_something(h_old) 
 out = h_new + h_old
@@ -154,7 +158,7 @@ out = h_new + h_old
 </div>
 </details>
 
-**Sanity check.** Carry out the usual sanity check to see that the shapes are right and there are no crashes.
+**Sanity check.** Carry out the usual sanity check to see that the shapes are correct and there are no crashes.
 
 ### The complete Transformer stack
 
@@ -165,7 +169,6 @@ The embedding and unembedding layers will be identical to what you had in Progra
 <summary><b>Hint</b>: Use a <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.ModuleList.html"><code>ModuleList</code></a>.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 Put all the Transformer blocks in a <code>ModuleList</code> instead of a plain Python list. The <code>ModuleList</code> makes sure your parameters are registered so that they are included when you compute the gradients.
-</pre>
 </div>
 </details>
 
@@ -173,7 +176,6 @@ Put all the Transformer blocks in a <code>ModuleList</code> instead of a plain P
 <summary><b>Hint</b>: Creating and applying the RoPE embeddings.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 Create the <code>A2RotaryEmbedding</code> in <code>__init__</code>, as already indicated in the code skeleton. Then in <code>forward</code>, first create the rotations (again, already included in the skeleton). Then pass the rotations when you apply each Transformer layer.
-</pre>
 </div>
 </details>
 
@@ -181,13 +183,13 @@ Create the <code>A2RotaryEmbedding</code> in <code>__init__</code>, as already i
 
 ## Step 2: Training the language model
 
-In Assignment 1, you implemented a utility to handle training and validation. Your Transformer language model should be possible to use as a drop-in replacement for the RNN-based model you had in that assignment.
+In Assignment 1, you implemented utilities to tokenize the text, load the documents, and to handle training and validation. Your Transformer language model should be possible to use as a drop-in replacement for the RNN-based model you had in that assignment.
 
 **Alternative solution.** Use a HuggingFace Trainer.
 
 Select some suitable hyperparameters (number of Transformer layers, hidden layer size, number of attention heads).
+For this assignment, you are recommended to use a small Transformer (e.g. a couple of layers).
 Then run the training function and compute the perplexity on the validation set as in the previous assignment. 
-
 
 ## Step 3: Generating text
 
@@ -242,9 +244,16 @@ This function takes a tensor as input and returns the <em>k</em> highest scores 
 
 Run your generation algorithm with some different prompts and input parameters, and try to investigate the effects. In the reflection questions, you will be asked to summarize your impression of how texts are generated with different prompts and input parameters.
 
-**Sanity check**: There are two ways to make this random sampling algorithm behave like *greedy decoding* (that is: there is no randomness, and the most likely next word is selected in each step). Run the function in these two ways and make sure you get the same output in both cases.
+Here are a few example prompts that could be interesting to try:
+<pre>
+'In natural language processing, a Transformer'
+'Is Stockholm the capital of Sweden? Answer yes or no. The answer is'
+'Write a Python program that reverses a list.'
+</pre>
 
 ### Comparing to a pre-trained Transformer
+
+Your language model will probable be able to generate texts that look somewhat like English, but rather bland and nonsensical. As an alternative, let's load the pre-trained OLMo-2 model (the 1 billion-parameter version). We have downloaded a copy to Minerva to save you some download time. Here, 
 
 ```
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -253,6 +262,10 @@ tokenizer = AutoTokenizer.from_pretrained(local_dir, local_files_only=True)
 model = AutoModelForCausalLM.from_pretrained(local_dir, local_files_only=True)
 ```
 
-Note that this
+**Note:** when you apply this model, the return value is a [`CausalLMOutputWithPast`](https://huggingface.co/docs/transformers/main_classes/output#transformers.modeling_outputs.CausalLMOutputWithPast) object, not just the logits. This object has a field called `logits`. Otherwise, you should be able to use the pre-trained model in your generation algorithm.
+
+Try the test examples once again with the pre-trained model and note the differences. In the reflection questions, there will be some questions about these differences.
+
+Note that this is a pure language model (like the one you trained) and it has not been *instruction-tuned*. That is: it has not been post-trained to allow interactive chatting.
 
 **Optional task.** To verify that your implementation is identical to the Olmo 2 model, copy the weight tensors from the pre-trained model into an instance of your own implementation, and verify that you get exactly the same results.
