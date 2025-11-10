@@ -109,7 +109,9 @@ $$
 \alpha(q, k) = \frac{q \cdot k^{\top}}{\sqrt{d_h}}
 $$
 
-Second, add a *causal mask* to the pre-activations. This mask is necessary for autoregressive (left-to-right) language models: this is so that the attention heads can only consider tokens before the current one. The mask should have the shape $(m, m)$; its lower triangle including the diagonal should be 0 and the upper triangle $-\infty$. Pytorch's <a href="https://docs.pytorch.org/docs/stable/generated/torch.tril.html"><code>tril</code></a> can be convenient here.
+The transposition of the key tensor can be carried out by calling <code>k.transpose(-2, -1)</code>.
+
+Second, add a *causal mask* to the pre-activations. This mask is necessary for autoregressive (left-to-right) language models: this is so that the attention heads can only consider tokens before the current one. The mask should have the shape $(m, m)$; its lower triangle including the diagonal should be 0 and the upper triangle $-\infty$. Pytorch's <a href="https://docs.pytorch.org/docs/stable/generated/torch.tril.html"><code>tril</code></a> or <a href="https://docs.pytorch.org/docs/stable/generated/torch.triu.html"><code>triu</code></a> can be convenient here.
 
 Then apply the softmax to get the attention weights.
 
@@ -125,21 +127,65 @@ $$
 </div>
 </details>
 
-**Sanity check step 2.**
+**MHA computation, step 3.** Now, we need to combine the results from the individual attention heads. We first flip the second and third dimensions of the tensor (so that the first two dimensions correspond to the batch length and text length), and then reshape into the right shape.
+```
+attn_out = attn_out.transpose(1, 2).reshape(b, m, d)
+```
+Then compute the final output representation (by applying the linear layer we called $W_O$ above) and return the result.
 
-### The full Transformer block
+**Sanity check steps 2 and 3.**
+Once again create a MHA layer for testing and apply it to an input tensor of the same shape as before. Assuming you don't get any crashes here, the output should be of the same shape as the input. If it crashes or your output has the wrong shape, insert `print` statements along the way, or use an editor with step-by-step debugging, to check the shapes at each step.
 
-**Sanity check.**
+### The full Transformer decoder layer
+
+After coding up the multi-head attention, everything else is just a simple assembly of pieces!
+
+In the constructor `__init__`, create the components in this block, taking the model configuration into account.
+As shown in the figure, a Transformer layer should include an attention layer and an MLP, with normalizers. In `forward`, connect the components to each other; remember to put residual connections at the right places.
+
+<details>
+<summary><b>Hint</b>: Residual connections in PyTorch.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+Assuming your 
+<pre>
+h_new = do_something(h_old) 
+out = h_new + h_old
+</pre>
+</div>
+</details>
+
+**Sanity check.** Carry out the usual sanity check to see that the shapes are right and there are no crashes.
 
 ### The complete Transformer stack
 
-The embedding and unembedding layers will be identical to what you had in Programming Assignment 1 (except that the unembedding layer should be bias-free, as mentioned above).
+Now, set up the complete Transformer stack including embedding and unembedding layers.
+The embedding and unembedding layers will be identical to what you had in Programming Assignment 1 (except that the unembedding layer should be bias-free, as mentioned in the beginning).
+
+<details>
+<summary><b>Hint</b>: Use a <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.ModuleList.html"><code>ModuleList</code></a>.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+Put all the Transformer blocks in a <code>ModuleList</code> instead of a plain Python list. The <code>ModuleList</code> makes sure your parameters are registered so that they are included when you compute the gradients.
+</pre>
+</div>
+</details>
+
+<details>
+<summary><b>Hint</b>: Creating the RoPE embeddings.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+Xxx.
+</pre>
+</div>
+</details>
 
 ## Step 2: Training the language model
 
+In Assignment 1, you implemented a utility to handle training and validation. Your Transformer language model should be possible to use as a drop-in replacement for the RNN-based model you had in that assignment.
+
 **Alternative solution.** Use a HuggingFace Trainer.
 
-Run the training function and compute the perplexity on the validation set as in the previous assignment.
+Select some suitable hyperparameters (number of Transformer layers, hidden layer size, number of attention heads).
+Then run the training function and compute the perplexity on the validation set as in the previous assignment. 
+
 
 ## Step 3: Generating text
 
