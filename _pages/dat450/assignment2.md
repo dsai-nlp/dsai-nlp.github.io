@@ -56,12 +56,11 @@ Create an untrained MLP layer. Create some 3-dimensional tensor where the last d
 ### Normalization
 
 To stabilize gradients during training, deep learning models with many layers often include some *normalization* (such as batch normalization or layer normalization). Transformers typically includes normalization layers at several places in the stack.
-
 OLMo 2 uses a type of normalization called [Root Mean Square layer normalization](https://arxiv.org/pdf/1910.07467).
 
-Here, you can either implement your own normalization layer, or use the built-in [`RMSNorm`](https://docs.pytorch.org/docs/stable/generated/torch.nn.RMSNorm.html) from PyTorch. In the PyTorch implementation, `eps` corresponds to `rms_norm_eps` from our model configuration, while `normalized_shape` should be equal to the hidden layer size. The hyperparameter `elementwise_affine` should be set to `True`, meaning that we include some learnable weights in this layer instead of a pure normalization.
+You can either implement your own normalization layer, or use the built-in [`RMSNorm`](https://docs.pytorch.org/docs/stable/generated/torch.nn.RMSNorm.html) from PyTorch. In the PyTorch implementation, `eps` corresponds to `rms_norm_eps` from our model configuration, while `normalized_shape` should be equal to the hidden layer size. The hyperparameter `elementwise_affine` should be set to `True`, meaning that we include some learnable weights in this layer instead of a pure normalization.
 
-If you want to make your own layer, the PyTorch documentation shows the formula you will have to implement. (The $\gamma_i$ parameters are the learnable weights.)
+If you want to make your own layer, the PyTorch documentation shows the formula you should implement. (The $\gamma_i$ parameters are the learnable weights.)
 
 **Sanity check.**
 
@@ -69,13 +68,64 @@ You can test this in the same way as you tested the MLP previously.
 
 ### Multi-head attention
 
-Let's take the trickiest part first!
+Now, let's turn to the tricky part!
 
-It is OK to use PyTorch's [`scaled_dot_product_attention`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) to compute the final step. (In that case, set `is_causal=True`.)
+The smaller versions of the OLMo 2 model, which we will follow here, use the same implementation of *multi-head attention* as the original Transformer, plus a couple of additional normalizers. (The bigger OLMo 2 models use [grouped-query attention](https://sebastianraschka.com/llms-from-scratch/ch04/04_gqa/) rather than standard MHA; GQA is also used in various Llama, Qwen and some other popular LLMs.)
 
-If you want to use your own implementation, the [documentation of the PyTorch implementation](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) includes a piece of code that you can start from.
+The figure below shows what we will have to implement.
 
-**Sanity check.**
+**Hyperparameters:** The hyperparameters you will need to consider when implementing the MHA are 
+`hidden_size` which defines the input dimensionality as in the MLP and normalizer above, and
+`num_attention_heads` which defines the number of attention heads. **Note** that `hidden_size` has to be evenly divisible by `num_attention_heads`. (Below, we will refer to `hidden_size // num_attention_heads` as the head dimensionality $d_h$.)
+
+**Defining MHA components.** In `__init__`, define the `nn.Linear` components (square matrices) that compute query, key, and value representations, and the final outputs. (They correspond to what we called $W_Q$, $W_K$, $W_V$, and $W_O$ in [the lecture on Transformers](https://www.cse.chalmers.se/~richajo/dat450/lectures/l4/m4_2.pdf).) OLMo 2 also applies layer normalizers after the query and key representations.
+
+**MHA computation, step 1.** The `forward` method takes two inputs `hidden_states` and `position_embedding`.
+
+Continuing to work in  `forward`, now compute query, key, and value representations; don't forget the normalizers after the query and key representations.
+
+Now, we need to reshape the query, key, and value tensors so that the individual attention heads are stored separately. Assume your tensors have the shape $(b, m, d)$, where $b$ is the batch size, $m$ the text length, and $d$ the hidden layer size. We now need to reshape and transpose so that we get $(b, n_h, m, d_h)$ where $n_h$ is the number of attention heads and $d_h$ the attention head dimensionality. Your code could be something like the following (apply this to queries, keys, and values):
+
+```
+q = q.view(b, m, n_h, d_h).transpose(1, 2)
+```
+
+Now apply the RoPE rotations to the query and key representations. Use the utility function `apply_rotary_pos_emb` provided in the code skeleton and just provide the `position_embedding` that you received as an input to `forward`. The utility function returns the modified query and key representations.
+
+**Sanity check step 1.**
+Create an untrained MHA layer. Create some 3-dimensional tensor where the last dimension has the same size as `hidden_size`, as you did in the previous sanity checks. Apply the MHA layer with what you have implemented so far and make sure it does not crash. (It is common to see errors related to tensor shapes here.)
+
+**MHA computation, step 2.** Now, implement the attention mechanism itself. 
+We will explain the exact computations in the hint below, but conveniently enough PyTorch's [`scaled_dot_product_attention`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) (with `is_causal=True`) implements everything that we have to do here.  Optionally, implement your own solution.
+
+<details>
+<summary><b>Hint</b>: Some advice if you want to implement your own attention.</summary>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
+In that case, the <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html">documentation of the PyTorch implementation</a> includes a piece of code that can give you some inspiration and that you can simplify somewhat.
+
+Assuming your query, key, and value tensors are called $q$, $k$, and $v$, then the computations you should carry out are the following. First, we compute the *attention pre-activations*, which are compute by multiplying query and key representations, and scaling:
+
+$$
+\alpha(q, k) = \frac{q \cdot k^{\top}}{\sqrt{d_h}}
+$$
+
+Second, add a *causal mask* to the pre-activations. This mask is necessary for autoregressive (left-to-right) language models: this is so that the attention heads can only consider tokens before the current one. The mask should have the shape $(m, m)$; its lower triangle including the diagonal should be 0 and the upper triangle $-\infty$. Pytorch's <a href="https://docs.pytorch.org/docs/stable/generated/torch.tril.html"><code>tril</code></a> can be convenient here.
+
+Then apply the softmax to get the attention weights.
+
+$$
+A(q, k) = \text{softmax}(\alpha(q, k) + \text{mask})
+$$
+
+Finally, multiply the attention weights by the value tensor and return the result.
+
+$$
+\text{Attention}(q, k, v) = A(q, k) \cdot v
+$$
+</div>
+</details>
+
+**Sanity check step 2.**
 
 ### The full Transformer block
 
