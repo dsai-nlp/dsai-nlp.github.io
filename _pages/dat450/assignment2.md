@@ -90,7 +90,7 @@ Now, we need to reshape the query, key, and value tensors so that the individual
 q = q.view(b, m, n_h, d_h).transpose(1, 2)
 ```
 
-Now apply the RoPE rotations to the query and key representations. Use the utility function `apply_rotary_pos_emb` provided in the code skeleton and just provide the `position_embedding` that you received as an input to `forward`. The utility function returns the modified query and key representations.
+Now apply the RoPE rotations to the query and key representations. Use the utility function `apply_rotary_pos_emb` provided in the code skeleton and just provide the `rope_rotations` that you received as an input to `forward`. The utility function returns the modified query and key representations.
 
 **Sanity check step 1.**
 Create an untrained MHA layer. Create some 3-dimensional tensor where the last dimension has the same size as `hidden_size`, as you did in the previous sanity checks. Apply the MHA layer with what you have implemented so far and make sure it does not crash. (It is common to see errors related to tensor shapes here.)
@@ -158,8 +158,8 @@ out = h_new + h_old
 
 ### The complete Transformer stack
 
-Now, set up the complete Transformer stack including embedding and unembedding layers.
-The embedding and unembedding layers will be identical to what you had in Programming Assignment 1 (except that the unembedding layer should be bias-free, as mentioned in the beginning).
+Now, set up the complete Transformer stack including embedding, top-level normalizer, and unembedding layers.
+The embedding and unembedding layers will be identical to what you had in Programming Assignment 1 (except that the unembedding layer should not use bias terms, as mentioned in the beginning).
 
 <details>
 <summary><b>Hint</b>: Use a <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.ModuleList.html"><code>ModuleList</code></a>.</summary>
@@ -170,12 +170,14 @@ Put all the Transformer blocks in a <code>ModuleList</code> instead of a plain P
 </details>
 
 <details>
-<summary><b>Hint</b>: Creating the RoPE embeddings.</summary>
+<summary><b>Hint</b>: Creating and applying the RoPE embeddings.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-Xxx.
+Create the <code>A2RotaryEmbedding</code> in <code>__init__</code>, as already indicated in the code skeleton. Then in <code>forward</code>, first create the rotations (again, already included in the skeleton). Then pass the rotations when you apply each Transformer layer.
 </pre>
 </div>
 </details>
+
+**Sanity check.** Now, the language model should be complete and you can test this in the same way as in Programming Assignment 1. Create a 2-dimensional *integer* tensor and apply your Transformer to it. The result should be a 3-dimensional tensor where the last dimension is equal to the vocabulary size.
 
 ## Step 2: Training the language model
 
