@@ -51,7 +51,7 @@ The relevant hyperparameters you need to take into account here are `hidden_size
 
 **Sanity check.**
 
-Create an untrained MLP layer. Create some 3-dimensional tensor where the last dimension has the same size as `hidden_size` in your MLP. If you apply the MLP to the test tensor, the output should have the same size as the input.
+Create an untrained MLP layer. Create some 3-dimensional tensor where the last dimension has the same size as `hidden_size` in your MLP. If you apply the MLP to the test tensor, the output should have the same shape as the input.
 
 ### Normalization
 
