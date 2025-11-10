@@ -103,7 +103,7 @@ We will explain the exact computations in the hint below, but conveniently enoug
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 In that case, the <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html">documentation of the PyTorch implementation</a> includes a piece of code that can give you some inspiration and that you can simplify somewhat.
 
-Assuming your query, key, and value tensors are called $$q$$, $$k$$, and $$v$$, then the computations you should carry out are the following. First, we compute the <em>attention pre-activations</em>, which are compute by multiplying query and key representations, and scaling:
+Assuming your query, key, and value tensors are called \(q\), \(k\), and \(v\), then the computations you should carry out are the following. First, we compute the <em>attention pre-activations</em>, which are compute by multiplying query and key representations, and scaling:
 
 $$
 \alpha(q, k) = \frac{q \cdot k^{\top}}{\sqrt{d_h}}
@@ -131,7 +131,7 @@ $$
 ```
 attn_out = attn_out.transpose(1, 2).reshape(b, m, d)
 ```
-Then compute the final output representation (by applying the linear layer we called \(W_O\) above) and return the result.
+Then compute the final output representation (by applying the linear layer we called $$W_O$$ above) and return the result.
 
 **Sanity check steps 2 and 3.**
 Once again create a MHA layer for testing and apply it to an input tensor of the same shape as before. Assuming you don't get any crashes here, the output should be of the same shape as the input. If it crashes or your output has the wrong shape, insert `print` statements along the way, or use an editor with step-by-step debugging, to check the shapes at each step.
