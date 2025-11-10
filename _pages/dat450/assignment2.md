@@ -51,6 +51,8 @@ The relevant hyperparameters you need to take into account here are `hidden_size
 
 **Sanity check.**
 
+Create an untrained MLP layer. Create some 3-dimensional tensor where the last dimension has the same size as `hidden_size` in your MLP. If you apply the MLP to the test tensor, the output should have the same size as the input.
+
 ### Normalization
 
 To stabilize gradients during training, deep learning models with many layers often include some *normalization* (such as batch normalization or layer normalization). Transformers typically includes normalization layers at several places in the stack.
@@ -62,6 +64,8 @@ Here, you can either implement your own normalization layer, or use the built-in
 If you want to make your own layer, the PyTorch documentation shows the formula you will have to implement. (The $\gamma_i$ parameters are the learnable weights.)
 
 **Sanity check.**
+
+You can test this in the same way as you tested the MLP previously.
 
 ### Multi-head attention
 
