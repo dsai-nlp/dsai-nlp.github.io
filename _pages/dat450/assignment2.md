@@ -31,16 +31,21 @@ Copy the skeleton from SOMEWHERE.
 
 ## Step 1: Setting up a Transformer neural network
 
+The main effort in this assignment is the reimplementation of a Transformer architecture. Specifically, we will mimic the architecture of the [OLMo 2](https://docs.allenai.org/release_notes/olmo-release-notes) language model, released by the [Allen AI institute](https://allenai.org/about) at the University of Washington.
+
+The figure below shows the design of the OLMo 2 Transformer. We will reimplement the MLP component and the multi-head attention (and optionally the normalizer as well), and then assemble all the pieces into a full Transformer stack.
 
 <img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/olmo2_overview.svg" alt="Olmo2 overview" style="width:10%; height:auto;">
 
-To be fully compatible with the Olmo 2 implementation, note that all the `nn.Linear` inside of all layers are bias-free (`bias=False`). This includes Q, K, V, and O projections inside attention layers, all parts of the MLP layers, and the unembedding layer.
+**Implementation note:** To be fully compatible with the OLMo 2 implementation, note that all the `nn.Linear` inside of all layers are bias-free (`bias=False`). This includes Q, K, V, and O projections inside attention layers, all parts of the MLP layers, and the unembedding layer. If you solve the optional task at the end where you copy the weights of a pre-trained model into your implementation, then it is important that all layers are identical in structure.
 
 ### Configuration
 
 ### MLP layer
 
-Olmo 2 uses an MLP architecture called SwiGLU, which was introduced in [this paper](https://arxiv.org/pdf/2002.05202).
+Olmo 2 uses an MLP architecture called SwiGLU, which was introduced in [this paper](https://arxiv.org/pdf/2002.05202). (In the paper, this type of network is referred to as FFN<sub>SwiGLU</sub>, described on page 2, Equation 6. Swish<sub>1</sub> corresponds to PyTorch's [SiLU](https://docs.pytorch.org/docs/stable/generated/torch.nn.SiLU.html) activation.) The figure below shows the architecture visually.
+
+<img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/swiglu.svg" alt="SwiGLU" style="width:10%; height:auto;">
 
 **Sanity check.**
 
