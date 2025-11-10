@@ -43,23 +43,29 @@ The figure below shows the design of the OLMo 2 Transformer. We will reimplement
 
 ### MLP layer
 
-Olmo 2 uses an MLP architecture called SwiGLU, which was introduced in [this paper](https://arxiv.org/pdf/2002.05202). (In the paper, this type of network is referred to as FFN<sub>SwiGLU</sub>, described on page 2, Equation 6. Swish<sub>1</sub> corresponds to PyTorch's [SiLU](https://docs.pytorch.org/docs/stable/generated/torch.nn.SiLU.html) activation.) The figure below shows the architecture visually.
+OLMo 2 uses an MLP architecture called SwiGLU, which was introduced in [this paper](https://arxiv.org/pdf/2002.05202). (In the paper, this type of network is referred to as FFN<sub>SwiGLU</sub>, described on page 2, Equation 6. Swish<sub>1</sub> corresponds to PyTorch's [SiLU](https://docs.pytorch.org/docs/stable/generated/torch.nn.SiLU.html) activation.) The figure below shows the architecture visually; in the diagram, the ⊗ symbol refers to element-wise multiplication.
 
 <img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/swiglu.svg" alt="SwiGLU" style="width:10%; height:auto;">
 
+The relevant hyperparameters you need to take into account here are `hidden_size` (the dimension of the input and output) and `intermediate_size` (the dimension of the intermediate representations).
+
 **Sanity check.**
+
+Create an untrained MLP layer. Create some 3-dimensional tensor where the last dimension has the same size as `hidden_size` in your MLP. If you apply the MLP to the test tensor, the output should have the same shape as the input.
 
 ### Normalization
 
 To stabilize gradients during training, deep learning models with many layers often include some *normalization* (such as batch normalization or layer normalization). Transformers typically includes normalization layers at several places in the stack.
 
-Olmo 2 uses a type of normalization called [Root Mean Square layer normalization](https://arxiv.org/pdf/1910.07467).
+OLMo 2 uses a type of normalization called [Root Mean Square layer normalization](https://arxiv.org/pdf/1910.07467).
 
 Here, you can either implement your own normalization layer, or use the built-in [`RMSNorm`](https://docs.pytorch.org/docs/stable/generated/torch.nn.RMSNorm.html) from PyTorch. In the PyTorch implementation, `eps` corresponds to `rms_norm_eps` from our model configuration, while `normalized_shape` should be equal to the hidden layer size. The hyperparameter `elementwise_affine` should be set to `True`, meaning that we include some learnable weights in this layer instead of a pure normalization.
 
 If you want to make your own layer, the PyTorch documentation shows the formula you will have to implement. (The $\gamma_i$ parameters are the learnable weights.)
 
 **Sanity check.**
+
+You can test this in the same way as you tested the MLP previously.
 
 ### Multi-head attention
 
