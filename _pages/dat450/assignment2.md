@@ -43,9 +43,11 @@ The figure below shows the design of the OLMo 2 Transformer. We will reimplement
 
 ### MLP layer
 
-Olmo 2 uses an MLP architecture called SwiGLU, which was introduced in [this paper](https://arxiv.org/pdf/2002.05202). (In the paper, this type of network is referred to as FFN<sub>SwiGLU</sub>, described on page 2, Equation 6. Swish<sub>1</sub> corresponds to PyTorch's [SiLU](https://docs.pytorch.org/docs/stable/generated/torch.nn.SiLU.html) activation.) The figure below shows the architecture visually.
+Olmo 2 uses an MLP architecture called SwiGLU, which was introduced in [this paper](https://arxiv.org/pdf/2002.05202). (In the paper, this type of network is referred to as FFN<sub>SwiGLU</sub>, described on page 2, Equation 6. Swish<sub>1</sub> corresponds to PyTorch's [SiLU](https://docs.pytorch.org/docs/stable/generated/torch.nn.SiLU.html) activation.) The figure below shows the architecture visually; in the diagram, the ⓧ symbol refers to element-wise multiplication.
 
 <img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/swiglu.svg" alt="SwiGLU" style="width:10%; height:auto;">
+
+The relevant hyperparameters you need to take into account here are `hidden_size` (the dimension of the input and output) and `intermediate_size` (the dimension of the intermediate representations).
 
 **Sanity check.**
 
