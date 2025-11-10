@@ -33,6 +33,9 @@ Copy the skeleton from SOMEWHERE.
 
 To be fully compatible with the Olmo 2 implementation, note that `nn.Linear` inside of all layers are bias-free (`bias=False`).
 
+![Olmo2 overview](olmo2_overview.svg)
+
+
 ### Configuration
 
 ### MLP layer
