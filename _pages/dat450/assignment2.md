@@ -33,8 +33,7 @@ Copy the skeleton from SOMEWHERE.
 
 To be fully compatible with the Olmo 2 implementation, note that `nn.Linear` inside of all layers are bias-free (`bias=False`).
 
-![Olmo2 overview](olmo2_overview.svg)
-
+<img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/olmo2_overview.svg" alt="Olmo2 overview" style="width:30%; height:auto;">
 
 ### Configuration
 
