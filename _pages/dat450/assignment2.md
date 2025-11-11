@@ -64,7 +64,7 @@ OLMo 2 uses a type of normalization called [Root Mean Square layer normalization
 
 You can either implement your own normalization layer, or use the built-in [`RMSNorm`](https://docs.pytorch.org/docs/stable/generated/torch.nn.RMSNorm.html) from PyTorch. In the PyTorch implementation, `eps` corresponds to `rms_norm_eps` from our model configuration, while `normalized_shape` should be equal to the hidden layer size. The hyperparameter `elementwise_affine` should be set to `True`, meaning that we include some learnable weights in this layer instead of a pure normalization.
 
-If you want to make your own layer, the PyTorch documentation shows the formula you should implement. (The $\gamma_i$ parameters are the learnable weights.)
+If you want to make your own layer, the PyTorch documentation shows the formula you should implement. (The $$\gamma_i$$ parameters are the learnable weights.)
 
 **Sanity check.**
 
@@ -76,15 +76,17 @@ Now, let's turn to the tricky part!
 
 The smaller versions of the OLMo 2 model, which we will follow here, use the same implementation of *multi-head attention* as the original Transformer, plus a couple of additional normalizers. (The bigger OLMo 2 models use [grouped-query attention](https://sebastianraschka.com/llms-from-scratch/ch04/04_gqa/) rather than standard MHA; GQA is also used in various Llama, Qwen and some other popular LLMs.)
 
-The figure below shows what we will have to implement.
+The figure below shows a high-level overview of the pieces we will have to put together. (In the figure, the four *W* blocks are `nn.Linear`, and RN means RMSNorm.)
+
+<img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/mha.svg" alt="MHA" style="width:10%; height:auto;">
 
 **Hyperparameters:** The hyperparameters you will need to consider when implementing the MHA are 
 `hidden_size` which defines the input dimensionality as in the MLP and normalizer above, and
-`num_attention_heads` which defines the number of attention heads. **Note** that `hidden_size` has to be evenly divisible by `num_attention_heads`. (Below, we will refer to `hidden_size // num_attention_heads` as the head dimensionality $d_h$.)
+`num_attention_heads` which defines the number of attention heads. **Note** that `hidden_size` has to be evenly divisible by `num_attention_heads`. (Below, we will refer to `hidden_size // num_attention_heads` as the head dimensionality $$d_h$$.)
 
-**Defining MHA components.** In `__init__`, define the `nn.Linear` components (square matrices) that compute query, key, and value representations, and the final outputs. (They correspond to what we called $W_Q$, $W_K$, $W_V$, and $W_O$ in [the lecture on Transformers](https://www.cse.chalmers.se/~richajo/dat450/lectures/l4/m4_2.pdf).) OLMo 2 also applies layer normalizers after the query and key representations.
+**Defining MHA components.** In `__init__`, define the `nn.Linear` components (square matrices) that compute query, key, and value representations, and the final outputs. (They correspond to what we called $$W_Q$$, $$W_K$$, $$W_V$$, and $$W_O$$ in [the lecture on Transformers](https://www.cse.chalmers.se/~richajo/dat450/lectures/l4/m4_2.pdf).) OLMo 2 also applies layer normalizers after the query and key representations.
 
-**MHA computation, step 1.** The `forward` method takes two inputs `hidden_states` and `rope_rotations`. The latter contains the precomputed rotations required for RoPE; the last step of the transformer explains how to compute them.
+**MHA computation, step 1.** The `forward` method takes two inputs `hidden_states` and `rope_rotations`. The latter contains the precomputed rotations required for RoPE. (The section **The complete Transformer stack** below explains where they come from.)
 
 Continuing to work in  `forward`, now compute query, key, and value representations; don't forget the normalizers after the query and key representations.
 
@@ -143,6 +145,9 @@ Once again create a MHA layer for testing and apply it to an input tensor of the
 ### The full Transformer decoder layer
 
 After coding up the multi-head attention, everything else is just a simple assembly of pieces!
+The figure below shows the required components in a single Transformer decoder layer.
+
+<img src="https://raw.githubusercontent.com/ricj/dsai-nlp.github.io/refs/heads/master/_pages/dat450/fullblock.svg" alt="fullblock" style="width:10%; height:auto;">
 
 In the constructor `__init__`, create the components in this block, taking the model configuration into account.
 As shown in the figure, a Transformer layer should include an attention layer and an MLP, with normalizers. In `forward`, connect the components to each other; remember to put residual connections at the right places.
@@ -162,7 +167,7 @@ out = h_new + h_old
 
 ### The complete Transformer stack
 
-Now, set up the complete Transformer stack including embedding, top-level normalizer, and unembedding layers.
+Now, set up the complete Transformer stack including embedding, top-level normalizer, and unembedding layers. (You may look at the figure presented previously.)
 The embedding and unembedding layers will be identical to what you had in Programming Assignment 1 (except that the unembedding layer should not use bias terms, as mentioned in the beginning).
 
 <details>
