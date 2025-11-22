@@ -26,9 +26,9 @@ The projects are done in groups of up to four.
 
 Please submit a short text that describes what you intend to work on. For suggestions of topics, see below.
 
-You should submit this description [in Canvas](https://chalmers.instructure.com/courses/31739/assignments/98459). The text should include a project title and one or a couple of paragraphs giving a rough outline of how you intend to work. If you have found any related work or relevant dataset, this is useful information to include. The deadline for this preliminary description is **December 6**.
+You should submit this description [in Canvas](https://canvas.chalmers.se/courses/36909/assignments/117612). The text should include a project title and one or a couple of paragraphs giving a rough outline of how you intend to work. If you have found any related work or relevant dataset, this is useful information to include. The deadline for this preliminary description is **December 5**.
 
-It is not compulsory to submit the preliminary description, but we strongly recommend it so that we have the opportunity to give you some initial feedback. 
+It is not compulsory to submit the preliminary description, but we strongly recommend it so that we have the opportunity to give you some initial feedback.
 
 ## The report and the presentation
 
@@ -42,13 +42,13 @@ The report should follow the format required for a **short paper** submission at
 
 For examples of how such a text can look, take a look at some [short papers published at the ACL conference](https://aclanthology.org/events/acl-2024/#2024acl-short). In addition, there are some examples of project reports from previous instances of this course provided [in this directory](https://www.cse.chalmers.se/~richajo/dat450/project_examples/).
 
-Please submit the project report [via the Canvas page](https://chalmers.instructure.com/courses/31739/assignments/100314). The deadline for submitting the report is **January 19**.
+Please submit the project report [via the Canvas page](https://chalmers.instructure.com/courses/XXX/assignments/100314). The deadline for submitting the report is **January 18**.
 
 ## Oral presentation and peer review
 
-You should prepare a presentation of up to 10 minutes. This presentation will be recorded and made available for other students to see. You can present the project even if your project work and report aren't finished. Please submit the recording of your oral presentation on [this Canvas page](https://chalmers.instructure.com/courses/31739/assignments/100313). The deadline for making your recording available is **January 14**.
+You should prepare a presentation of up to 10 minutes. This presentation will be recorded and made available for other students to see. You can present the project even if your project work and report aren't finished. Please submit the recording of your oral presentation on [this Canvas page](https://chalmers.instructure.com/courses/XXX/assignments/100313). The deadline for making your recording available is **January 13**.
 
-Finally, you will be expected to watch the presentations by at two other groups and provide some feedback. There are some suggestions for how to write the feedback on [the Canvas submission page](https://chalmers.instructure.com/courses/31739/quizzes/23291). The deadline for this peer review is **January 22**.
+Finally, you will be expected to watch the presentations by at two other groups and provide some feedback. There are some suggestions for how to write the feedback on [the Canvas submission page](https://chalmers.instructure.com/courses/XXX/quizzes/23291). The deadline for this peer review is **January 21**.
 
 ## Grading
 
@@ -62,7 +62,7 @@ We encourage people to find a topic that they have a personal interest in, if po
 
 If you need help deciding on a topic, here are a few suggestions. Some of these are very easy and some more challenging, and this list is not sorted by the difficulty level.
 
-- Adapting a lab assignment or lecture demo. Start from one of the lab assignments or lecture demos and change it to something that is interesting for you. Maybe change the model in Assignment 2 to a Transformer? Or compare a neural topic model to the Gibbs sampling algorithm in Assignment 3?
+- Adapting a lab assignment or lecture demo. Start from one of the lab assignments or lecture demos and change it to something that is interesting for you. Maybe add a reinforcement learning step to the model you trained in Assignment 4? Or compare a neural topic model to the Gibbs sampling algorithm in Assignment 3?
 - Comparing representations for an application. Select some NLP application, either one we saw during the lectures or something where you can find the code online. Investigate how various types of text representations affect the application's performance. For instance, you could compare standard word embeddings, ELMo, BERT, and other representations.
 - Machine translation for a language pair of your choice.
 - Retreival-augmented generation in an application domain of your choice. Maybe you'd like a chatbot that can answer questions about the courses available at the university?
