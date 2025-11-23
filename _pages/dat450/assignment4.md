@@ -75,14 +75,11 @@ Since these 52k data points make fine-tuning longer, for simplicity in this cour
 To get a clear idea of how to complete the assignment, you can start with the skeleton code available here: `/data/courses/2025_dat450_dit247/assignments/a4`. It looks like this:
 ```bash
 .
-├── __init__.py
 ├── data_utils.py
 ├── lora.py
 ├── main.py
 ├── predict.py
 └── utils.py
-
-That's one directory with five files.
 ```
 
 In short, you need to fill in the incomplete parts of `data_utils.py` and `lora.py`. The other files contain helpful functions to run the assignment, but it’s highly recommended to review the documented code to understand the structure of the project. To ensure your code works correctly, you can follow these instructions and run the code either:
@@ -90,11 +87,6 @@ In short, you need to fill in the incomplete parts of `data_utils.py` and `lora.
 Using the prebuilt environment:
 ```bash
 python3 main.py
-```
-
-Or, if you want to try new materials using **uv**:
-```bash
-uv run --python 3.12 python main.py
 ```
 
 ## Step 0: Preprocessing
@@ -226,7 +218,6 @@ Sample with prompt:
 </pre>
 </div>
 </details>
-
 
 Pre-trained LLMs are simply autoregressive models (next-token predictors); they learn patterns in text, not how to follow instructions. Therefore, SFT can enhance LLMs by teaching them how to answer tasks directly, structure their outputs, respond helpfully, and more. In real commercial systems like ChatGPT, Claude, and others, instruction tuning followed by reinforcement learning are crucial steps that make the models more practically useful. As mentioned before, Alpaca serves as a starting point to help our simple LLM (OLMo) adopt similar features. To achieve this, we define some templates based on the presence or absence of input for the Alpaca dataset.
 
@@ -405,8 +396,6 @@ def make_trainer(
     )
     return trainer
 ```
-
-
 
 ## Step 2: Full fine-tuning (SFT dataset)
 Next, we train the pre-trained model using SFT (over all the parameters), then calculate the metrics and outputs to evaluate how well it follows instructions.
