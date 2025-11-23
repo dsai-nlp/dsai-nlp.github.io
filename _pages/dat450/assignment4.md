@@ -19,7 +19,7 @@ In this assignment, you will perform supervised fine-tuning (SFT) of a small ope
 
 ### Requirements
 
-Please submit your solution in Canvas. Submission deadline: December `SPECIFY HERE`.
+Please submit your solution [in Canvas](https://canvas.chalmers.se/courses/36909/assignments/117618). **Submission deadline: December 1**.
 
 Submit Python files containing your solution to the programming tasks described below. In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. (Most important outputs already designed for the code)
 
@@ -34,37 +34,15 @@ This assignment is adapted from a previous version by Marco Kuhlmann and updated
 ## Step 0: Preliminaries
 
 ### Libraries
-We use the following libraries from the HF ecosystem:
+
+As in the previous assignment, you can use the pre-set environment `source /data/courses/2025_dat450_dit247/venvs/dat450_venv/bin/activate`.
+
+Alternatively, if you are working on your own machine or some cloud-based service, install the following libraries with a package manager such as `pip` or `uv`:
 - [Torch](https://docs.pytorch.org/docs/stable/index.html)
 - [Transformers](https://huggingface.co/docs/transformers/index)
 - [Datasets](https://huggingface.co/docs/datasets/index)
 - [Evaluate](https://huggingface.co/docs/evaluate/en/index)
 - [NLTK](https://www.nltk.org/api/nltk.html)
-
-
-As in the previous assignment, you can still use the pre-set environment `source /data/courses/2025_dat450_dit247/venvs/dat450_venv/bin/activate`, or you can try something popular nowadays called **`uv`**. **`uv`** is a super-fast Python package manager and environment tool—kind of like `pip`, but much faster and cleaner. So, bear with me in the following paragraph if you want to start working with it.
-
-First, we need to install it on Mierva (or later on your operating system, which you can do by following this [documentation](https://docs.astral.sh/uv/getting-started/installation/)). The easiest way:
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-After installation, restart your terminal or reload your shell:
-```bash
-source ~/.bashrc
-```
-Check that it works:
-```bash
-uv --version
-```
-That's it, you're ready to dive into the task. Then you can start to sync your environmnet using:
-
-```bash
-uv python install 3.12
-uv venv --python 3.12
-uv sync
-```
 
 
 ### Getting the files
