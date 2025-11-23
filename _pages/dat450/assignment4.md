@@ -89,7 +89,7 @@ Using the prebuilt environment:
 python3 main.py
 ```
 
-## Step 0: Preprocessing
+## Step 1: Preprocessing
 Create a Dataset by loading Alpaca training set that already downloaded for you.
 
 ```python
@@ -258,7 +258,7 @@ DatasetDict({
 </details>
 
 
-## Step 1: Baseline zero-shot and prompt format
+## Step 2: Baseline zero-shot and prompt format
 
 Set MODEL_NAME_OR_PATH (default suggested: `/data/courses/2025_dat450_dit247/models/OLMo-2-0425-1B`). Load the tokenizer and model in causal LM form.
 
@@ -397,7 +397,7 @@ def make_trainer(
     return trainer
 ```
 
-## Step 2: Full fine-tuning (SFT dataset)
+## Step 3: Full fine-tuning (SFT dataset)
 Next, we train the pre-trained model using SFT (over all the parameters), then calculate the metrics and outputs to evaluate how well it follows instructions.
 
 ```python
@@ -459,7 +459,7 @@ Full SFT trainable params: 1484916736
 
 Next, we train the pre-trained model using SFT, then calculate the metrics and outputs to evaluate how well it follows instructions. We also consider how long it will take to fine-tune all the parameters because the next step is to see how LoRA can help us achieve the same level of instruction tuning in less time.
 
-## Step 3: Fine-tuning with LoRA
+## Step 4: Fine-tuning with LoRA
 
 ### Utilities for modifying models
 
