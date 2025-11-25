@@ -76,9 +76,11 @@ To get a clear idea of how to complete the assignment, you can start with the sk
 ```bash
 .
 ├── data_utils.py
+├── inference.sh
 ├── lora.py
 ├── main.py
 ├── predict.py
+├── run.sh
 └── utils.py
 ```
 
