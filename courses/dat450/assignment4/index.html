@@ -10,9 +10,11 @@ DatasetDict({
 })
 </pre> </div> </details> <p>Since these 52k data points make fine-tuning longer, for simplicity in this course, we only consider 2K + 200 samples for training and testing. Of course, during learning, you can use a smaller amount to ensure your implementation works properly. For the final submission, go ahead with 2K + 200 samples and use the same seed as the code scaffold, <code class="language-plaintext highlighter-rouge">SEED=101</code>, to help TAs evaluate your outputs.</p> <p>To get a clear idea of how to complete the assignment, you can start with the skeleton code available here: <code class="language-plaintext highlighter-rouge">/data/courses/2025_dat450_dit247/assignments/a4</code>. It looks like this:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">.</span>
 ├── data_utils.py
+├── inference.sh
 ├── lora.py
 ├── main.py
 ├── predict.py
+├── run.sh
 └── utils.py
 </code></pre></div></div> <p>In short, you need to fill in the incomplete parts of <code class="language-plaintext highlighter-rouge">data_utils.py</code> and <code class="language-plaintext highlighter-rouge">lora.py</code>. The other files contain helpful functions to run the assignment, but it’s highly recommended to review the documented code to understand the structure of the project. To ensure your code works correctly, you can follow these instructions and run the code either:</p> <p>Using the prebuilt environment:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 main.py
 </code></pre></div></div> <h2 id="step-1-preprocessing">Step 1: Preprocessing</h2> <p>Create a Dataset by loading Alpaca training set that already downloaded for you.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
