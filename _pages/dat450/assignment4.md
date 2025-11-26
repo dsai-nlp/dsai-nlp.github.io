@@ -21,7 +21,7 @@ In this assignment, you will perform supervised fine-tuning (SFT) of a small ope
 
 Please submit your solution [in Canvas](https://canvas.chalmers.se/courses/36909/assignments/117618). **Submission deadline: December 1**.
 
-Submit Python files containing your solution to the programming tasks described below. In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. (Most important outputs already designed for the code)
+Submit Python files containing your solution to the programming tasks described below. In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. The most important outputs are already designed for the code.
 
 This is a pure programming assignment and you do not have to write a technical report or explain details of your solution: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 
@@ -35,7 +35,7 @@ This assignment is adapted from a previous version by Marco Kuhlmann and updated
 
 ### Libraries
 
-As in the previous assignment, you can use the pre-set environment `source /data/courses/2025_dat450_dit247/venvs/dat450_venv/bin/activate`.
+As in the previous assignments, you can use the pre-set environment `source /data/courses/2025_dat450_dit247/venvs/dat450_venv/bin/activate`.
 
 Alternatively, if you are working on your own machine or some cloud-based service, install the following libraries with a package manager such as `pip` or `uv`:
 - [Torch](https://docs.pytorch.org/docs/stable/index.html)
@@ -47,7 +47,7 @@ Alternatively, if you are working on your own machine or some cloud-based servic
 
 ### Getting the files
 
-The dataset [Alpaca](https://huggingface.co/datasets/tatsu-lab/alpaca) is a collection of 52k instruction-response pairs designed for SFT of LLM for instruction following (JSON format). For easy use we already downloaed this dataset that you can load using the HF datasets as:
+The dataset [Alpaca](https://huggingface.co/datasets/tatsu-lab/alpaca) is a collection of 52k instruction-response pairs designed for SFT of LLM for instruction following (JSON format). You can load using the HF datasets as:
 
 ```python
 from datasets import load_dataset
@@ -84,9 +84,7 @@ To get a clear idea of how to complete the assignment, you can start with the sk
 └── utils.py
 ```
 
-In short, you need to fill in the incomplete parts of `data_utils.py` and `lora.py`. The other files contain helpful functions to run the assignment, but it’s highly recommended to review the documented code to understand the structure of the project. To ensure your code works correctly, you can follow these instructions and run the code either:
-
-Using the prebuilt environment:
+In short, you need to fill in the incomplete parts of `data_utils.py` and `lora.py`. The other files contain helpful functions to run the assignment. It’s highly recommended to review the documented code to understand the structure of the project. To ensure your code works correctly, you can follow these instructions and run the code using the pre-built environment:
 ```bash
 python3 main.py
 ```
@@ -114,7 +112,7 @@ DatasetDict({
 </div>
 </details>
 
-Then we need to create our training and testing sets from that dataset. To do this, we use two methods provided by HF datasets, [`select`](https://huggingface.co/docs/datasets/v1.8.0/package_reference/main_classes.html#datasets.Dataset.select) and [`train_test_split`](https://huggingface.co/docs/datasets/v1.8.0/package_reference/main_classes.html#datasets.Dataset.train_test_split), which help us choose the subsets as training and testing data. Although that's a cleaned version of Alpaca, to ensure we always have output, we filter out all rows where the output is empty. To achieve an equal distribution of different instructions corresponding to the inputs, we also stratify the rows based on the presence or absence of input.
+Then we need to create our training and testing sets from that dataset. To do this, we use two methods provided by HF datasets, [`select`](https://huggingface.co/docs/datasets/v1.8.0/package_reference/main_classes.html#datasets.Dataset.select) and [`train_test_split`](https://huggingface.co/docs/datasets/v1.8.0/package_reference/main_classes.html#datasets.Dataset.train_test_split), which help us choose the subsets as training and testing data. Although we provide a cleaned version of Alpaca, we need to filter out all rows where the output is empty to ensure we always have output. To achieve an equal distribution of different instructions corresponding to the inputs, we also stratify the rows based on the presence or absence of input.
 
 
 ```python
