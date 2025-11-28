@@ -548,8 +548,7 @@ Set up a model where you replace the four linear layers in attention blocks (que
 
 Train this model and compare the training speed, metrics, and outputs to the results from Step 3.
 
-<span style="color: red;">**Correction (Nov. 28)**</span>: We fixed a couple of typos here, in particular a mistake in the instructions about which layers you should apply LoRA to.
-
+<b style="color: red;">Correction (Nov. 28)</b>: We fixed a couple of typos here, in particular a mistake in the instructions about which layers you should apply LoRA to.
 
 **Side notes:**
 -----
