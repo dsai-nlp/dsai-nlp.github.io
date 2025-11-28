@@ -539,14 +539,17 @@ You can use <code>nn.init.normal_</code> and <code>nn.init.zeros_</code> here.
 
 ### Fine-tuning with LoRA
 
-Set up a model where you replace the query and value linear layers with LoRA layers. Use the following steps:
+Set up a model where you replace the four linear layers in attention blocks (query, key, value, and output) with LoRA layers. Use the following steps:
 - First use `extract_lora_targets` to get the relevant linear layers.
 - Each of the linear layers in the returned dictionary should be wrapped inside a LoRA layer.
 - Then use `replace_layers` to put them back into the model.
 
-**Sanity check**: Use your function `num_trainable_parameters`. The number of trainable parameters should be less than in Step 1 but more than in Step 2. The exact number will depend on the rank.
+**Sanity check**: Use your function `num_trainable_parameters`. The number of trainable parameters should be less than in Step 3. The exact number will depend on the rank.
 
-Train this model and compare the training speed, metrics, and outputs to the results from Steps 1 and 2.
+Train this model and compare the training speed, metrics, and outputs to the results from Step 3.
+
+<span style="color: red;">**Correction (Nov. 28)**</span>: We fixed a couple of typos here, in particular a mistake in the instructions about which layers you should apply LoRA to.
+
 
 **Side notes:**
 -----
