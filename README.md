@@ -1,6 +1,6 @@
   # DSAI-NLP GitHub Page Contribution Guide
 
-Welcome to the DSAI-NLP GitHub repository! This guide will walk you through the steps to contribute to our GitHub Page. Whether you're fixing a bug, adding content, or updating existing information, your contributions are invaluable to the success of our project.
+Welcome to the DSAI-NLP GitHub repository! This guide will walk you through the steps to contribute to our GitHub Page. Whether you're fixing a bug, adding content, or updating existing information, your contributions are invaluable to the success of our project!w
 
 ## Important Note for Contributors
 
