@@ -2,14 +2,65 @@
 ---
 
 @inproceedings{hagstrom2026cub,
-  title = {{CUB}: Benchmarking Context Utilisation Techniques for Language Models},
-  author = {Lovisa Hagstr\"{o}m and Youna Kim and Haeun Yu and Sang-goo Lee and Richard Johansson and Hyunsoo Cho and Isabelle Augenstein},
+    title = "{CUB}: Benchmarking Context Utilisation Techniques for Language Models",
+    author = {Hagstr{\"o}m, Lovisa  and
+      Kim, Youna  and
+      Yu, Haeun  and
+      Lee, Sang-goo  and
+      Johansson, Richard  and
+      Cho, Hyunsoo  and
+      Augenstein, Isabelle},
+    editor = "Liakata, Maria  and
+      Moreira, Viviane P.  and
+      Zhang, Jiajun  and
+      Jurgens, David",
+    booktitle = "Proceedings of the 64th Annual Meeting of the {A}ssociation for {C}omputational {L}inguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2026",
+    address = "San Diego, California, United States",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.acl-long.1151/",
+    pdf = {https://aclanthology.org/2026.acl-long.1151.pdf},
+    doi = "10.18653/v1/2026.acl-long.1151",
+    pages = "25101--25133",
+    ISBN = "979-8-89176-390-6",
+    abstract = "Incorporating external knowledge is crucial for knowledge-intensive tasks, such as question answering and fact checking. However, language models (LMs) may ignore relevant information that contradicts outdated parametric memory or be distracted by irrelevant contexts. While many context utilisation manipulation techniques (CMTs) have recently been proposed to alleviate these issues, few have seen systematic comparison. In this paper, we develop CUB (Context Utilisation Benchmark) - the first comprehensive benchmark designed to help diagnose CMTs under diverse noisy context conditions within retrieval-augmented generation (RAG). With this benchmark, we conduct the most extensive evaluation to date of seven state-of-the-art methods, representative of the main categories of CMTs, across three diverse datasets and tasks, applied to 11 LMs. Our findings expose critical gaps in current CMT evaluation practices, demonstrating the need for holistic testing. We reveal that most existing CMTs struggle to handle the full spectrum of context types encountered in real-world RAG scenarios. We also find that many CMTs display inflated performance on simple synthesised datasets, compared to more realistic datasets with naturally occurring samples."
+}
+
+@inproceedings{farahani2026copy,
+  title = {To Copy or Not to Copy: Copying Is Easier to Induce Than Recall},
+  author = {Mehrdad Farahani and Franziska Penzkofer and Richard Johansson},
   year = {2026},
-  booktitle={Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (ACL 2026)},
-  note={to appear},
-  url = {https://arxiv.org/abs/2505.16518},
-  pdf = {https://arxiv.org/pdf/2505.16518},
-  abstract = {Incorporating external knowledge is crucial for knowledge-intensive tasks, such as question answering and fact checking. However, language models (LMs) may ignore relevant information that contradicts outdated parametric memory or be distracted by irrelevant contexts. While many context utilisation manipulation techniques (CMTs) that encourage or suppress context utilisation have recently been proposed to alleviate these issues, few have seen systematic comparison. In this paper, we develop CUB (Context Utilisation Benchmark) to help practitioners within retrieval-augmented generation (RAG) identify the best CMT for their needs. CUB allows for rigorous testing on three distinct context types, observed to capture key challenges in realistic context utilisation scenarios. With this benchmark, we evaluate seven state-of-the-art methods, representative of the main categories of CMTs, across three diverse datasets and tasks, applied to nine LMs. Our results show that most of the existing CMTs struggle to handle the full set of types of contexts that may be encountered in real-world retrieval-augmented scenarios. Moreover, we find that many CMTs display an inflated performance on simple synthesised datasets, compared to more realistic datasets with naturally occurring samples. Altogether, our results show the need for holistic tests of CMTs and the development of CMTs that can handle multiple context types.}
+  address = {Budapest, Hungary},
+  booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2026},
+  note = {to appear},
+  url = {https://arxiv.org/pdf/2601.12075},
+  pdf = {https://arxiv.org/pdf/2601.12075},
+  abstract = {Language models used in retrieval-augmented settings must arbitrate between parametric knowledge stored in their weights and contextual information in the prompt. This work presents a mechanistic study of that choice by extracting an arbitration vector from model activations on a curated dataset designed to disentangle (i) irrelevant contexts that elicit parametric recall and (ii) relevant but false contexts that elicit copying. The vector is computed as the residual-stream centroid difference between these regimes across 27 relations, and is injected as an additive intervention at selected layers and token spans to steer behavior in two directions: Copy→Recall (suppressing context use) and Recall→Copy (inducing the model to copy any token from the context). Experiments on two architectures (decoder-only and encoder/decoder) and two open-domain QA benchmarks show consistent behavior shifts under moderate scaling while monitoring accuracy and fluency. Mechanistic analyses of attention routing, MLP contributions, and layer-wise probability trajectories reveal an asymmetry: inducing copying is an easy ``reactivation'' process that can be triggered at different locations in the input, while restoring recall is a ``suppression'' process that is more fragile and strongly tied to object-token interventions.},
+}
+
+
+@inproceedings{modica2026factual,
+    title = "Do Factual Recall Mechanisms Carry over from Text to Speech in Multimodal Language Models?",
+    author = "Modica, Luca  and
+      Landin, Filip  and
+      Farahani, Mehrdad  and
+      Qian, Livia  and
+      Skantze, Gabriel  and
+      Johansson, Richard",
+    editor = "Mohammad, Saif M.  and
+      Ousidhoum, Nedjma",
+    booktitle = "Proceedings of the 15th Joint Conference on Lexical and Computational Semantics (*{SEM} 2026)",
+    month = jul,
+    year = "2026",
+    address = "San Diego, California, United States",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.starsem-conference.28/",
+    pdf = {https://aclanthology.org/2026.starsem-conference.28.pdf},
+    doi = "10.18653/v1/2026.starsem-conference.28",
+    pages = "401--409",
+    ISBN = "979-8-89176-413-2",
+    abstract = "In recent years, several Speech Language Models (SLMs) that represent speech and written text jointly have been presented. The question then emerges about how model-internal mechanisms are similar and different when operating in the two modalities. We focus on how these systems encode, store, and retrieve factual knowledge, which has previously been investigated for text-only models. To investigate mechanisms behind the storage and recall of factual association in SLMs, we leverage Causal Mediation Analysis, a technique previously applied to text-based models. Initial results using SpiritLM, a multimodal model integrating discrete speech tokens reveal discrepancies between text-to-text and speech-to-text results, suggesting that the emergent mechanisms for factual recall are only partially carried over from the text to the speech modality. These results advance our understanding of how internal mechanisms encode factual associations in SLMs while contributing insights for improving speech-enabled AI systems."
 }
 
 @inproceedings{audinet2025benchmarking,
