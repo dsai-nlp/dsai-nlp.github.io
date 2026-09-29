@@ -5,7 +5,7 @@ position: Professor
 state: current
 start-date: 2016-04-01
 end-date: YY-MM-DD
-email: richard.johansson@gu.se
+email: richard.johansson@cse.gu.se
 scholar_userid: FvhWYU8AAAAJ
 publons_id:
 research_gate_profile:

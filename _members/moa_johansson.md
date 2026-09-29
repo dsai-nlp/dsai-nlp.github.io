@@ -1,7 +1,7 @@
 ---
 name: Moa Johansson
 image: "assets/members/moa_johansson.png"
-position: Associate Professor
+position: Professor
 state: current
 start-date: 
 end-date: YY-MM-DD
