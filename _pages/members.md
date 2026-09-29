@@ -105,7 +105,6 @@ nav_order: 1
 
 <section class="members-hero">
   <h1>Meet the NLP@DSAI Team</h1>
-  <p>Explore the people driving our research — from faculty and researchers to the students and alumni who keep our community vibrant.</p>
 </section>
 
 {% assign current_members = site.members | where: "state", "current" | sort: "name" %}
@@ -116,7 +115,7 @@ nav_order: 1
   {% assign position = member.position | downcase %}
   {% if position contains "professor" or position contains "lecturer" or position contains "director" %}
     {% assign staff_members = staff_members | push: member %}
-  {% elsif position contains "phd" or position contains "student" or position contains "intern" %}
+  {% elsif position contains "phd" or position contains "student" or position contains "intern" or position contains "postdoc" %}
     {% assign student_members = student_members | push: member %}
   {% else %}
     {% assign other_members = other_members | push: member %}
@@ -157,8 +156,8 @@ nav_order: 1
 {% if student_members.size > 0 %}
 <section class="members-section">
   <div class="section-title">
-    <h2 class="h3 mb-1">PhD Researchers</h2>
-    <p class="text-muted mb-0">Doctoral candidates advancing cutting-edge NLP research</p>
+    <h2 class="h3 mb-1">Junior Researchers</h2>
+    <p class="text-muted mb-0">Junior researchers working in the group</p>
   </div>
   <div class="members-grid">
     {% for member in student_members %}
@@ -253,7 +252,7 @@ nav_order: 1
 <section class="members-section">
   <div class="section-title">
     <h2 class="h3 mb-1">Alumni</h2>
-    <p class="text-muted mb-0">Former members who continue to shape the broader NLP community</p>
+    <p class="text-muted mb-0">Former members</p>
   </div>
   <div class="members-grid">
     {% for member in alumni_members %}
