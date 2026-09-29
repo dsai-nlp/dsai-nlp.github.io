@@ -115,7 +115,7 @@ nav_order: 1
   {% assign position = member.position | downcase %}
   {% if position contains "professor" or position contains "lecturer" or position contains "director" %}
     {% assign staff_members = staff_members | push: member %}
-  {% elsif position contains "phd" or position contains "student" or position contains "intern" %}
+  {% elsif position contains "phd" or position contains "student" or position contains "intern" or position contains "postdoc" %}
     {% assign student_members = student_members | push: member %}
   {% else %}
     {% assign other_members = other_members | push: member %}
