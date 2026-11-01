@@ -40,7 +40,7 @@ On the practical side, you will need to understand the basics of PyTorch such as
 
 Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/41332/assignments/142925). 
 
-**Submission deadline: November 10**.
+**Submission deadline: November 9**.
 
 Submit Python files containing your solution to the programming tasks described below.
 In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. (Most importantly: the perplexity evaluated on the validation set, and the next-word predictions.)
