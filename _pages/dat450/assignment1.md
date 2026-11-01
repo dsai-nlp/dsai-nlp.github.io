@@ -40,7 +40,7 @@ On the practical side, you will need to understand the basics of PyTorch such as
 
 Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/41332/assignments/142925). 
 
-**Submission deadline: November 9**.
+**Submission deadline: November 10**.
 
 Submit Python files containing your solution to the programming tasks described below.
 In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. (Most importantly: the perplexity evaluated on the validation set, and the next-word predictions.)
@@ -100,13 +100,12 @@ By enabling auto-reloading, you won't have to restart the notebook every time yo
 </details>
 
 
-If you have questions about how to work with the cluster, please ask in the related [discussion thread](https://canvas.chalmers.se/courses/36909/discussion_topics/221739).
+If you have questions about how to work with the cluster, please ask in the related [discussion thread](https://canvas.chalmers.se/courses/41332/discussion_topics/253856).
 
 ### Optional: Working on some other machine
 If you are working on your own machine, make sure that the following libraries are installed:
-- [NLTK](https://www.nltk.org/install.html) or [SpaCy](https://spacy.io/usage) for word splitting,
 - [PyTorch](https://pytorch.org/get-started/locally/) for building and training the models,
-- [Transformers](https://pytorch.org/get-started/locally/) and Datasets from HuggingFace,
+- [Transformers](https://huggingface.co/docs/transformers/installation) and [Datasets](https://huggingface.co/docs/datasets/installation) from HuggingFace,
 - Optional: [Matplotlib](https://matplotlib.org/stable/users/getting_started/) and [scikit-learn](https://scikit-learn.org/stable/install.html) for the embedding visualization in the last step.
 If you are using a Colab notebook, these libraries are already installed.
 
@@ -116,59 +115,50 @@ Then download and extract [this archive](https://www.cse.chalmers.se/~richajo/da
 
 **Terminological note**: It can be useful to keep in mind that people in NLP use the word ***tokenization*** in a couple of different ways. Traditionally, ***tokenization*** referred to the process of splitting texts into separate words. More recently, ***tokenization*** typically tends to mean all preprocessing steps we carry out to convert text into a numerical format suitable for neural networks. To avoid confusion, in this assignment we will use the term ***tokenization*** in the modern sense, and use the term ***word splitting*** otherwise.
 
-### Using NLTK or SpaCy for word splitting
-
-In this assignment, you will just use an existing library to split texts into words. Popular NLP libraries such as SpaCy and NLTK come with built-in functions for this purpose. We recommend NLTK in this assignment since it is somewhat faster than SpaCy and somewhat easier to use.
-
-<details>
-<summary><b>Hint</b>: How to use NLTK's English word splitter.</summary>
-
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">Import the function <code>word_tokenize</code> from the <code>nltk</code> library. If you are running this on your own machine, you will first need to install NLTK with <code>pip</code> or <code>conda</code>. In Colab, NLTK is already installed.
-
-For instance, <code>word_tokenize("Let's test!!")</code> should give the result <code>["Let", "'s", "test", "!", "!"]</code>
-</div>
-</details>
+In this assignment, we are going to implement byte-level byte-pair encoding (BPE) tokenizer (see more [here](https://huggingface.co/learn/llm-course/en/chapter6/5)). Each ordinary token is stored as one or more bytes. Tokens do not have to correspond to whole words. They may represent part of a character, part of a word, a whole word, or simply text spanning spaces. Each nonempty paragraph is treated as a separate sequence.
 
 ### Building the vocabulary
 
-Each nonempty line in the text files correspond to one paragraph in Wikipedia. Apply the tokenizer to all paragraphs in the training and validation datasets. Convert all words into lowercase.
+Each nonempty line in the text files correspond to one paragraph in Wikipedia. Learn the vocabulary and BPE merge rules **only from the training file**. Afterwards, use the same trained tokenizer to encode both the training and validation datasets.  
 
-Create a function that goes through the training text and creates a *vocabulary*: a mapping from token strings to integers.
+Complete `split_into_bytes` and `build_tokenizer` in the skeleton. `split_into_bytes(text)` should encode a string as UTF-8 and return a list of one-byte `bytes` objects. For example, `"cat"` becomes `[b'c', b'a', b't']`. A non-ASCII character may require several bytes. In `build_tokenizer`, initialise the vocbulary with all 256 possible byte values, where each value is mapped to an integer ID.
 
 In addition, the vocabulary should contain 4 special symbols:
-- a symbol for previously unseen or low-frequency tokens,
-- a symbol we will put at the beginning of each paragraph,
-- a symbol we will put at the end of each paragraph.
-- a symbol we will use for *padding* so that we can make input tensors rectangular.
+- `<UNK>`, a symbol for previously unseen tokens (note that ordinary UTF-8 text can be represented without it because all byte values are included),
+- `<BOS>`, a symbol we will put at the beginning of each paragraph,
+- `<EOS>`, a symbol we will put at the end of each paragraph.
+- `<PAD>`, a symbol we will use for *padding* so that we can make input tensors rectangular.
 
-The total size of the vocabulary (including the 4 symbols) should be at most `max_voc_size`, which is is a user-specified hyperparameter. If the number of unique tokens in the text is greater than `max_voc_size`, then use the most frequent ones.
+The total size of the vocabulary (including the four special symbols, all 256 byte tokens, and all learned tokens) should be at most `max_voc_size`, which is a user-specified hyperparameter of at least 260. Build the vocabulary entries by learning BPE merges as described below.
 
 <details>
 <summary><b>Hint</b>: A <a href="https://docs.python.org/3/library/collections.html#collections.Counter"><code>Counter</code></a> can be convenient when computing the frequencies.</summary>
-<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">A <code>Counter</code> is like a regular Python dictionary, with some additional functionality for computing frequencies. For instance, you can go through each paragraph and call <a href="https://docs.python.org/3/library/collections.html#collections.Counter.update"><code>update</code></a>. After building the <code>Counter</code> on your dataset, <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items.</div>
+<div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">A <code>Counter</code> is like a regular Python dictionary, with some additional functionality for computing frequencies. For instance, you can go through each paragraph and call <a href="https://docs.python.org/3/library/collections.html#collections.Counter.update"><code>update</code></a>. After building the <code>Counter</code> on your dataset, <a href="https://docs.python.org/3/library/collections.html#collections.Counter.most_common"><code>most_common</code></a> gives the most frequent items. <code>Counter</code> can be used to count pairs within each training paragraph and combine their counts. After each merge, you can update the counts to cover the new token sequences.</div>
 </details>
 
-Also create some utility that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we look at model outputs and word embedding neighbors.
+Also create some utility (an inverse mapping) that allows you to go back from the integer to the original word token. This will only be used in the final part of the assignment, where we look at model outputs and word embedding neighbors. A word may consist of several BPE tokens, so it does not need to have a single vocabulary ID.
 
 **Example**: you might end up with something like this:
 <pre>
-str_to_int = { 'BEGINNING':0, 'END':1, 'UNKNOWN':2, 'PAD': 3, 'the':4, 'and':5, ... }
+str_to_int = { 'BEGINNING':0, 'END':1, 'UNKNOWN':2, 'PAD': 3, b't':4, b'h':5, ... }
 
-int_to_str = { 0:'BEGINNING', 1:'END', 2:'UNKNOWN', 3:'PAD', 4:'the', 5:'and', ... }
+int_to_str = { 0:'BEGINNING', 1:'END', 2:'UNKNOWN', 3:'PAD', 4:b't', 5:b'h', ... }
 </pre>
 
 **Sanity check**: after creating the vocabulary, make sure that
-- the size of your vocabulary is not greater than the max vocabulary size you specified,
+- the size of your vocabulary is not greater than the max vocabulary size you specified and is at least 260,
 - the 4 special symbols exist in the vocabulary and that they don't coincide with any real words,
-- some highly frequent example words (e.g. "the", "and") are included in the vocabulary but that some rare words (e.g. "cuboidal", "epiglottis") are not.
-- if you take some test word, you can map it to an integer and then back to the original test word using the inverse mapping.
+- if you take a test word, you can map its BPE tokens to integer IDs and reconstruct the original word using the inverse mapping, joining the byte sequences and decoding them as UTF-8.
+
+To train the tokenizer, we need to represent every line of the training text as a list of individual UTF-8 byte tokens and then count how often each pair of neighboring tokens occurs. We then merge the most most common pair everywhere it occurs and add the joined token to
+#the vocabulary. Save the merge rules in the order in which they are learned. Repeat merging until the maximum vocabulary size is reached. 
 
 ### Implementing a HuggingFace-like Tokenizer
 
 Now, we turn to the task of implementing the utility that will turn a text into a numerical format that can be provided to neural networks as an input.
 Our implementation will be functionally similar to the tokenizers provided by the **HuggingFace** library.
 
-Write code for the missing parts in the `A1Tokenizer` in the skeleton Python file. You will need to implement the three methods `__init__`, `__call__`, and `__len__`. Most of the work will be done in `__call__`:  `__init__` is simply where you pass the information you need to set up the tokenize, and `__len__` should just return the size of the vocabulary.
+Write code for the missing parts in the `A1Tokenizer` in the skeleton Python file. You will need to implement the four methods `__init__`, `__call__`, `__len__` and `decode`. Most of the work will be done in `__call__`:  `__init__` is simply where you pass the information you need to set up the tokenizer, `__len__` should just return the size of the vocabulary, and `decode` converts the list of integers to a string.
 
 <details>
 <summary><b>Hint</b>: The weird-looking method <a href="https://docs.python.org/3/reference/datamodel.html#object"><code>__call__</code></a> is a special method that allows an object to be called like a function.</summary>
@@ -185,7 +175,7 @@ It can be useful to create a function that first builds the vocabulary and then 
 **Sanity check**: Apply your tokenizer to an input consisting of few texts and make sure that it seems to work. In particular, verify that the tokenizer can create a tensor output in a situation where the input texts do not contain the same number of words: in these cases, the shorter texts should be "padded" on the right side. For instance
 ```
 tokenizer = (... create your tokenizer...)
-test_texts = [['This is a test.', 'Another test.']]
+test_texts = ['This is a test.', 'Another test.']
 
 tokenizer(test_texts, return_tensors='pt', padding=True,
           truncation=True)
@@ -199,7 +189,7 @@ The result should be something similar to the following example output (assuming
 ```
 Verify that at least the `input_ids` tensor corresponds to what you expect. (As mentioned in the skeleton code, the `attention_mask`</code>` is optional for this assignment.)
 
-When you are confident that your tokenizer works correctly, save it to a file (`your_tokenizer.save('some_file_name')`) so that you do not have to re-create it every time you run your program. You load the saved tokenizer by calling `A1Tokenizer.from_file('some_file_name')`.
+When you are confident that your tokenizer works correctly, save it to a file (`your_tokenizer.save('some_file_name')`) so that you do not have to re-create it every time you run your program. You load the saved tokenizer by calling `A1Tokenizer.from_file('some_file_name')`. Make sure that the saved tokenizer keeps both the vocabulary and the ordered BPE merge rules, so that reloading it results in the same tokenization.
 
 ## Part 2: Loading the text files and creating batches
 
@@ -218,10 +208,22 @@ Each instance in the training and validation sets correspond to Wikipedia paragr
 Now, remove empty lines from the data:
 
 ```
-dataset = dataset.filter(lambda x: x['text'].strip() != ''
+dataset = dataset.filter(lambda x: x['text'].strip() != '')
 ```
 
 **Sanity check**: after loading the datasets and removing empty lines, you should have around 147,000 training and 18,000 validation instances.
+
+**Tokenizing the datasets.** Before constructing `A1Trainer`, use the tokenizer from Part 1 to encode both dataset splits:
+
+```python
+dataset = dataset.map(
+    lambda batch: dict(tokenizer(batch['text'], truncation=True, padding=False)),
+    batched=True,
+    remove_columns=['text'],
+)
+```
+
+Each dataset item now contains integer `input_ids` and not raw text. Pass these tokenized datasets to `A1Trainer`, do not tokenize raw text inside the training or validation loop.
 
 Optionally, it can be useful in the development phase to work with smaller datasets. The following is one way of achieving that:
 
@@ -234,6 +236,7 @@ for sec in ['train', 'val']:
 **Iterating through the datasets.**
 When training and running neural networks, we typically use *batching*: that is, to improve computational efficiency, we process several instances in parallel.
 We will use the `DataLoader` utility from PyTorch. Data loaders help users iterate through a dataset and create batches.
+Tokenized paragraphs may have different lengths. Consider how to pad them when combining them into a batch with `DataLoader`.
 
 <details>
 <summary><b>Hint</b>: More information about <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html"><code>DataLoader</code></a>.</summary>
@@ -273,6 +276,8 @@ Once again, we base our implementation on the HuggingFace Transformers library, 
 - The model hyperparameters are stored in a configuration object `A1RNNModelConfig` that inherits from HuggingFace's `PretrainedConfig`;
 - The neural network class inherits from HuggingFace's `PreTrainedModel` rather than PyTorch's `nn.Module`.
 
+The `forward` method in `A1RNNModel` should take `labels` (input_ids), apply the model layers and compute the next-token loss. It should return a `CausalLMOutputWithPast` object containing `loss` and `logits`.
+
 When you set up your model, you should use the hyperparameters stored in the `A1RNNModelConfig`.
 
 <details>
@@ -302,30 +307,7 @@ class MyRNNBasedLanguageModel(nn.Module):
     ... do the rest ...
 </pre></div>
 </details>
-&nbsp;
 
-**Sanity check**: carry out the following steps:
-- Create an integer tensor of shape 1x*N* where *N* is the length of the sequence. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
-- Apply the model to this input tensor. It shouldn't crash here.
-- Make sure that the shape of the returned output tensor is 1x*N*x*V* where *V* is the size of the vocabulary. This output corresponds to the logits of the next-token probability distribution, but it is useless at this point because we haven't yet trained the model.
-
-
-## Part 4: Training the model
-
-We will now put all the pieces together and implement the code to train the language model.
-
-Similarly to Part 1, we will mimic the functionality of the HuggingFace Transformers library. The [`Trainer`](https://huggingface.co/docs/transformers/main_classes/trainer) is the main utility the Transformers library provides to handle model training, and it provides a variety of complex functionality including multi-GPU training and many other bells and whistles. In our case, we will just implement a basic training loop.
-
-Starting from the skeleton Python code, your task now is to complete the missing parts in the method `train` in the class `A1Trainer`. 
-
-The missing parts you need to provide are
-- Setting up the optimizer, which is the PyTorch utility that updates model parameters during the training loop. The optimizer typically implements some variant of [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). We recommend [`AdamW`](https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html), which is used to train most LLMs.
-- Setting up the `DataLoader`s for the training and validation sets. The datasets are provided as inputs, and you can simply create the `DataLoader`s as in Part 2.
-- The training loop itself, which is where most of your work will be done.
-
-Hyperparameters that control the training should be stored in a [TrainingArguments](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments) object. HuggingFace defines a large number of such hyperparameters but you only need to consider a few of them. The skeleton code includes a hint that lists the relevant hyperparameters.
-
-The training loop should look more or less like a regular PyTorch training loop (see the hint in the code). There are a few non-trivial things to keep in mind when training an autoregressive language model (as opposed to training e.g. classifiers or regression models). We will discuss these points in the following three hints:
 <details>
 <summary><b>Hint</b>: the output tensor is the input tensor, shifted one step to the right.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
@@ -359,12 +341,37 @@ logits = logits.view(-1, logits.shape[-1])  # 3-dimensional -> 2-dimensional
 </pre>
 </div>
 </details>
+&nbsp;
+
+**Sanity check**: carry out the following steps:
+- Create an integer tensor of shape 1x*N* where *N* is the length of the sequence. It doesn't matter what the integers are except that they should be less than the vocabulary size. (Alternatively, take one instance from your training set.)
+- Apply the model to this input tensor. It shouldn't crash here.
+- Make sure that the shape of the returned output tensor of logits is 1 x (*N* − 1) x *V*, where *V* is the size of the vocabulary. This output corresponds to the logits of the next-token probability distribution, but it is useless at this point because we haven't yet trained the model.
+
+
+## Part 4: Training the model
+
+We will now put all the pieces together and implement the code to train the language model.
+
+Similarly to Part 1, we will mimic the functionality of the HuggingFace Transformers library. The [`Trainer`](https://huggingface.co/docs/transformers/main_classes/trainer) is the main utility the Transformers library provides to handle model training, and it provides a variety of complex functionality including multi-GPU training and many other bells and whistles. In our case, we will just implement a basic training loop.
+
+Starting from the skeleton Python code, your task now is to complete the missing parts in the method `train` in the class `A1Trainer`. 
+
+The missing parts you need to provide are
+- Setting up the optimizer, which is the PyTorch utility that updates model parameters during the training loop. The optimizer typically implements some variant of [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). We recommend [`AdamW`](https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html), which is used to train most LLMs.
+- Setting up the `DataLoader`s for the training and validation sets. The datasets are provided as inputs, and you can simply create the `DataLoader`s as in Part 2.
+- The training loop itself, which is where most of your work will be done.
+
+Hyperparameters that control the training should be stored in a [TrainingArguments](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments) object. HuggingFace defines a large number of such hyperparameters but you only need to consider a few of them. The skeleton code includes a hint that lists the relevant hyperparameters.
+
+The training loop should look more or less like a regular PyTorch training loop (see the hint in the code). There are a few non-trivial things to keep in mind when training an autoregressive language model (as opposed to training e.g. classifiers or regression models). We will discuss these points in the following three hints:
+
 
 <details>
 <summary><b>Hint</b>: take padding into account when defining the loss.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
 When the loss is computed, we don't want to include the positions where we have inserted the dummy padding tokens.
-<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a> has a parameter <code>ignore_index</code> that you can set to the integer you use to represent the padding tokens.
+<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html"><code>CrossEntropyLoss</code></a> has a parameter <code>ignore_index</code> that you can set to the integer (for example, -100) and replace the integer you use to represent the padding tokens with it.
 </div>
 </details>
 &nbsp;
@@ -380,7 +387,8 @@ If your solution is implemented correctly and you are using the full training se
 ### Predicting the next word
 
 Take some example text and use the model to predict the next word. For instance, if we apply the model to the text *She lives in San*, what word do you think will come next?
-- Apply the model to the integer-encoded text. As usual, this gives you (the logits of) a probability distribution over your vocabulary. (Make sure that you consider the right position here: if your tokenized input includes an end-of-sentence dummy, you should take the logits at the second-to-last position.)
+- Apply the model to the integer-encoded text. As usual, this gives you (the logits of) a probability distribution over your vocabulary. (Make sure that you consider the right position here: if your tokenized input includes an end-of-sentence dummy, you should take the logits corresponding to final actual token.)
+
 - Use <a href="https://pytorch.org/docs/stable/generated/torch.argmax.html"><code>argmax</code></a> to find the index of the highest-scoring item, or <a href="https://pytorch.org/docs/stable/generated/torch.topk.html"><code>topk</code></a> to find the indices and scores of the *k* highest-scoring items.
 - Apply the inverse vocabulary encoder (that you created in Part 1) so that you can understand what words the model thinks are the most likely in this context.
 
@@ -394,7 +402,7 @@ $$\text{perplexity} = 2^{-\frac{1}{m}\sum_{i=1}^m \log_2 P(w_i | c_i)}$$
 
 In this formula, *m* is the number of words in the dataset, *P* is the probability assigned by our model, <em>w<sub>i</sub></em> and <em>c<sub>i</sub></em> the word and context window at each position.
 
-Compute the perplexity of your model on the validation set. The exact value will depend on various implementation choices you have made, how much of the training data you have been able to use, etc. Roughly speaking, if you get perplexity scores around 700 or more, there are probably problems. Carefully implemented and well-trained models will probably have perplexity scores in the range of 200&ndash;300.
+Compute the perplexity of your model on the validation set. The exact value will depend on various implementation choices you have made, how much of the training data you have been able to use, etc. Roughly speaking, if you get perplexity scores around 700 or more, there are probably problems. Carefully implemented and well-trained models will probably have perplexity scores in the range of 200&ndash;300. But perplexity depends on tokenizations, so your BPE setup will determine perplexity ranges that make sense in your particular case.
 
 <details>
 <summary><b>Hint</b>: An easy way to compute the perplexity in PyTorch.</summary>
