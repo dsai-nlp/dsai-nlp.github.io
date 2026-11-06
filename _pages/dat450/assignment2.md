@@ -19,14 +19,14 @@ In this assignment, we extend the models we investigated in the previous assignm
 
 ### Requirements
 
-Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/36909/assignments/117615). **Submission deadline**: November 17.
+Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/41332/assignments/142926). **Submission deadline**: November 16.
 
 Submit Python files containing your solution to the programming tasks described below. In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. (Most importantly: the perplexity evaluated on the validation set, and the generated texts you have created in the last section.)
 
 This is a pure programming assignment and you do not have to write a technical report or explain details of your solution: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
 ## Step 0: Preliminaries
 
-Make sure you have access to your solution for Programming Assignment 1 since you will reuse the tokenization and the training loop. (Optionally, use HuggingFace's `Trainer` instead.)
+Make sure you have access to your solution for Programming Assignment 1 since you will reuse the tokenization and the training loop.
 
 On Minerva, copy the skeleton from `/data/courses/2025_dat450_dit247/assignments/a2/A2_skeleton.py`.
 This skeleton contains stub classes for all Transformer components, as well as a complete implementation of the RoPE positional representation (copied and somewhat simplified from the HuggingFace library).
