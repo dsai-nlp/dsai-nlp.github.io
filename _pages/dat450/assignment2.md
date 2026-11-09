@@ -11,7 +11,7 @@ nav_order: 4
 
 In this assignment, we extend the models we investigated in the previous assignment in two different ways:
 - We will now use a *Transformer* instead of the recurrent neural network we had previously.
-- In this assignment, we will also use our language model to generate texts.
+- We will use our language model to generate texts.
 
 ### Pedagogical purposes of this assignment
 - Understanding the Transformer architecture in details, when used for language modeling.
@@ -19,11 +19,14 @@ In this assignment, we extend the models we investigated in the previous assignm
 
 ### Requirements
 
-Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/41332/assignments/142926). **Submission deadline**: November 16.
+Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/41332/assignments/142926).
+
+**Submission deadline**: November 16.
 
 Submit Python files containing your solution to the programming tasks described below. In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. (Most importantly: the perplexity evaluated on the validation set, and the generated texts you have created in the last section.)
 
 This is a pure programming assignment and you do not have to write a technical report or explain details of your solution: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
+
 ## Step 0: Preliminaries
 
 Make sure you have access to your solution for Programming Assignment 1 since you will reuse the tokenization and the training loop.
@@ -44,6 +47,8 @@ The figure below shows the design of the OLMo 2 Transformer. We will reimplement
 ### Configuration
 
 Similarly to Assignment 1, the model hyperparameters you need for this assignment will be stored in a configuration object `A2ModelConfig`, which inherits from HuggingFace's `PretrainedConfig`. This configuration will be passed into `__init__` of all the Transformer's components.
+
+In addition to the Transformer hyperparameters, the configuration stores `pad_token_id`, the integer that your tokenizer uses to represent the padding dummy token. Set it to `tokenizer.pad_token_id` when you create the configuration: the model needs it to exclude the padding positions when computing the loss.
 
 ### MLP layer
 
@@ -170,6 +175,8 @@ out = h_new + h_old
 Now, set up the complete Transformer stack including embedding, top-level normalizer, and unembedding layers. (You may look at the figure presented previously.)
 The embedding and unembedding layers will be identical to what you had in Programming Assignment 1 (except that the unembedding layer should not use bias terms, as mentioned in the beginning).
 
+**The forward pass.** As for the RNN in Programming Assignment 1, `forward` takes a batch of integer-encoded texts called `labels` and computes the next-token loss. It should return a CausalLMOutputWithPast object containing loss and logits.
+
 <details>
 <summary><b>Hint</b>: Use a <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.ModuleList.html"><code>ModuleList</code></a>.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
@@ -180,17 +187,15 @@ Put all the Transformer blocks in a <code>ModuleList</code> instead of a plain P
 <details>
 <summary><b>Hint</b>: Creating and applying the RoPE embeddings.</summary>
 <div style="margin-left: 10px; border-radius: 4px; background: #ddfff0; border: 1px solid black; padding: 5px;">
-Create the <code>A2RotaryEmbedding</code> in <code>__init__</code>, as already indicated in the code skeleton. Then in <code>forward</code>, first create the rotations (again, already included in the skeleton). Then pass the rotations when you apply each Transformer layer.
+Create the <code>A2RotaryEmbedding</code> in <code>__init__</code>, as already indicated in the code skeleton. Then in <code>forward</code>, first create the rotations from the input <code>X</code> (again, already included in the skeleton). Then pass the rotations when you apply each Transformer layer.
 </div>
 </details>
 
-**Sanity check.** Now, the language model should be complete and you can test this in the same way as in Programming Assignment 1. Create a 2-dimensional *integer* tensor and apply your Transformer to it. The result should be a 3-dimensional tensor where the last dimension is equal to the vocabulary size.
+**Sanity check.** Now, the language model should be complete and you can test this in the same way as in Programming Assignment 1. Create a 2-dimensional *integer* tensor of shape $$ (b, m) $$ and apply your Transformer to it. The result should be a `CausalLMOutputWithPast` object. Its `logits` field should be a 3-dimensional tensor of shape $$ (b, m-1, V) $$, where $$ V $$ is the vocabulary size: one position shorter than the input, since the last token is only used as a target. Its `loss` field should be a single number.
 
 ## Step 2: Training the language model
 
 In Assignment 1, you implemented utilities to tokenize the text, load the documents, and to handle training and validation. Your Transformer language model should be possible to use as a drop-in replacement for the RNN-based model you had in that assignment.
-
-**Alternative solution.** Use a HuggingFace Trainer.
 
 Select some suitable hyperparameters (number of Transformer layers, hidden layer size, number of attention heads).
 For this assignment, you are recommended to use a small Transformer (e.g. a couple of layers).
@@ -202,8 +207,8 @@ Then run the training function and compute the perplexity on the validation set 
 
 As a starting point, we'll repeat the exercise from the first assignment where we see what the model predicts as the next word of a given sequence. For instance, for the sequence `he lives in san`, a well-trained model will typically predict the word `francisco`. The steps will typically be something like the following:
 
-- Apply the model to the integer-encoded input text.
-- Take the model's output at the last position (but make sure that you avoid an end-of-sentence dummy here).
+- Apply the model to the integer-encoded input text and take the `logits` field of the output.
+- Take the logits at the last position. (Unlike in Assignment 1, you do not need to skip the end-of-sentence dummy here, since your model ignores the last input token.)
 - Use <a href="https://pytorch.org/docs/stable/generated/torch.argmax.html"><code>argmax</code></a> to find the index of the highest-scoring item.
 - Apply the inverse vocabulary encoder so that you can understand what words the model thinks are the most likely in this context.
 
@@ -218,6 +223,8 @@ Implement a random sampling algorithm as described in the recording ([video](htt
 - `topk`: to implement top-K sampling, i.e. the next-token distribution is truncated so that it only includes the `topk` most probable tokens.
 
 The text generation should proceed until it an end-of-text symbol has been generated, or for at most `max_length` steps.
+
+Note that your model ignores the last input token, so if you append generated tokens to the tokenized input, insert them before the end-of-sentence dummy.
 
 <details>
 <summary><b>Hint</b>: How to sample from the next-token distribution.</summary>
@@ -267,10 +274,10 @@ tokenizer = AutoTokenizer.from_pretrained(local_dir, local_files_only=True)
 model = AutoModelForCausalLM.from_pretrained(local_dir, local_files_only=True)
 ```
 
-**Note:** when you apply this model, the return value is a [`CausalLMOutputWithPast`](https://huggingface.co/docs/transformers/main_classes/output#transformers.modeling_outputs.CausalLMOutputWithPast) object, not just the logits. This object has a field called `logits`. Otherwise, you should be able to use the pre-trained model in your generation algorithm.
+**Note:** like your own model, this model returns a [`CausalLMOutputWithPast`](https://huggingface.co/docs/transformers/main_classes/output#transformers.modeling_outputs.CausalLMOutputWithPast) object with a field called `logits`. Unlike your model, it also computes an output for the last input token, so the input should not end with an end-of-sentence dummy. Apart from this difference, you should be able to use the pre-trained model in your generation algorithm.
 
 Try the test examples once again with the pre-trained model and note the differences. In the reflection questions, there will be some questions about these differences.
 
 Note that this is a pure language model (like the one you trained) and it has not been *instruction-tuned*. That is: it has not been post-trained to allow interactive chatting.
 
-**Optional task.** To verify that your implementation is identical to the Olmo 2 model, copy the weight tensors from the pre-trained model into an instance of your own implementation, and verify that you get exactly the same results.
+**Optional task.** To verify that your implementation is identical to the Olmo 2 model, copy the weight tensors from the pre-trained model into an instance of your own implementation, and verify that you get exactly the same results. (Since your model ignores the last input token, compare your logits with all but the last position of the pre-trained model's logits.)
