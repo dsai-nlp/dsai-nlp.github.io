@@ -25,7 +25,7 @@ Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/41332
 
 Submit Python files containing your solution to the programming tasks described below. In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. (Most importantly: the perplexity evaluated on the validation set, and the generated texts you have created in the last section.)
 
-This is a pure programming assignment and you do not have to write a technical report or explain details of your solution: there will be a separate individual assignment where you will answer some conceptual questions about what you have been doing here.
+This is a pure programming assignment and you do not have to write a technical report or explain details of your solution.
 
 ## Step 0: Preliminaries
 
