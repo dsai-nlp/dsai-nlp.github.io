@@ -7,7 +7,7 @@ nav: false
 nav_order: 4
 ---
 
-# DAT450/DIT247: Programming Assignment 5: Retrieval-augmented text generation
+# DAT450/DIT247: Programming Assignment 4: Retrieval-augmented text generation
 In this assignment we will build our own RAG pipeline using LangChain.
 
 ## Pedagogical purposes of this assignment
