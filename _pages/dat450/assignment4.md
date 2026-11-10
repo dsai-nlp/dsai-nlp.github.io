@@ -1,7 +1,7 @@
 ---
 layout: page
 title: 'DAT450/DIT247: Programming Assignment 5: Retrieval-augmented text generation'
-permalink: /courses/dat450/assignment5/
+permalink: /courses/dat450/assignment4/
 description:
 nav: false
 nav_order: 4
@@ -16,7 +16,7 @@ In this assignment we will build our own RAG pipeline using LangChain.
 - Get an understanding for the challenges and use cases of RAG.
 
 ## Requirements
-Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/36909/assignments/117619). **Submission deadline: December 8.**
+Please submit your solution in [Canvas](https://canvas.chalmers.se/courses/41332/assignments/142929). **Submission deadline: November 30.**
 
 Submit Python files containing your solution to the programming tasks described below. In addition, to save time for the people who grade your submission, please submit a text file containing the outputs printed out by your Python program; read the instructions carefully so that the right outputs are included. 
 
