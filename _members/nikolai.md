@@ -6,14 +6,14 @@ state: current
 start-date: 2026-06-01
 end-date: YY-MM-DD
 pronouns: 
-email: 
+email: ilinykh@chalmers.se
 scholar_userid: 
 publons_id:
 research_gate_profile:
-github_username: 
-linkedin_username: 
+github_username: nilinykh
+linkedin_username: xilini
 twitter_username: 
 medium_username: 
 blogger_url: 
-description: Nikolai is a postdoc who works on multimodal NLP, interpretability, and evaluation.
+description: Nikolai is a postdoc who works on multimodal NLP, interpretability, and evaluation. 
 ---
