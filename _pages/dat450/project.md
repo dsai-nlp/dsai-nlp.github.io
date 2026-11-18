@@ -26,7 +26,7 @@ The projects are done in groups of up to four.
 
 Please submit a short text that describes what you intend to work on. For suggestions of topics, see below.
 
-You should submit this description [in Canvas](https://canvas.chalmers.se/courses/36909/assignments/117612). The text should include a project title and one or a couple of paragraphs giving a rough outline of how you intend to work. If you have found any related work or relevant dataset, this is useful information to include. The deadline for this preliminary description is **December 5**.
+You should submit this description [in Canvas](https://canvas.chalmers.se/courses/41332/assignments/142923). The text should include a project title and one or a couple of paragraphs giving a rough outline of how you intend to work. If you have found any related work or relevant dataset, this is useful information to include. The deadline for this preliminary description is **December 4**.
 
 It is not compulsory to submit the preliminary description, but we strongly recommend it so that we have the opportunity to give you some initial feedback.
 
@@ -37,18 +37,19 @@ When writing your report, please use one of [these style templates](https://www.
 The report should follow the format required for a **short paper** submission at a conferences organized by the ACL (that is: the typical way that NLP papers are published). You can read [here](https://acl-org.github.io/ACLPUB/formatting.html) about the formatting requirements, but in summary:
 - The main body of text must be **at most 4 pages**. This should include everything required to understand what you have done and the key conclusions.
 - After the main text, you must include a short section called **Limitations**. The Limitations section should briefly discuss issues you think could potentially be improved in your work.
+- After the Limitations section, there should be a section describing to what extent you have used AI when solving the project task. By &quot;AI&quot;, we mean any tools used to assist you, such as interactive chatbots or coding agents. We are not referring to fundamental tools such as PyTorch or any LLM you might have used in your experiments.
 - In addition, you may optionally include additional material in an **appendix**. Here, you can put additional details that are not essential for understanding the work, but that you want to include for completeness. (Examples of what to put here could be a detailed list of hyperparameter settings, example outputs, some extra evaluation, etc.)
-- The limitations, bibliography, and appendix do not count towards the limit of 4 pages.
+- The limitations, AI statement, bibliography, and appendix do not count towards the limit of 4 pages.
 
 For examples of how such a text can look, take a look at some [short papers published at the ACL conference](https://aclanthology.org/events/acl-2024/#2024acl-short). In addition, there are some examples of project reports from previous instances of this course provided [in this directory](https://www.cse.chalmers.se/~richajo/dat450/project_examples/).
 
-Please submit the project report [via the Canvas page](https://chalmers.instructure.com/courses/XXX/assignments/100314). The deadline for submitting the report is **January 18**.
+Please submit the project report [via the Canvas page](https://canvas.chalmers.se/courses/41332/assignments/142924). The deadline for submitting the report is **January 17**.
 
 ## Oral presentation and peer review
 
-You should prepare a presentation of up to 10 minutes. This presentation will be recorded and made available for other students to see. You can present the project even if your project work and report aren't finished. Please submit the recording of your oral presentation on [this Canvas page](https://chalmers.instructure.com/courses/XXX/assignments/100313). The deadline for making your recording available is **January 13**.
+You should prepare a presentation of up to 10 minutes. This presentation will be recorded and made available for other students to see. You can present the project even if your project work and report aren't finished. Please submit the recording of your oral presentation on [this Canvas page](https://canvas.chalmers.se/courses/41332/assignments/142921). The deadline for making your recording available is **January 12**.
 
-Finally, you will be expected to watch the presentations by at two other groups and provide some feedback. There are some suggestions for how to write the feedback on [the Canvas submission page](https://chalmers.instructure.com/courses/XXX/quizzes/23291). The deadline for this peer review is **January 21**.
+Finally, you will be expected to watch the presentations by at two other groups and provide some feedback. There are some suggestions for how to write the feedback on [the Canvas submission page](https://canvas.chalmers.se/courses/41332/quizzes/29359). The deadline for this peer review is **January 21**.
 
 ## Grading
 
