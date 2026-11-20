@@ -1,22 +1,22 @@
 ---
 layout: page
-title: 'DAT450/DIT247: Independent project'
+title: 'DAT450/DIT249: Independent project'
 permalink: /courses/dat450/project/
 description:
 nav: false
 nav_order: 4
 ---
 
-# DAT450/DIT247: Independent project
+# DAT450/DIT249: Independent project
 
 ## Your work
 
 In the project work, your task will be to
 
-- find an interesting task that can be addressed with machine learning methods
+- find an interesting task connected to natural language processing (interpreted broadly)
 - find (or annotate) an appropriate dataset for that task
 - look around for related work
-- implement software to train some machine learning model for your task
+- implement software to train some model for your task, or use a pre-trained model to solve your task
 - evaluate your system
 - write up a report about your results.
 

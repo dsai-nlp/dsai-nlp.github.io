@@ -1,13 +1,13 @@
 ---
 layout: page
-title: 'DAT450/DIT247: Programming Assignment 2: Transformer language models'
+title: 'DAT450/DIT249: Programming Assignment 2: Transformer language models'
 permalink: /courses/dat450/assignment2/
 description:
 nav: false
 nav_order: 4
 ---
 
-# DAT450/DIT247: Programming Assignment 2: Transformer language models
+# DAT450/DIT249: Programming Assignment 2: Transformer language models
 
 In this assignment, we extend the models we investigated in the previous assignment in two different ways:
 - We will now use a *Transformer* instead of the recurrent neural network we had previously.
