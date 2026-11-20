@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 'DAT450/DIT247: Programming Assignment 5: Retrieval-augmented text generation'
+title: 'DAT450/DIT247: Programming Assignment 4: Retrieval-augmented text generation'
 permalink: /courses/dat450/assignment4/
 description:
 nav: false
