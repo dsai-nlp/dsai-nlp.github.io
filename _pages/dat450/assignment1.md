@@ -1,13 +1,13 @@
 ---
 layout: page
-title: 'DAT450/DIT247: Programming Assignment 1: Introduction to language modeling'
+title: 'DAT450/DIT249: Programming Assignment 1: Introduction to language modeling'
 permalink: /courses/dat450/assignment1/
 description:
 nav: false
 nav_order: 4
 ---
 
-# DAT450/DIT247: Programming Assignment 1: Introduction to language modeling
+# DAT450/DIT249: Programming Assignment 1: Introduction to language modeling
 
 *Language modeling* is the foundation that recent advances in NLP technlogies build on. In essence, language modeling means that we learn how to imitate the language that we observe in the wild. More formally, we want to train a system that models the statistical distribution of natural language. Solving this task is exactly what the famous commercial large language models do (with some additional post-hoc tweaking to make the systems more interactive and avoid generating provocative outputs).
 
