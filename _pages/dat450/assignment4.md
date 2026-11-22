@@ -122,7 +122,7 @@ First, you need a model to embed the documents in the retrieval corpus. Here, we
 
 ### Step 3.2: Chunking
 
-Second, you need to split the documents in your retrieval corpus into smaller chunks, as some documents may be too long for the embedding model. You can use [RecursiveCharacterTextSplitter](https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter) for this purpose. The `create_documents()` method takes the raw texts (documents.abstract) and produces a list of LangChain Document objects containing the text chunks. Alternatively, if you already have a list of Document objects, you can use split_documents(). We need to note that LangChain offers different methods depending on the format of your input. If you start with plain text strings, `create_documents()` can split them and turn them into Document objects in one step. If you already have Document objects, use `split_documents()`. You normally don't need to apply both methods consecutively.
+Second, you need to split the documents in your retrieval corpus into smaller chunks, as some documents may be too long for the embedding model. You can use [RecursiveCharacterTextSplitter](https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter) for this purpose. The `create_documents()` method takes the raw texts (documents.abstract) and produces a list of LangChain Document objects containing the text chunks. Alternatively, if you already have a list of Document objects, you can use split_documents().
 
 For evaluation in Step 5, we recommend saving the document id as `metadatas` when creating the document:
 
