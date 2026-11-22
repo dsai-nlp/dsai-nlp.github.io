@@ -121,13 +121,14 @@ First, you need a model to embed the documents in the retrieval corpus. Here, we
 
 
 ### Step 3.2: Chunking
-Second, you need to chunk the documents in your retrieval corpus, as some likely are too long for the embedding model. Here, you can use the [RecursiveCharacterTextSplitter](https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter) as a start. The retrieval corpus is given by `documents.abstract`, so you can use `create_documents` on the text splitter with the retrieval corpus to create LangChain `Document` objects, and then use `split_documents` to create text chunks that will be used in creating the vector store.
+
+Second, you need to split the documents in your retrieval corpus into smaller chunks, as some documents may be too long for the embedding model. You can use [RecursiveCharacterTextSplitter](https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter) for this purpose. The create_documents() method takes the raw texts (documents.abstract) and produces a list of LangChain Document objects containing the text chunks. Alternatively, if you already have a list of Document objects, you can use split_documents().
 
 For evaluation in Step 5, we recommend saving the document id as `metadatas` when creating the document:
 
 ```python 
 metadatas = [{"id": idx} for idx in documents.index]
-texts = text_splitter.create_documents(texts=documents.abstract.tolist(), metadata=metadatas)
+texts = text_splitter.create_documents(texts=documents.abstract.tolist(), metadatas=metadatas)
 ```
 
 **Sanity check:** Print some samples from the text chunks and check that it makes sense. This way, you might be able to get a feeling for a good chunk size.
@@ -158,6 +159,22 @@ There could be two options of building a RAG chain, and you can choose either **
 [Option A](#option-a-build-a-rag-agent-based-on-the-official-langchain-guide): Build a RAG agent based on the official LangChain guide: [here](https://docs.langchain.com/oss/python/langchain/rag). Here we will use a two-step chain, in which we will run a search in the vector store, and incorporate the result as context for LLM queries.
 
 [Option B](#option-b-build-a-rag-chain-based-on-langchain-open-tutorial): Build a RAG chain using LangChain Expression Language (LCEL) based on a LangChain Open Tutorial: [here](https://colab.research.google.com/github/LangChain-OpenTutorial/LangChain-OpenTutorial/blob/main/13-LangChain-Expression-Language/05-RunnableParallel.ipynb#scrollTo=635d8ebb). Here we will use the [RunnableParallel](https://reference.langchain.com/python/langchain_core/runnables/?h=runnablepara#langchain_core.runnables.base.RunnableParallel) class to build a RAG chain that will also return the retrieved document.
+
+<details>
+  <summary><b>Hint:</b> Using Hugging Face models with Options A and B</summary>
+
+  In Step 2, you loaded a language model using `HuggingFacePipeline`. You can use this model with either Option A or Option B, but the way you integrate it into your RAG pipeline is slightly different.
+
+  - **Option A (RAG agent):** The `create_agent` function is primarily designed to work with chat models, which exchange messages with roles such as user, assistant, and system. Although `HuggingFacePipeline` may work directly in simple setups without tools, we recommend wrapping it with `ChatHuggingFace` to use the intended chat-model interface. You can import `ChatHuggingFace` from `langchain_huggingface`.
+
+  - **Option B (LCEL RAG chain):** You can use `HuggingFacePipeline` directly in your chain, without wrapping it with `ChatHuggingFace`. However, you can also use `ChatHuggingFace` if you prefer a chat-based interface.
+
+  Both options use the same underlying language model. The difference is how the model is connected to the RAG pipeline. If you use `ChatHuggingFace`, we recommend choosing an instruction- or chat-tuned model that supports chat formatting.
+
+  For more information, see the <a href="https://docs.langchain.com/oss/python/integrations/chat/huggingface">LangChain documentation</a>.
+
+</details>
+
 
 ### Option A: Build a RAG agent based on the official LangChain guide
 
