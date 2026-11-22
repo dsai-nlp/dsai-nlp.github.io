@@ -148,13 +148,11 @@ for res, score in results:
     print(f"* [SIM={score:3f}] {res.page_content} [{res.metadata}]")
 ```
 
-
-
 ## Step 4: Define the full RAG pipeline
 
-In this and the following steps, we will guadually build a RAG chain. 
+In this and the following steps, we will gradually build a RAG chain. 
 
-There could be two options of building a RAG chain, and you can choose either **one** of them to build your own RAG: 
+We suggest two possible approaches to building a RAG pipeline using LangChain. You can choose either approach (**one** of them) to build your own RAG:
 
 [Option A](#option-a-build-a-rag-agent-based-on-the-official-langchain-guide): Build a RAG agent based on the official LangChain guide: [here](https://docs.langchain.com/oss/python/langchain/rag). Here we will use a two-step chain, in which we will run a search in the vector store, and incorporate the result as context for LLM queries.
 
@@ -200,7 +198,7 @@ class RetrieveDocumentsMiddleware(AgentMiddleware[State]):
 
     def before_model(self, state: AgentState) -> dict[str, Any] | None:
         last_message = state["messages"][-1] # get the user input query
-        retrieved_docs = self.vector_store.similarity_search(last_message.text)  # search for documents
+        retrieved_docs = self.vector_store.similarity_search(last_message.content)  # search for documents
 
         docs_content = "\n\n".join(doc.page_content for doc in retrieved_docs)  
 
@@ -251,7 +249,9 @@ As a start, you might want the retriever to fetch only one document per prompt.
 
 Then, define your template and use `ChatPromptTemplate.from_template` to create a Chat Prompt. 
 
-With the retriever and the prompt, you should be able to define the RAG chain. In order to return the retrieved context as well as the answers for further evaluation, firstly we can define a `RunnableParallel` object that can take the context and the question, then we can define a chain that only generate text outputs like this:
+With the retriever and the prompt, you can now build your RAG chain. The goal is to retrieve relevant documents, use their content to generate an answer, and keep track of the retrieved documents for evaluation in Step 5.
+
+One possible approach is to use `RunnableParallel` to pass both the retrieved context and the original question through the chain. Note that retrievers typically return LangChain Document objects. You may want to extract their text content (page_content) when injecting the retrieved information into the prompt, and at the same time preserving the original documents and their metadata for evaluation.
 
 ```python
 # Construct the retrieval chain
@@ -261,13 +261,13 @@ chain = (
     | StrOutputParser()
 )
 ```
-Lastly, combine the `RunnableParallel` object with the chain using the [`assign`](https://reference.langchain.com/python/langchain_core/runnables/?h=runnablepara#langchain_core.runnables.base.RunnableParallel.assign) method. 
+Lastly, combine the `RunnableParallel` object with the chain using the [`assign`](https://reference.langchain.com/python/langchain_core/runnables/?h=runnablepara#langchain_core.runnables.base.RunnableParallel.assign) method. This method allows you to include the generated answer alongside the retrieved documents.
 
 ```python
 rag_chain = runnable_parallel_object.assign(answer=chain)
 ```
 
-Then you should be able to access the retrieved documents with `answer["context"]`.
+In this example, you should be able to access the retrieved documents with `answer["context"]`.
 
 **Sanity check:** Take a question from your dataset and check whether the model seems to retrieve a relevant document, and answer in a reasonable fashion.
 
@@ -279,13 +279,13 @@ Here we will do 4 evaluation tasks to evaluate the RAG agent with the given data
 
 1. Evaluate your full RAG pipeline on the medical questions (`questions.question`) and corresponding gold labels (`questions.gold_label`). 
 
-Since the gold labels can be casted to a binary variable (yes/no) you may use the f1 and/or accuracy metrics.
+Since the gold labels can be cast to a binary variable (yes/no) you may use the f1 and/or accuracy metrics.
 
-We expect the model to give answers of "Yes" or "No", but it can happen that the model gives random answers. In this case, one way to perform the evaluation is to keep track of the number of valid answers and do evaluation only on the valid answers.
+We expect the model to produce answers of "Yes" or "No", but it may sometimes generate answers that do not follow this format. You can evaluate the model only on correctly formatted answers, but make sure to also report how many valid answers were generated (both the number and proportion). This will help you interpret the evaluation results and compare the RAG pipeline with the baseline.
 
 2. As a baseline, run the same LM without context and compare the performance of the two setups. You can use the same evaluation method as the previous RAG evaluation. Did the retrieval help? 
 
-3. Also evaluate whether the gold documents are fetched for each question. You can compare the retrieved document id with the gold document with ID given by `questions.gold_document_id`.
+3. Also evaluate whether the gold documents are fetched for each question. You can compare the retrieved document id with the gold document with ID given by `questions.gold_document_id`. If multiple chunks are retrieved, consider retrieval successful if at least one of them originates from the gold document.
 
 4. Also, inspect some retrieved documents and corresponding model answers. Does the pipeline seem to work as intended?
 
