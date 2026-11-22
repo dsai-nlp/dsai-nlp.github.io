@@ -163,15 +163,15 @@ There could be two options of building a RAG chain, and you can choose either **
 <details>
   <summary><b>Hint:</b> Using Hugging Face models with Options A and B</summary>
 
-  In Step 2, you loaded a language model using `HuggingFacePipeline`. You can use this model with either Option A or Option B, but the way you integrate it into your RAG pipeline is slightly different.
+  In Step 2, you loaded a language model using HuggingFacePipeline. You can use this model with either Option A or Option B, although the way you integrate it into your RAG pipeline may differ.
 
-  - **Option A (RAG agent):** The `create_agent` function is primarily designed to work with chat models, which exchange messages with roles such as user, assistant, and system. Although `HuggingFacePipeline` may work directly in simple setups without tools, we recommend wrapping it with `ChatHuggingFace` to use the intended chat-model interface. You can import `ChatHuggingFace` from `langchain_huggingface`.
+Option A (RAG agent): The `create_agent` function is primarily designed for chat models, which work with messages from users, assistants, and systems. However, HuggingFacePipeline can also work directly in simpler setups, such as when retrieval is handled by middleware and no tools are provided. Alternatively, you can wrap your pipeline with ChatHuggingFace to use a chat-model interface. You can import ChatHuggingFace from `langchain_huggingface`.
 
-  - **Option B (LCEL RAG chain):** You can use `HuggingFacePipeline` directly in your chain, without wrapping it with `ChatHuggingFace`. However, you can also use `ChatHuggingFace` if you prefer a chat-based interface.
+Option B (LCEL RAG chain): You can use HuggingFacePipeline directly as part of your chain. You do not need to wrap it with ChatHuggingFace, even when using ChatPromptTemplate. However, you can also use ChatHuggingFace if you prefer to work with a chat-model interface.
 
-  Both options use the same underlying language model. The difference is how the model is connected to the RAG pipeline. If you use `ChatHuggingFace`, we recommend choosing an instruction- or chat-tuned model that supports chat formatting.
+Both approaches can use the same underlying language model. You are free to choose whichever approach works best for your implementation. If you use ChatHuggingFace, we recommend choosing an instruction- or chat-tuned model that supports chat formatting.
 
-  For more information, see the <a href="https://docs.langchain.com/oss/python/integrations/chat/huggingface">LangChain documentation</a>.
+For more information, see the [LangChain documentation](https://docs.langchain.com/oss/python/integrations/chat/huggingface).
 
 </details>
 
