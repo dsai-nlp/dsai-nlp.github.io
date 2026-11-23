@@ -138,15 +138,16 @@ Third, you need a vector store to store the documents and corresponding embeddin
 
 When building your vector store, pass the embedding model in [Step 3.1](#step-31-embedding-model) as the embedding model and use the text chunks in [Step 3.2](#step-32-chunking) as the documents in the vector store. To add documents in the vector store, you can Use `Chroma.from_documents` when creating the vector store or use `vector_store.add_documents` after creating the vector store.
 
-
 **Sanity check:** Query your vector store as follows and check that the results make sense:
 ```python
 results = vector_store.similarity_search_with_score(
     "What is programmed cell death?", k=3
 )
 for res, score in results:
-    print(f"* [SIM={score:3f}] {res.page_content} [{res.metadata}]")
+    print(f"* [DIST={score:3f}] {res.page_content} [{res.metadata}]")
 ```
+
+Note that Chroma returns distance scores, where lower values indicate more similar documents.
 
 ## Step 4: Define the full RAG pipeline
 
